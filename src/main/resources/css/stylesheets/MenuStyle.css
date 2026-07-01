@@ -62,8 +62,7 @@
 .button {
     -fx-background-color: linear-gradient(to bottom, -theme-button-top, -theme-button-bottom);
     -fx-text-fill: -theme-text-button;
-    -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
+    -fx-border-radius: 4px 0px 4px 0px;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, -theme-button-glow, 8, 0, 0, 2);
 }
@@ -310,4 +309,12 @@
 .mute:hover {
     -fx-opacity: 0.85;
     -fx-effect: dropshadow(three-pass-box, -theme-button-top, 16, 0.6, 0, 0);
+}
+
+.hiddenText {
+    -fx-text-fill: transparent;
+}
+
+.spoilerBox {
+    -fx-background-color: -theme-button-top;
 }

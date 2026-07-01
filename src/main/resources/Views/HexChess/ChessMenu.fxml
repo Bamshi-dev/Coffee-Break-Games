@@ -33,7 +33,7 @@
                 </Label>
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
          <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
             <children>
                    <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="Local Game">

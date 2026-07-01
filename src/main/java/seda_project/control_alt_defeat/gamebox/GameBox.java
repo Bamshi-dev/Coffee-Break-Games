@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import seda_project.control_alt_defeat.gamebox.ui.ResizeHelper;
 
 public class GameBox extends Application {
     @FXML
@@ -31,6 +32,10 @@ public class GameBox extends Application {
     private List<KeyCode> konamiList = new ArrayList<>();
     private List<KeyCode> comparisionList = List.of(KeyCode.UP,KeyCode.UP, KeyCode.DOWN,KeyCode.DOWN, KeyCode.LEFT,KeyCode.RIGHT, KeyCode.LEFT,KeyCode.RIGHT, KeyCode.B,KeyCode.A);
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FxmlKit.enableDevelopmentMode();
@@ -40,7 +45,6 @@ public class GameBox extends Application {
         stage.show();
         stage.setMinHeight(600);
         stage.setMinWidth(800);
-        stage.resizableProperty().setValue(Boolean.FALSE);
         stage.getIcons().add(new Image(GameBox.class.getResource("/Images/others/Application_Icon.png").toExternalForm()));
         String address = "/Views/StartingScreen.fxml";
         FXMLLoader loader = new FXMLLoader(GameBox.class.getResource(address));
@@ -52,6 +56,7 @@ public class GameBox extends Application {
         stage.setScene(mainMenuScene);
         stage.sizeToScene();
         stage.centerOnScreen();
+        ResizeHelper.addResizeListener(stage);
         logger.debug("Startup completed");
     }
 

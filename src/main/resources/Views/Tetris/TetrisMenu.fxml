@@ -13,7 +13,7 @@
         <URL value="@../../css/stylesheets/MenuStyle.css" />
         <URL value="@../../css/stylesheets/TetrisMenu.css" />
     </stylesheets>
-    <VBox alignment="TOP_CENTER">
+    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
         <fx:include source="../TopBar.fxml" />
             <VBox fx:id="header" alignment="TOP_CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
                 <padding>
@@ -31,7 +31,7 @@
                 </Label>
             </VBox>
 
-        <StackPane prefHeight="495.0">
+        <StackPane prefHeight="495.0" VBox.vgrow="ALWAYS">
          <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
             <children>
                    <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="Local Game">

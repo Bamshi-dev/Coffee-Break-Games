@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="50.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.ui.KeyCapController">
+    <clip>
+        <Rectangle arcHeight="12" arcWidth="12" height="45" width="50" />
+    </clip>
+    <StackPane layoutX="10.0" maxHeight="25.0" maxWidth="30.0" minHeight="20.0" minWidth="30.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: white;">
+        <Label fx:id="KeyCapText" text="Label" textFill="#435896">
+            <font>
+                <Font name="System Bold" size="11.0" />
+            </font>
+        </Label>
+    </StackPane>
+    <Polyline fill="#9cd1f7" layoutX="174.0" layoutY="178.0" points="-126.00001525878906, -133.0, -134.0, -153.20001220703125, -134.0, -178.0, -123.99999237060547, -178.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="2.0" />
+    <Polyline fill="#778bcc" layoutX="64.0" layoutY="169.0" points="-61.20001983642578, -124.0, -54.0, -144.0, -24.0, -144.0, -16.000015258789062, -123.99999237060547" stroke="#ffffff00" strokeType="INSIDE" strokeWidth="2.0" />
+    <Polyline fill="#9cd1f7" layoutX="74.0" layoutY="179.0" points="-71.20002746582031, -133.99998474121094, -63.999969482421875, -153.80001831054688, -63.99997329711914, -179.0, -74.00001525878906, -178.99998474121094" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" style="-fx-arc-width: 10px; -fx-arc-height: 10px;" width="50.0" />
+</Pane>

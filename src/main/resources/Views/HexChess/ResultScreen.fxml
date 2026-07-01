@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.ResultScreen">
     <VBox alignment="TOP_CENTER">
         <fx:include source="../TopBar.fxml" />
@@ -28,7 +27,7 @@
             <Label text="Game Result" />
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
                 <HBox maxHeight="-Infinity" maxWidth="-Infinity">
                     <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" text="Game Result: " />

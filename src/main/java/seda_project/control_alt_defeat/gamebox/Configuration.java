@@ -87,10 +87,16 @@ public class Configuration {
             Scene currentScene = stage.getScene();
 
             Platform.runLater(() -> {
+                double height = stage.getHeight();
+                double width = stage.getWidth();
+
                 currentScene.setFill(Color.TRANSPARENT);
                 currentScene.setRoot(root);
+
                 stage.sizeToScene();
-                stage.centerOnScreen();
+
+                stage.setWidth(Math.max(width, stage.getWidth()));
+                stage.setHeight(Math.max(height,stage.getHeight()));
             });
 
             if (controller != null){

@@ -28,7 +28,7 @@
             <Label text="Local Game Configuration" />
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" styleClass="box">
                 <HBox alignment="CENTER_LEFT" spacing="5.0">
                     <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Player 1 Name: " />

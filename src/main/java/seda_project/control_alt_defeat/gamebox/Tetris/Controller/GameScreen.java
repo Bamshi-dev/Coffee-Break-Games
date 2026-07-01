@@ -1,11 +1,12 @@
 package seda_project.control_alt_defeat.gamebox.Tetris.Controller;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -16,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -28,11 +30,11 @@ import seda_project.control_alt_defeat.gamebox.network.NetworkListener;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.net.URL;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class GameScreen extends Controller implements TetrisEventListener {
+public class GameScreen extends Controller implements TetrisEventListener, Initializable {
     private final TetrisSettings tS = TetrisSettings.getInstance();
     private TetrisEngine engine;
     private KeyHandler handler;
@@ -40,6 +42,8 @@ public class GameScreen extends Controller implements TetrisEventListener {
 
     private Timeline p1EngineTicker;
     private Timeline p2EngineTicker;
+    private Timeline arrowAnimation;
+    private final DoubleProperty animationPhase = new SimpleDoubleProperty(0);
 
     private boolean disconnected = false;
     private boolean gameOverHandled = false;
@@ -61,13 +65,23 @@ public class GameScreen extends Controller implements TetrisEventListener {
     private List<PowerUp> currentPowerUps;
     private boolean currentTwoBlockMode = false;
 
-    private final java.util.Map<KeyCode, Integer> clientActiveKeys = new java.util.HashMap<>();
+    private final Map<KeyCode, Integer> clientActiveKeys = new HashMap<>();
     private Timeline clientRepeatTimer;
 
     // AI-generated optimization: keep only the latest pending snapshot so the
     // JavaFX thread renders once per batch instead of one runLater per message.
-    private final java.util.concurrent.atomic.AtomicReference<TetrisEngine.GameState> pendingState =
-            new java.util.concurrent.atomic.AtomicReference<>();
+    private final AtomicReference<TetrisEngine.GameState> pendingState =
+            new AtomicReference<>();
+
+    @FXML
+    private VBox arrowBoxP1, arrowBoxP2;
+
+    @FXML
+    private GridPane player1Field, player2Field;
+
+    @FXML
+    private Label player1NameLabel, player2NameLabel, player1PointsLabel, player2PointsLabel, player1LinesLabel, player2LinesLabel,p1LevelLabel, p2LevelLabel,
+    p1RotateKey, p1LeftKey, p1RightKey, p1DownKey, p2RotateKey, p2LeftKey, p2RightKey, p2DownKey;
 
 
     private void loadPowerUpImages() {
@@ -106,16 +120,13 @@ public class GameScreen extends Controller implements TetrisEventListener {
     }
 
     @FXML
-    private GridPane player1Field, player2Field;
-
-    @FXML
-    private Label player1NameLabel, player2NameLabel, player1PointsLabel, player2PointsLabel, player1LinesLabel, player2LinesLabel,p1LevelLabel, p2LevelLabel;
-
-    @FXML
     protected void onExitGameAction() {
         sC.play("button");
         sC.stopLooping();
         sC.playLooping("lobby_background",.2);
+        if (arrowAnimation != null) {
+            arrowAnimation.stop();
+        }
         // We're leaving on purpose: closing the connection below fires our own
         // onDisconnected, so suppress the disconnect handler to avoid a double navigate.
         disconnected = true;
@@ -1002,5 +1013,161 @@ public class GameScreen extends Controller implements TetrisEventListener {
     public void setInitialLevels(int initP1Level,int initP2Level){
         this.initP1Level = initP1Level;
         this.initP2Level = initP2Level;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
+        startAnimation();
+        setKeycaps();
+    }
+
+    private void setKeycaps() {
+        TetrisSettings tS = TetrisSettings.getInstance();
+        ArrayList<KeyCode> p1Keys = tS.getPlayer1Keys();
+        ArrayList<KeyCode> p2Keys = tS.getPlayer2Keys();
+        if (controlledPlayer == 0) {
+            p1RotateKey.setText(getShortKeyName(p1Keys.get(3)));
+            p1LeftKey.setText(getShortKeyName(p1Keys.get(0)));
+            p1RightKey.setText(getShortKeyName(p1Keys.get(1)));
+            p1DownKey.setText(getShortKeyName(p1Keys.get(2)));
+            p2RotateKey.setText(getShortKeyName(p2Keys.get(3)));
+            p2LeftKey.setText(getShortKeyName(p2Keys.get(0)));
+            p2RightKey.setText(getShortKeyName(p2Keys.get(1)));
+            p2DownKey.setText(getShortKeyName(p2Keys.get(2)));
+        }
+    }
+
+    private void startAnimation() {
+        animationPhase.addListener((obs, oldVal, newVal) -> {
+            double phase = newVal.doubleValue();
+            updateArrowOpacities(arrowBoxP1, phase);
+            updateArrowOpacities(arrowBoxP2, phase);
+        });
+
+        arrowAnimation = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(animationPhase, 0)),
+                new KeyFrame(Duration.seconds(3.0), new KeyValue(animationPhase, 2 * Math.PI))
+        );
+
+        arrowAnimation.setCycleCount(Timeline.INDEFINITE);
+        arrowAnimation.play();
+    }
+
+
+    private void updateArrowOpacities(VBox box, double phase) {
+        if (box == null) return;
+
+        int totalArrows = box.getChildren().size();
+        for (int i = 0; i < totalArrows; i++) {
+            Node arrow = box.getChildren().get(i);
+
+            // Spatial frequency: spreads the wave across the arrows
+            double arrowOffset = ((double) i / totalArrows) * (2 * Math.PI);
+
+            // Sine wave formula: combines space and time phase for traveling motion
+            // We use - phase to make the wave travel downwards visually
+            double wave = Math.sin(arrowOffset + phase);
+
+            // Map the sine wave (-1.0 to 1.0) to a valid opacity range (e.g., 0.15 to 1.0)
+            double normalizedOpacity = 0.15 + 0.85 * ((wave + 1.0) / 2.0);
+
+            arrow.setOpacity(normalizedOpacity);
+        }
+    }
+
+    public String getShortKeyName(KeyCode code) {
+        String toReturn = "";
+        switch (code) {
+            case UP: { toReturn = "↑"; break;}
+            case DOWN: {toReturn = "↓"; break;}
+            case LEFT:{toReturn = "←"; break;}
+            case RIGHT:{toReturn = "→"; break;}
+
+            // Numpad Keys
+            case NUMPAD0:{toReturn = "N0"; break;}
+            case NUMPAD1:{toReturn = "N1"; break;}
+            case NUMPAD2:{toReturn = "N2"; break;}
+            case NUMPAD3:{toReturn = "N3"; break;}
+            case NUMPAD4:{toReturn = "N4"; break;}
+            case NUMPAD5:{toReturn = "N5"; break;}
+            case NUMPAD6:{toReturn = "N6"; break;}
+            case NUMPAD7:{toReturn = "N7"; break;}
+            case NUMPAD8:{toReturn = "N8"; break;}
+            case NUMPAD9:{toReturn = "N9"; break;}
+            case KP_UP: {toReturn =  "N↑"; break;}
+            case KP_DOWN: {toReturn =  "N↓"; break;}
+            case KP_LEFT: {toReturn =  "N←"; break;}
+            case KP_RIGHT: {toReturn =  "N→"; break;}
+
+            case DIGIT0: {toReturn = "0"; break;}
+            case DIGIT1: {toReturn = "1"; break;}
+            case DIGIT2: {toReturn = "2"; break;}
+            case DIGIT3: {toReturn = "3"; break;}
+            case DIGIT4: {toReturn = "4"; break;}
+            case DIGIT5: {toReturn = "5"; break;}
+            case DIGIT6: {toReturn = "6"; break;}
+            case DIGIT7: {toReturn = "7"; break;}
+            case DIGIT8: {toReturn = "8"; break;}
+            case DIGIT9: {toReturn = "9"; break;}
+
+            case ENTER: {toReturn = "↵"; break;}
+            case BACK_SPACE: {toReturn = "⌫"; break;}
+            case TAB: {toReturn = "⇥"; break;}
+            case ESCAPE: {toReturn = "Esc"; break;}
+            case SHIFT: {toReturn = "⇧"; break;}
+            case CONTROL: {toReturn = "Ctrl"; break;}
+            case ALT: {toReturn = "Alt"; break;}
+            case ALT_GRAPH: {toReturn = "AltG"; break;}
+            case WINDOWS:
+            case META:
+            case COMMAND: {toReturn = "Win"; break;}
+            case SPACE: {toReturn = "␣"; break;}
+            case CAPS: {toReturn = "Caps"; break;}
+            case INSERT: {toReturn = "Ins"; break;}
+            case DELETE: {toReturn = "Del"; break;}
+            case PAUSE: {toReturn = "Paus"; break;}
+            case PRINTSCREEN: {toReturn = "PrtSc"; break;}
+            case SCROLL_LOCK: {toReturn = "ScrLk"; break;}
+            case NUM_LOCK: {toReturn = "NumLk"; break;}
+
+            case MULTIPLY:
+            case ASTERISK: {toReturn = "*"; break;}
+            case ADD:
+            case PLUS: {toReturn = "+"; break;}
+            case SUBTRACT:
+            case MINUS: {toReturn = "-"; break;}
+            case DIVIDE:
+            case SLASH: {toReturn = "/"; break;}
+            case DECIMAL:
+            case PERIOD: {toReturn = "."; break;}
+            case COMMA: {toReturn = ","; break;}
+            case SEMICOLON: {toReturn = ";"; break;}
+            case COLON: {toReturn = ":"; break;}
+            case EQUALS: {toReturn = "="; break;}
+            case LESS: {toReturn = "<"; break;}
+            case GREATER: {toReturn = ">"; break;}
+            case BACK_QUOTE: {toReturn = "`"; break;}
+            case QUOTE: {toReturn = "'"; break;}
+            case QUOTEDBL: {toReturn = "\""; break;}
+            case AMPERSAND: {toReturn = "&"; break;}
+            case BRACELEFT: {toReturn = "{"; break;}
+            case BRACERIGHT: {toReturn = "}"; break;}
+            case LEFT_PARENTHESIS: {toReturn = "("; break;}
+            case RIGHT_PARENTHESIS: {toReturn = ")"; break;}
+            case AT: {toReturn = "@"; break;}
+            case CIRCUMFLEX: {toReturn = "^"; break;}
+            case DOLLAR: {toReturn = "$"; break;}
+            case EURO_SIGN: {toReturn = "€"; break;}
+            case EXCLAMATION_MARK: {toReturn = "!"; break;}
+            case NUMBER_SIGN: {toReturn = "#"; break;}
+            case UNDERSCORE: {toReturn = "_"; break;}
+            default: {
+                toReturn = code.getName();
+                if (toReturn.equals("Undefined"))toReturn = "?";
+                if (toReturn.length()>4) toReturn = toReturn.substring(0,4);
+            }
+        }
+        return toReturn;
     }
 }

@@ -27,7 +27,7 @@
             <Label text="Join a Game" />
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
                 <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" vgap="5.0">
                     <columnConstraints>

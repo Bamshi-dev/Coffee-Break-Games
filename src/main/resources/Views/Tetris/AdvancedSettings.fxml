@@ -48,7 +48,7 @@
             <Label text="Advanced Settings" />
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
          <VBox alignment="CENTER" maxHeight="450.0" maxWidth="-Infinity" styleClass="box">
             <children>
                <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="scroller">

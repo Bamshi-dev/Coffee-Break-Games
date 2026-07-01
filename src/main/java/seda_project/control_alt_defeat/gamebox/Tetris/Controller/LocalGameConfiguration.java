@@ -72,7 +72,8 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         if (advancedSettings.isVertical()){
             address = "/Views/Tetris/GameScreen.fxml";
         }
-        else { address = "/Views/Tetris/GameScreenHorizontal.fxml";
+        else {
+            address = "/Views/Tetris/GameScreenHorizontal.fxml";
         }
 
         if (c.checkNameLength(player1Name,1,statusLabel) && c.checkNameLength(player2Name,2,statusLabel)){

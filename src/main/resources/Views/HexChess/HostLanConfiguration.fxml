@@ -32,7 +32,7 @@
             <Label text="Host Configuration" />
             </VBox>
 
-        <StackPane prefHeight="495.0">
+        <StackPane prefHeight="495.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0" styleClass="box">
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" text="Your Name:" />

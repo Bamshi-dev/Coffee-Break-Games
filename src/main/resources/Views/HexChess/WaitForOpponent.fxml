@@ -28,7 +28,7 @@
             <Label text="Lobby" />
             </VBox>
 
-        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
                 <GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" vgap="5.0">
                     <columnConstraints>

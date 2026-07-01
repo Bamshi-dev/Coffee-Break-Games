@@ -48,7 +48,6 @@ public class AdvancedSettings extends Controller implements Initializable {
     protected void onSaveAction(){
         sC.play("button");
         advancedSettings.saveIntSettings(itemSpawnRate.getValue(), itemDespawnTime.getValue(),bombChance.getValue());
-
         advancedSettings.setSwapBoards(swapBoards.isSelected());
         advancedSettings.setSwapBlocks(swapBlocks.isSelected());
         advancedSettings.setPortals(portals.isSelected());
@@ -61,7 +60,14 @@ public class AdvancedSettings extends Controller implements Initializable {
         advancedSettings.setColumnBomb(columnBomb.isSelected());
         advancedSettings.setBoardChange(toggleSwitch.switchOnProperty().getValue());
         advancedSettings.setVertical(((RadioButton)Layout.getSelectedToggle()).getText().equals("Vertical"));
-        Toast.makeText(root,"Settings saved!");
+        if (bombChance.getValue() >100){
+            Toast.makeText(root, "Settings saved!\nBomb Chance set to 100%");
+            bombChance.setText(String.valueOf(100));
+            advancedSettings.saveIntSettings(itemSpawnRate.getValue(), itemDespawnTime.getValue(),100);
+        }
+        else {
+            Toast.makeText(root, "Settings saved!");
+        }
     }
 
     @Override

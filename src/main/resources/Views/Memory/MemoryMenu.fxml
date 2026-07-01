@@ -28,7 +28,7 @@
                 </Label>
             </VBox>
 
-        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="495.0">
+        <StackPane prefHeight="495.0" VBox.vgrow="ALWAYS">
          <VBox maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
             <children>
                    <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="Local Game">

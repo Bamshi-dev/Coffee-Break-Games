@@ -1,5 +1,6 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -50,28 +51,25 @@ public class LocalGameConfiguration extends Controller implements Initializable 
             } else {
                 controller.setBotMode(false, null);
             }
-
-            if (c.checkFlip(player1Name,player2Name)){
-                controller.flip();
-            }
-            if (c.checkRainbow(player1Name,player2Name)){
-                controller.rainbow();
-            }
             if (player1Name.equals("Duck")) {
                 controller.p1Duck();
             }
-            if (player2Name.equals("Duck")){
+            if (player2Name.equals("Duck")) {
                 controller.p2Duck();
+            }
+            if (c.checkFlip(player1Name, player2Name)) {
+                controller.flip();
+            }
+            if (c.checkRainbow(player1Name, player2Name)) {
+                controller.rainbow();
             }
             if (boardState == null) {
                 controller.init(header.getScene());
-            }
-            else{
+            } else {
                 controller.init(boardState, header.getScene());
             }
             controller.setNames(player1Name, player2Name);
             controller.setPoints(0, 0);
-
             PlayerColor startingColor = gameEngine.getActivePlayer();
             if (startingColor == PlayerColor.WHITE && player1Name.equalsIgnoreCase("Bot")) {
                 controller.activePlayer(PlayerColor.WHITE);

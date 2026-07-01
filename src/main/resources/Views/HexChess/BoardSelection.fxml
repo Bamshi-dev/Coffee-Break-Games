@@ -32,7 +32,7 @@
             <Label text="Board Selection" />
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box" StackPane.alignment="CENTER">
                 <StackPane.margin>
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

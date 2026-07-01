@@ -49,6 +49,9 @@ public class GameScreen extends Controller {
     private Label sboardP1, sboardP2, sboardScoreP1, sboardScoreP2, activePlayerLabel;
 
     @FXML
+    private GridPane activePlayerGrid;
+
+    @FXML
     private StackPane gamePane;
 
     @FXML
@@ -72,6 +75,8 @@ public class GameScreen extends Controller {
         this.config = new GameConfig(tupleSize, deckSize, player1, player2);
         this.setup  = Decks.prepare(config);
 
+        highlightActivePlayer(setup.firstPlayer());
+
         createBoard();
     }
 
@@ -85,6 +90,8 @@ public class GameScreen extends Controller {
         this.myName    = s.myName;
         this.config    = s.config;
         this.setup     = s.setup;
+
+        highlightActivePlayer(setup.firstPlayer());
 
         createBoard();
     }
@@ -107,9 +114,9 @@ public class GameScreen extends Controller {
             row = tmp;
         }
 
-        int height = 340;
+        double height = 361;
 
-        double size = (double) height /row;
+        double size = height /row;
 
         playingGrid.setPrefSize(size*col, size*row);
         playingGrid.setMaxSize(size*col, size*row);
@@ -151,6 +158,7 @@ public class GameScreen extends Controller {
                                 && !engine.getActivePlayer().equals(myName)) {
                             return;
                         }
+                        cell.setDisable(true);
                         flipmotion(cell, cardId);
                     });
                     playingGrid.add(cell, j + helper, i);
@@ -207,7 +215,10 @@ public class GameScreen extends Controller {
 
             @Override
             public void onTurnChanged(String newActivePlayer, GameSnapshot snapshot) {
-                Platform.runLater(() -> setActivePlayerLabel(newActivePlayer));
+                Platform.runLater(() -> {
+                    setActivePlayerLabel(newActivePlayer);
+                    highlightActivePlayer(newActivePlayer);
+                });
             }
         });
 
@@ -228,6 +239,17 @@ public class GameScreen extends Controller {
         }
 
         setActivePlayerLabel(engine.getActivePlayer());
+    }
+
+    private void highlightActivePlayer(String newActivePlayer) {
+        if (newActivePlayer.equals(sboardP1.getText())){
+            activePlayerGrid.getStyleClass().add("ready");
+            activePlayerGrid.getStyleClass().remove("error");
+        }
+        else {
+            activePlayerGrid.getStyleClass().add("error");
+            activePlayerGrid.getStyleClass().remove("ready");
+        }
     }
 
     public void turnCardsBack() {

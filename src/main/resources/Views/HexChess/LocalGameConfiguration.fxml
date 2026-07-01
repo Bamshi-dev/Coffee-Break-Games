@@ -33,7 +33,7 @@
             <Label text="Local Game Configuration" />
             </VBox>
 
-        <StackPane prefHeight="475.0">
+        <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
             <Label styleClass="normalText" text="Player 1">
                <padding>
@@ -42,7 +42,7 @@
             </Label>
                 <HBox alignment="CENTER_LEFT">
                     <Label text="Is Bot: " />
-                    <ToggleSwitch fx:id="isP1Bot" maxHeight="-Infinity" maxWidth="-Infinity" />
+                    <ToggleSwitch fx:id="isP1Bot" maxWidth="-Infinity" />
                 </HBox>
                 <HBox alignment="CENTER_LEFT">
                     <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Player 1 Name: " />

@@ -1,11 +1,18 @@
 package seda_project.control_alt_defeat.gamebox.Tetris.Engine;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import seda_project.control_alt_defeat.gamebox.Configuration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TetrisSettings {
@@ -38,35 +45,41 @@ public class TetrisSettings {
     }
 
     public KeyCode change(int player, int position) {
-        Stage inputStage = new Stage();
-        inputStage.setTitle("Press a key...");
+        try {
+            Stage inputStage = new Stage();
+            inputStage.initStyle(StageStyle.TRANSPARENT);
+            FXMLLoader loader = new FXMLLoader(Configuration.class.getResource("/Views/Tetris/KeyInput.fxml"));
+            Parent root = loader.load();
+            Scene s = new Scene(root);
+            s.setFill(Color.TRANSPARENT);
+            inputStage.initModality(Modality.APPLICATION_MODAL);
+            KeyCode[] result = new KeyCode[1];
 
-        Label label = new Label("Press any unassigned key to assign it to Player " + (player + 1));
-        StackPane root = new StackPane(label);
-        Scene scene = new Scene(root, 300, 150);
-        KeyCode[] result = new KeyCode[1];
-
-        scene.setOnKeyPressed(e -> {
-            KeyCode key = e.getCode();
-            if (!player1Keys.contains(key) && !player2Keys.contains(key)) {
-                result[0] = key;
-                if (position < 4) {
-                    switch (player) {
-                        case 0:
-                            player1Keys.set(position, key);
-                            break;
-                        case 1:
-                            player2Keys.set(position, key);
-                            break;
+            s.setOnKeyPressed(e -> {
+                KeyCode key = e.getCode();
+                if (!player1Keys.contains(key) && !player2Keys.contains(key)) {
+                    result[0] = key;
+                    if (position < 4) {
+                        switch (player) {
+                            case 0:
+                                player1Keys.set(position, key);
+                                break;
+                            case 1:
+                                player2Keys.set(position, key);
+                                break;
+                        }
                     }
+                    inputStage.close();
                 }
-                inputStage.close();
-            }
-        });
+            });
 
-        inputStage.setScene(scene);
-        inputStage.showAndWait();
-        return result[0];
+            inputStage.setScene(s);
+            inputStage.showAndWait();
+            return result[0];
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public ArrayList<KeyCode> getPlayer1Keys() { return player1Keys; }

@@ -44,7 +44,7 @@
             <Label text="Host Configuration" />
             </VBox>
 
-        <StackPane prefHeight="516.0" prefWidth="808.0">
+        <StackPane prefHeight="516.0" prefWidth="808.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
                 <GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" vgap="5.0">
                     <columnConstraints>

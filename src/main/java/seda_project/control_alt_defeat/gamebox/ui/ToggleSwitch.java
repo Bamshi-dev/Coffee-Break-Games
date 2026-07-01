@@ -33,6 +33,7 @@ public class ToggleSwitch extends HBox {
     private void setStyle() {
         //Default Width
         setWidth(80);
+        setHeight(10);
         label.setAlignment(Pos.CENTER);
         setStyle("-fx-background-color: grey; -fx-text-fill:black; -fx-background-radius: 5;");
         setAlignment(Pos.CENTER_LEFT);

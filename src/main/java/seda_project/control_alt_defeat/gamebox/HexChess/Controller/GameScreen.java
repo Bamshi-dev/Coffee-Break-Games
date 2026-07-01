@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -34,6 +35,7 @@ import seda_project.control_alt_defeat.gamebox.ui.Toast;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class GameScreen extends Controller implements Initializable, ChessEventListener {
     PieceSettings settings = PieceSettings.getInstance();
@@ -45,10 +47,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     private PlayerColor botColor = null;
     private boolean disconnected = false;
     private Scene thisScene;
-    
+    private List<ImageView>p1Views;
+    private List<ImageView>p2Views;
+
     @FXML
     private VBox header, p1, p2;
-
 
     @FXML
     private StackPane stackPane;
@@ -62,14 +65,19 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     private ImageView p2PawnImg, p2RookImg, p2KnightImg, p2BishopImg, p2QueenImg, p2KingImg;
 
     @FXML
-    private Label p1Score, p2Score, p1NameLabel, p2NameLabel;
+    private Label p1Score, p2Score, p1NameLabel, p2NameLabel,activePlayerLabel;
 
     @FXML
     private Button p1Resign, p1Draw, p2Resign, p2Draw;
 
+    @FXML
+    private HBox activePlayerBox;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        p1Views = Stream.of(p1PawnImg,p1RookImg,p1KnightImg,p1BishopImg,p1QueenImg,p1KingImg).toList();
+        p2Views = Stream.of(p2PawnImg,p2RookImg,p2KnightImg,p2BishopImg,p2QueenImg,p2KingImg).toList();
         applyTileColor();
         applyPiecePreviewImages();
     }
@@ -77,7 +85,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     public void setNames(String p1Name, String p2Name){
         p1NameLabel.setText(p1Name);
         p2NameLabel.setText(p2Name);
-
+        highlightActivePlayer(activePlayer);
     }
 
     public void setPoints (double p1Points, double p2Points){
@@ -91,6 +99,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         this.gameEngine.addListener(this);
         this.gameEngine.setupInitialState();
         activePlayer = gameEngine.getActivePlayer();
+
+        highlightActivePlayer(activePlayer);
 
         if (isBotMode) {
             Button resign = botColor == PlayerColor.WHITE ? p1Resign : p2Resign;
@@ -110,6 +120,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         this.gameEngine.addListener(this);
         this.gameEngine.setupInitalState(boardState);
         activePlayer = gameEngine.getActivePlayer();
+        highlightActivePlayer(activePlayer);
     }
 
     @Override
@@ -513,6 +524,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     @Override
     public void activePlayer(PlayerColor currentTurn) {
         this.activePlayer = currentTurn;
+        highlightActivePlayer(activePlayer);
 
         if (isBotMode && currentTurn == botColor) {
             String currentFen = gameEngine.getBoard().createNotation(currentTurn);
@@ -802,8 +814,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
 
     private Image getPieceImage(Piece piece) {
         List<ImageView> pieces = (piece.getPlayer() == PlayerColor.WHITE)
-                ? settings.getP1Pieces()
-                : settings.getP2Pieces();
+                ? p1Views
+                : p2Views;
 
         int index = switch(piece.getType()) {
             case PAWN -> 0;
@@ -814,5 +826,18 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
             case KING -> 5;
         };
         return pieces.get(index).getImage();
+    }
+
+    private void highlightActivePlayer(PlayerColor playerColor) {
+        if (activePlayer == PlayerColor.WHITE) {
+            activePlayerLabel.setText(p1NameLabel.getText());
+            activePlayerBox.getStyleClass().add("error");
+            activePlayerBox.getStyleClass().remove("ready");
+        }
+        else {
+            activePlayerLabel.setText(p2NameLabel.getText());
+            activePlayerBox.getStyleClass().add("ready");
+            activePlayerBox.getStyleClass().remove("error");
+        }
     }
 }

@@ -1079,12 +1079,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     public String getShortKeyName(KeyCode code) {
         String toReturn = "";
         switch (code) {
-            case UP: { toReturn = "↑"; break;}
-            case DOWN: {toReturn = "↓"; break;}
-            case LEFT:{toReturn = "←"; break;}
-            case RIGHT:{toReturn = "→"; break;}
+            case UP: { toReturn = "\uD83E\uDC09"; break;}
+            case DOWN: {toReturn = "\uD83E\uDC0B"; break;}
+            case LEFT:{toReturn = "\uD83E\uDC08"; break;}
+            case RIGHT:{toReturn = "\uD83E\uDC0A"; break;}
 
-            // Numpad Keys
             case NUMPAD0:{toReturn = "N0"; break;}
             case NUMPAD1:{toReturn = "N1"; break;}
             case NUMPAD2:{toReturn = "N2"; break;}
@@ -1095,10 +1094,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
             case NUMPAD7:{toReturn = "N7"; break;}
             case NUMPAD8:{toReturn = "N8"; break;}
             case NUMPAD9:{toReturn = "N9"; break;}
-            case KP_UP: {toReturn =  "N↑"; break;}
-            case KP_DOWN: {toReturn =  "N↓"; break;}
-            case KP_LEFT: {toReturn =  "N←"; break;}
-            case KP_RIGHT: {toReturn =  "N→"; break;}
+            case KP_UP: {toReturn =  "N\uD83E\uDC09"; break;}
+            case KP_DOWN: {toReturn =  "N\uD83E\uDC0B"; break;}
+            case KP_LEFT: {toReturn =  "N\uD83E\uDC08"; break;}
+            case KP_RIGHT: {toReturn =  "N\uD83E\uDC0A"; break;}
 
             case DIGIT0: {toReturn = "0"; break;}
             case DIGIT1: {toReturn = "1"; break;}
@@ -1111,11 +1110,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
             case DIGIT8: {toReturn = "8"; break;}
             case DIGIT9: {toReturn = "9"; break;}
 
-            case ENTER: {toReturn = "↵"; break;}
-            case BACK_SPACE: {toReturn = "⌫"; break;}
-            case TAB: {toReturn = "⇥"; break;}
+            case ENTER: {toReturn = "Enter"; break;}
+            case BACK_SPACE: {toReturn = "\uD83E\uDCA0"; break;}
+            case TAB: {toReturn = "Tab"; break;}
             case ESCAPE: {toReturn = "Esc"; break;}
-            case SHIFT: {toReturn = "⇧"; break;}
+            case SHIFT: {toReturn = "Shift"; break;}
             case CONTROL: {toReturn = "Ctrl"; break;}
             case ALT: {toReturn = "Alt"; break;}
             case ALT_GRAPH: {toReturn = "AltG"; break;}
@@ -1126,7 +1125,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
             case CAPS: {toReturn = "Caps"; break;}
             case INSERT: {toReturn = "Ins"; break;}
             case DELETE: {toReturn = "Del"; break;}
-            case PAUSE: {toReturn = "Paus"; break;}
+            case PAUSE: {toReturn = "Pause"; break;}
             case PRINTSCREEN: {toReturn = "PrtSc"; break;}
             case SCROLL_LOCK: {toReturn = "ScrLk"; break;}
             case NUM_LOCK: {toReturn = "NumLk"; break;}

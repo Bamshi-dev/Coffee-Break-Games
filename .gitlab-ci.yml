@@ -13,21 +13,44 @@ cache:
     - .m2/repository
     - .maven-dist/
 
-build:
+build-linux:
   stage: build
+  tags:
+    - linux
   image: maven:3.9.12-eclipse-temurin-25
   script:
     - mvn clean javafx:jlink
+    - mv target/gamebox target/gamebox-linux
   artifacts:
     paths:
-      - target/gamebox
+      - target/gamebox-linux
     reports:
       junit: target/surefire-reports/TEST-*.xml
     expire_in: 30 days
 
+build-windows:
+  stage: build
+  tags:
+    - windows
+  script:
+    - mvn clean javafx:jlink
+    - Rename-Item target\gamebox gamebox-windows
+    - Move-Item gamebox-windows target\
+  artifacts:
+    paths:
+      - target/gamebox-windows
+    expire_in: 30 days
+
 docs:
   stage: docs
+  tags:
+    - linux
   image: texlive/texlive:latest
+  needs:
+    - job: build-linux
+      artifacts: true
+    - job: build-windows
+      artifacts: true
   script:
     - command -v curl >/dev/null || (apt-get update && apt-get install -y curl)
     - |

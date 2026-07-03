@@ -10,6 +10,6 @@ public class Launcher {
 
     static void main(String[] args) {
         logger.debug("Starting application");
-        Application.launch(GameBox.class, args);
+        Application.launch(BetterCallMain.class, args);
     }
 }

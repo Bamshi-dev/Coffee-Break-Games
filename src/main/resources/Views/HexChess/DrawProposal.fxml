@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
+<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="playground" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.DrawProposal">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="playground" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.DrawProposal">
 
     <stylesheets>
         <URL value="@../../css/stylesheets/fontstyle.css" />
@@ -13,26 +15,17 @@
         <URL value="@../../css/stylesheets/MenuStyle.css" />
         <URL value="@../../css/stylesheets/HexChessMenu.css" />
     </stylesheets>
-
-    <VBox alignment="CENTER" fillWidth="false" layoutX="2.0" maxHeight="-Infinity" maxWidth="-Infinity">
-        <StackPane fx:id="stackpane" maxHeight="-Infinity" maxWidth="-Infinity">
-            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0" styleClass="box" StackPane.alignment="CENTER">
-                <StackPane.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </StackPane.margin>
-                <Label styleClass="normalText" text="Do you accept the draw?" wrapText="true">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin></Label>
-                <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
-                    <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <Button mnemonicParsing="false" onAction="#onAcceptAction" text="Yes" />
-                    </StackPane>
-                    <StackPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <Button mnemonicParsing="false" onAction="#onDeclineAction" text="No" />
-                    </StackPane>
-                </HBox>
-            </VBox>
-        </StackPane>
-    </VBox>
+   <HexVBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
+      <children>
+             <Label styleClass="normalText" text="Do you accept the draw?" wrapText="true" />
+             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
+                 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
+               <HexButton onAction="#onAcceptAction" text="Yes" />
+                 </StackPane>
+                 <StackPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
+               <HexButton onAction="#onDeclineAction" text="No" />
+                 </StackPane>
+             </HBox>
+      </children>
+   </HexVBox>
 </StackPane>

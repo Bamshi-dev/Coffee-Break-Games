@@ -60,10 +60,15 @@
 }
 
 .button {
-    -fx-background-color: linear-gradient(to bottom, -theme-button-top, -theme-button-bottom);
-    -fx-text-fill: -theme-text-button;
-    -fx-border-radius: 4px 0px 4px 0px;
     -fx-cursor: hand;
+
+    -fx-padding: 5px 20px 5px 20px;
+    -fx-border-width: 2px;
+
+    -fx-background-color: -theme-palette-bg ;
+    -fx-text-fill: -theme-text-primary;
+    -fx-border-color: linear-gradient(from 0.0% 11.0% to 16.0% 88.0%, -theme-button-top 0.0%, -theme-button-bottom 100.0%);
+
     -fx-effect: dropshadow(gaussian, -theme-button-glow, 8, 0, 0, 2);
 }
 

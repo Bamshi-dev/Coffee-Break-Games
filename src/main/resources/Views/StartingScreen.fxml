@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
+<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.ui.StartingScreenController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.ui.StartingScreenController">
     <stylesheets>
         <URL value="@../css/stylesheets/fontstyle.css" />
         <URL value="@../css/stylesheets/MainMenu.css" />
@@ -15,25 +18,22 @@
     </stylesheets>
     <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
         <fx:include source="TopBar.fxml" />
-            <VBox fx:id="header" alignment="TOP_CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
-                <padding>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                </padding>
-                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="headerText" text="COFFEE BREAK GAMES" textAlignment="CENTER" textOverrun="CLIP">
-                    <font>
-                        <Font name="Arial Bold" size="24.0" />
-                    </font>
-                </Label>
-                <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" text="Main Menu">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Label>
-            </VBox>
+      <HexVBox fx:id="header" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
+         <children>
+                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="headerText" text="Main Menu" textAlignment="CENTER" textOverrun="CLIP">
+                       <font>
+                           <Font name="Arial Bold" size="24.0" />
+                       </font>
+                   </Label>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </HexVBox>
 
 
-        <StackPane maxHeight="1.7976931348623157E308" prefHeight="495.0" VBox.vgrow="ALWAYS">
-         <VBox maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
+        <StackPane maxHeight="1.7976931348623157E308" prefHeight="485.0" VBox.vgrow="ALWAYS">
+         <HexVBox maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
             <children>
                    <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" text="Memory">
                        <font>
@@ -43,7 +43,7 @@
                <VBox>
                   <children>
                          <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                             <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onMemoryAction" styleClass="normalText" text="Play Memory" />
+                        <HexButton onAction="#onMemoryAction" text="Play Memory" />
                          </StackPane>
                   </children>
                   <padding>
@@ -58,7 +58,7 @@
                <VBox>
                   <children>
                          <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                             <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onTetrisAction" styleClass="text" text="Play Tetris" />
+                        <HexButton onAction="#onTetrisAction" text="Play Tetris" />
                          </StackPane>
                   </children>
                   <padding>
@@ -69,7 +69,7 @@
                <VBox>
                   <children>
                          <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                             <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onHexChessAction" styleClass="normalText" text="Play Hex Chess" />
+                        <HexButton onAction="#onHexChessAction" text="Play Hex Chess" />
                          </StackPane>
                   </children>
                   <padding>
@@ -79,7 +79,7 @@
                <VBox>
                   <children>
                          <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                             <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onExitAction" styleClass="normalText" text="Exit" />
+                        <HexButton onAction="#onExitAction" text="Exit" />
                          </StackPane>
                   </children>
                   <padding>
@@ -87,10 +87,7 @@
                   </padding>
                </VBox>
             </children>
-            <padding>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-         </VBox>
+         </HexVBox>
         </StackPane>
     </VBox>
 </StackPane>

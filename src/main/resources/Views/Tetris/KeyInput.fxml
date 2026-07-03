@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
+<?import java.net.URL?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="playground" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.DrawProposal">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" styleClass="playground" xmlns="http://javafx.com/javafx/17.0.12"
+           fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.DrawProposal">
 
     <stylesheets>
-        <URL value="@../../css/stylesheets/fontstyle.css" />
-        <URL value="@../../css/stylesheets/MainTheme.css" />
-        <URL value="@../../css/stylesheets/MenuStyle.css" />
-        <URL value="@../../css/stylesheets/HexChessMenu.css" />
+        <URL value="@../../css/stylesheets/fontstyle.css"/>
+        <URL value="@../../css/stylesheets/MainTheme.css"/>
+        <URL value="@../../css/stylesheets/MenuStyle.css"/>
+        <URL value="@../../css/stylesheets/HexChessMenu.css"/>
     </stylesheets>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="116.0" prefWidth="322.0" spacing="10.0" styleClass="box" StackPane.alignment="CENTER">
-          <StackPane.margin>
-              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-          </StackPane.margin>
-          <Label styleClass="normalText" text="Press any unassigned key to assign it!" textAlignment="CENTER" wrapText="true">
-              <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-              </VBox.margin>
-      </Label>
-      </VBox>
+    <HexVBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="116.0" prefWidth="322.0"
+             spacing="10.0" styleClass="box" StackPane.alignment="CENTER">
+        <StackPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </StackPane.margin>
+        <Label styleClass="normalText" text="Press any unassigned key to assign it!" textAlignment="CENTER"
+               wrapText="true">
+            <VBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </VBox.margin>
+        </Label>
+    </HexVBox>
 </StackPane>

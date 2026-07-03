@@ -1,10 +1,14 @@
 package seda_project.control_alt_defeat.gamebox.ui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
-import seda_project.control_alt_defeat.gamebox.GameBox;
+import seda_project.control_alt_defeat.gamebox.BetterCallMain;
 
-public class StartingScreenController extends Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class StartingScreenController extends Controller implements Initializable {
 
     @FXML
     private VBox header;
@@ -12,7 +16,7 @@ public class StartingScreenController extends Controller {
     @FXML
     public void onExitAction() {
         sC.play("button");
-        GameBox.cleanExit();
+        BetterCallMain.cleanExit();
     }
     @FXML
     public void onMemoryAction() {
@@ -29,5 +33,10 @@ public class StartingScreenController extends Controller {
     protected void onHexChessAction(){
         sC.play("button");
         c.changeScene("/Views/HexChess/ChessMenu.fxml", header, vS);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url,resourceBundle);
     }
 }

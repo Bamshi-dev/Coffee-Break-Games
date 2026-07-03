@@ -21,11 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seda_project.control_alt_defeat.gamebox.ui.ResizeHelper;
 
-public class GameBox extends Application {
+public class BetterCallMain extends Application {
     @FXML
     VBox header;
 
-    private static final Logger logger = LoggerFactory.getLogger(GameBox.class);
+    private static final Logger logger = LoggerFactory.getLogger(BetterCallMain.class);
     private static ViewStack vS =  ViewStack.getInstance();
     private SoundController sC = SoundController.getInstance();
     Configuration c = Configuration.getInstance();
@@ -45,9 +45,9 @@ public class GameBox extends Application {
         stage.show();
         stage.setMinHeight(600);
         stage.setMinWidth(800);
-        stage.getIcons().add(new Image(GameBox.class.getResource("/Images/others/Application_Icon.png").toExternalForm()));
+        stage.getIcons().add(new Image(BetterCallMain.class.getResource("/Images/others/Application_Icon.png").toExternalForm()));
         String address = "/Views/StartingScreen.fxml";
-        FXMLLoader loader = new FXMLLoader(GameBox.class.getResource(address));
+        FXMLLoader loader = new FXMLLoader(BetterCallMain.class.getResource(address));
         vS.addFxmlLoaders(address);
         sC.playLooping("lobby_background",.2);
         var mainMenuScene = new Scene(loader.load());

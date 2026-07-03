@@ -30,7 +30,7 @@ public class ViewStack {
         this.fxmlLoaders.add(fxmlLoaders);
     }
 
-    public void popFxmlLoader(){
+    public void popFxmlLoader() {
         this.fxmlLoaders.pop();
     }
 

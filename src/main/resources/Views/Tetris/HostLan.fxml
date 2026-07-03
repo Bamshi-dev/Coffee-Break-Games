@@ -4,12 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
-<?import seda_project.control_alt_defeat.gamebox.ui.ToggleSwitch?>
-<?import java.lang.String?>
+<?import seda_project.control_alt_defeat.gamebox.ui.*?>
 <?import java.net.URL?>
 
-<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0"
            minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/26"
            fx:controller="seda_project.control_alt_defeat.gamebox.Tetris.Controller.HostLan">
@@ -81,19 +78,7 @@
                         <Insets top="10.0"/>
                     </VBox.margin>
                 </StackPane>
-                <Label fx:id="statusLabel" alignment="CENTER" maxWidth="300.0" textAlignment="CENTER" visible="false"
-                       wrapText="true">
-                    <styleClass>
-                        <String fx:value="error"/>
-                        <String fx:value="box"/>
-                    </styleClass>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                    </padding>
-                    <VBox.margin>
-                        <Insets top="10.0"/>
-                    </VBox.margin>
-                </Label>
+                <HexLabel fx:id="statusLabel" maxWidth="300.0" styleClass="error" visible="false" wrapText="true"/>
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0"/>

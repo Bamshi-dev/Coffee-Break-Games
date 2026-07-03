@@ -15,7 +15,7 @@ public class HexHBox extends HBox {
     private void initShape() {
         hexShape = new Polygon();
         setShape(hexShape);
-        setPadding(new Insets(10,15,10,15));
+        setPadding(new Insets(10, 15, 10, 15));
     }
 
     @Override
@@ -26,15 +26,15 @@ public class HexHBox extends HBox {
         if (w > 0 && h > 0) {
             drawHexagon(w, h);
         }
-        setPadding(new Insets(10,getWidth()*.1,10,getWidth()*.1));
+        setPadding(new Insets(10, getWidth() * .1, 10, getWidth() * .1));
     }
 
     private void drawHexagon(double width, double height) {
         hexShape.getPoints().setAll(
-                0.0 - width*.1, height * 0.5,
+                0.0 - width * .1, height * 0.5,
                 0.0, 0.0,
                 width, 0.0,
-                width + width*.1, height * 0.5,
+                width + width * .1, height * 0.5,
                 width, height,
                 0.0, height
         );

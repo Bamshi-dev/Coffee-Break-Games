@@ -34,10 +34,10 @@ public class HexButton extends Button {
 
     private void drawHexagon(double width, double height) {
         hexShape.getPoints().setAll(
-                0.0-20, height * 0.5,
+                0.0 - 20, height * 0.5,
                 0.0, 0.0,
                 width, 0.0,
-                width+20, height * 0.5,
+                width + 20, height * 0.5,
                 width, height,
                 0.0, height
         );

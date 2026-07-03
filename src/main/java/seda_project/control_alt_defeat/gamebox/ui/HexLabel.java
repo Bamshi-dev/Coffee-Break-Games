@@ -21,7 +21,7 @@ public class HexLabel extends Label {
     private void initShape() {
         hexShape = new Polygon();
         setShape(hexShape);
-        setPadding(new Insets(0,15,0,15));
+        setPadding(new Insets(0, 15, 0, 15));
     }
 
     @Override
@@ -36,10 +36,10 @@ public class HexLabel extends Label {
 
     private void drawHexagon(double width, double height) {
         hexShape.getPoints().setAll(
-                0.0-20, height * 0.5,
+                0.0 - 20, height * 0.5,
                 0.0, 0.0,
                 width, 0.0,
-                width+20, height * 0.5,
+                width + 20, height * 0.5,
                 width, height,
                 0.0, height
         );

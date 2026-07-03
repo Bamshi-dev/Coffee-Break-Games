@@ -8,11 +8,11 @@ public class KeyCapController {
     @FXML
     private Label KeyCapText;
 
-    public void setText(String s){
-        KeyCapText.setText(s);
+    public String getText() {
+        return KeyCapText.getText();
     }
 
-    public String getText(){
-        return KeyCapText.getText();
+    public void setText(String s) {
+        KeyCapText.setText(s);
     }
 }

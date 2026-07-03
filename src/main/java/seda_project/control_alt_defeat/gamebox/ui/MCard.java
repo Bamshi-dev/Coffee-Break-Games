@@ -14,7 +14,7 @@ public class MCard extends Button {
     Background cardBack;
     Background cardFront;
 
-    public MCard(int x, int y,int id) {
+    public MCard(int x, int y, int id) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -42,34 +42,34 @@ public class MCard extends Button {
         );
 
         String back = getClass().getResource("/Images/Memory/backface.png").toExternalForm();
-        String front = getClass().getResource("/Images/Memory/"+id+".png").toExternalForm();
-        cardBack = new Background(new BackgroundImage(new Image(back,true), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize));
-        cardFront = new Background(new BackgroundImage(new Image(front,true),  BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize));
+        String front = getClass().getResource("/Images/Memory/" + id + ".png").toExternalForm();
+        cardBack = new Background(new BackgroundImage(new Image(back, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize));
+        cardFront = new Background(new BackgroundImage(new Image(front, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize));
         this.setBackground(cardBack);
     }
 
-    public void setHeightProporties(double height, double width){
+    public void setHeightProporties(double height, double width) {
         this.heightProperty().add(height);
         this.widthProperty().add(width);
     }
 
-    public void faceDown(){
+    public void faceDown() {
         this.faceUp = false;
         this.setBackground(cardBack);
         this.setDisable(false);
     }
 
-    public int getid(){
+    public int getid() {
         return this.id;
+    }
+
+    public boolean getFaceUp() {
+        return this.faceUp;
     }
 
     public void setFaceUp(boolean b) {
         this.faceUp = b;
         this.setBackground(cardFront);
         this.setDisable(true);
-    }
-
-    public boolean getFaceUp(){
-        return this.faceUp;
     }
 }

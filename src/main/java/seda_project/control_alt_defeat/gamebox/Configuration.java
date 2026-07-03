@@ -26,58 +26,57 @@ public class Configuration {
     }
 
 
-    public void deckSize(int tupleSize, RadioButton smallGame, RadioButton mediumGame, RadioButton largeGame){
-        int max = (int) 45/tupleSize;
-        int stepsize = max/3;
-        System.out.println("tuple size: "+tupleSize);
-        System.out.println("max: "+max);
-        System.out.println("stepsize: "+stepsize);
-        if (max == 2){
+    public void deckSize(int tupleSize, RadioButton smallGame, RadioButton mediumGame, RadioButton largeGame) {
+        int max = 45 / tupleSize;
+        int stepsize = max / 3;
+        System.out.println("tuple size: " + tupleSize);
+        System.out.println("max: " + max);
+        System.out.println("stepsize: " + stepsize);
+        if (max == 2) {
             smallGame.setText(String.valueOf(tupleSize));
             mediumGame.setDisable(false);
-            mediumGame.setText(String.valueOf((max-stepsize)*tupleSize));
+            mediumGame.setText(String.valueOf((max - stepsize) * tupleSize));
             largeGame.setDisable(true);
             largeGame.setText("---");
-        }
-        else if (max == 1){
+        } else if (max == 1) {
             smallGame.setText(String.valueOf(tupleSize));
             mediumGame.setDisable(true);
             mediumGame.setText("---");
             largeGame.setDisable(true);
             largeGame.setText("---");
-        }
-        else {
-            largeGame.setText(String.valueOf(max*tupleSize));
+        } else {
+            largeGame.setText(String.valueOf(max * tupleSize));
             mediumGame.setDisable(false);
-            mediumGame.setText(String.valueOf((max-stepsize)*tupleSize));
+            mediumGame.setText(String.valueOf((max - stepsize) * tupleSize));
             largeGame.setDisable(false);
-            smallGame.setText(String.valueOf((max-2*stepsize)*tupleSize));
+            smallGame.setText(String.valueOf((max - 2 * stepsize) * tupleSize));
         }
     }
 
     public boolean checkNameLength(String name, int player, Label statusLabel) {
         int max = 16;
         int length = name.length();
-        if (length > max){
+        if (length > max) {
             statusLabel.setVisible(true);
-            statusLabel.setText("The name of player " + player +" may not be longer than "+max+" characters!");
+            statusLabel.setText("The name of player " + player + " may not be longer than " + max + " characters!");
             return false;
         }
         return true;
     }
-    public String checkNameInput(String name, int player){
-        if (name.equals("")){
+
+    public String checkNameInput(String name, int player) {
+        if (name.equals("")) {
             name = "Player " + player;
         }
         return name;
     }
 
-    public int ActivePlayer(){
+    public int ActivePlayer() {
         //TODO create function that either returns 1 or 2
         return 1;
     }
 
-    public Object changeScene(String address, VBox header, ViewStack vS){
+    public Object changeScene(String address, VBox header, ViewStack vS) {
         try {
             FXMLLoader loader = new FXMLLoader(Configuration.class.getResource(address));
             Parent root = loader.load();
@@ -96,10 +95,10 @@ public class Configuration {
                 stage.sizeToScene();
 
                 stage.setWidth(Math.max(width, stage.getWidth()));
-                stage.setHeight(Math.max(height,stage.getHeight()));
+                stage.setHeight(Math.max(height, stage.getHeight()));
             });
 
-            if (controller != null){
+            if (controller != null) {
                 return controller;
             }
         } catch (Exception e) {
@@ -131,40 +130,34 @@ public class Configuration {
 
 
     public boolean checkFlip(String player1Name, String player2Name) {
-        if (player1Name.equals("Upsidedown")){
+        if (player1Name.equals("Upsidedown")) {
             return true;
         }
-        if (player2Name.equals("Upsidedown")){
+        if (player2Name.equals("Upsidedown")) {
             return true;
         }
-        if (player1Name.equals("Dinnerbone")){
+        if (player1Name.equals("Dinnerbone")) {
             return true;
         }
-        if (player2Name.equals("Dinnerbone")){
+        if (player2Name.equals("Dinnerbone")) {
             return true;
         }
-        if (player1Name.equals("Grumm")){
+        if (player1Name.equals("Grumm")) {
             return true;
         }
-        if (player2Name.equals("Grumm")){
-            return true;
-        }
-        return false;
+        return player2Name.equals("Grumm");
     }
 
-    public boolean checkRainbow(String player1Name, String player2Name){
-        if (player1Name.equals("jeb_")){
+    public boolean checkRainbow(String player1Name, String player2Name) {
+        if (player1Name.equals("jeb_")) {
             return true;
         }
-        if (player2Name.equals("jeb_")){
+        if (player2Name.equals("jeb_")) {
             return true;
         }
-        if (player1Name.equals("Rainbow")){
+        if (player1Name.equals("Rainbow")) {
             return true;
         }
-        if (player2Name.equals("Rainbow")){
-            return true;
-        }
-        return false;
+        return player2Name.equals("Rainbow");
     }
 }

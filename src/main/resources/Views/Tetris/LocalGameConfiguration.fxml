@@ -4,9 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
-<?import java.lang.String?>
+<?import seda_project.control_alt_defeat.gamebox.ui.*?>
 <?import java.net.URL?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0"
@@ -100,18 +98,7 @@
                         <Insets top="10.0"/>
                     </VBox.margin>
                 </StackPane>
-                <Label fx:id="statusLabel" maxHeight="-Infinity" maxWidth="270.0" wrapText="true">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="10.0"/>
-                    </VBox.margin>
-                    <styleClass>
-                        <String fx:value="box"/>
-                        <String fx:value="error"/>
-                    </styleClass>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                    </padding>
-                </Label>
+                <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" wrapText="true"/>
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <VBox.margin>
                         <Insets bottom="10.0"/>

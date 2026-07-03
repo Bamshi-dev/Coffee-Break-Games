@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -10,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
+<?import seda_project.control_alt_defeat.gamebox.ui.HexLabel?>
 <?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
 <?import seda_project.control_alt_defeat.gamebox.ui.ToggleSwitch?>
 
@@ -66,15 +66,7 @@
                    <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                   <HexButton onAction="#onCustomBoardAction" text="Use Custom Board" />
                    </StackPane>
-                   <Label fx:id="statusLabel" maxHeight="-Infinity" maxWidth="270.0" visible="false" wrapText="true">
-                       <styleClass>
-                           <String fx:value="box" />
-                           <String fx:value="error" />
-                       </styleClass>
-                       <padding>
-                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                       </padding>
-                   </Label>
+               <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
                    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                        <StackPane styleClass="button-wrapper">
                      <HexButton onAction="#onBackAction" text="Back" />

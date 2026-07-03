@@ -22,14 +22,16 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class TopBarController implements Initializable {
-    private Image mute = new Image(Objects.requireNonNull(Controller.class.getResource("/Images/others/mute.png")).toExternalForm());
-    private Image unmute = new Image(Objects.requireNonNull(Controller.class.getResource("/Images/others/unmute.png")).toExternalForm());
-    private SoundController sC = SoundController.getInstance();
+    private final Image mute = new Image(Objects.requireNonNull(Controller.class.getResource("/Images/others/mute.png")).toExternalForm());
+    private final Image unmute = new Image(Objects.requireNonNull(Controller.class.getResource("/Images/others/unmute.png")).toExternalForm());
+    private final SoundController sC = SoundController.getInstance();
     private double offsetX;
     private double offsetY;
 
     @FXML
     private HBox topBar;
+    @FXML
+    private ImageView muteButton;
 
     @FXML
     protected void closeWindow() {
@@ -38,42 +40,37 @@ public class TopBarController implements Initializable {
     }
 
     @FXML
-    private ImageView muteButton;
-
-    @FXML
-    protected void changeMute(){
+    protected void changeMute() {
         boolean next = sC.getMute();
         sC.setMute(!next);
         setMuteImageView(!next);
         changeSound(next);
     }
 
-    public void initMute(){
+    public void initMute() {
         boolean current = sC.getMute();
         setMuteImageView(current);
     }
 
-    public void setMuteImageView(boolean toSet){
-        if (toSet){
+    public void setMuteImageView(boolean toSet) {
+        if (toSet) {
             muteButton.setImage(mute);
-        }
-        else{
+        } else {
             muteButton.setImage(unmute);
         }
     }
 
-    public void changeSound(boolean toSet){
-        if (toSet){
+    public void changeSound(boolean toSet) {
+        if (toSet) {
             sC.resume();
-        }
-        else {
+        } else {
             sC.pause();
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (muteButton!= null) {
+        if (muteButton != null) {
             initMute();
         }
     }
@@ -81,7 +78,7 @@ public class TopBarController implements Initializable {
     @FXML
     public void onDragMovement(MouseEvent mouseEvent) {
 
-        Stage stage= (Stage) topBar.getScene().getWindow();
+        Stage stage = (Stage) topBar.getScene().getWindow();
 
         stage.setX(mouseEvent.getScreenX() - offsetX);
         stage.setY(mouseEvent.getScreenY() - offsetY);
@@ -100,31 +97,30 @@ public class TopBarController implements Initializable {
     @FXML
     public void onEggAction(MouseEvent mouseEvent) {
 
-            StackPane root = (StackPane) topBar.getScene().getRoot();
-            Node existingEggPanel = root.lookup("#easterEggPanel");
+        StackPane root = (StackPane) topBar.getScene().getRoot();
+        Node existingEggPanel = root.lookup("#easterEggPanel");
 
-            if (existingEggPanel == null) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(TopBarController.class.getResource("/Views/EasterEggs.fxml"));
-                    VBox easterEggView = loader.load();
-                    easterEggView.setId("easterEggPanel");
-                    StackPane.setAlignment(easterEggView, Pos.CENTER_LEFT);
-                    root.getChildren().add(easterEggView);
-                    easterEggView.setTranslateX(-250.0);
+        if (existingEggPanel == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(TopBarController.class.getResource("/Views/EasterEggs.fxml"));
+                VBox easterEggView = loader.load();
+                easterEggView.setId("easterEggPanel");
+                StackPane.setAlignment(easterEggView, Pos.CENTER_LEFT);
+                root.getChildren().add(easterEggView);
+                easterEggView.setTranslateX(-250.0);
 
-                    TranslateTransition slideIn = new TranslateTransition(Duration.millis(500), easterEggView);
-                    slideIn.setToX(0);
-                    slideIn.play();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                TranslateTransition slideIn = new TranslateTransition(Duration.millis(500), easterEggView);
+                slideIn.setToX(0);
+                slideIn.play();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            else{
-                TranslateTransition slideout = new TranslateTransition(Duration.millis(500), existingEggPanel);
-                slideout.setToX(-250.0);
-                slideout.play();
-                slideout.setOnFinished(_ -> root.getChildren().remove(existingEggPanel));
-            }
+        } else {
+            TranslateTransition slideout = new TranslateTransition(Duration.millis(500), existingEggPanel);
+            slideout.setToX(-250.0);
+            slideout.play();
+            slideout.setOnFinished(_ -> root.getChildren().remove(existingEggPanel));
+        }
 
     }
 }

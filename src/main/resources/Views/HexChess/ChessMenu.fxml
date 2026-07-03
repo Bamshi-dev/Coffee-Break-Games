@@ -1,107 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import seda_project.control_alt_defeat.gamebox.ui.*?>
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
-
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.ChessMenu">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0"
+           minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/26"
+           fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.ChessMenu">
     <stylesheets>
-        <URL value="@../../css/stylesheets/fontstyle.css" />
-        <URL value="@../../css/stylesheets/MainTheme.css" />
-        <URL value="@../../css/stylesheets/MenuStyle.css" />
-        <URL value="@../../css/stylesheets/HexChessMenu.css" />
+        <URL value="@../../css/stylesheets/fontstyle.css"/>
+        <URL value="@../../css/stylesheets/MainTheme.css"/>
+        <URL value="@../../css/stylesheets/MenuStyle.css"/>
+        <URL value="@../../css/stylesheets/HexChessMenu.css"/>
     </stylesheets>
     <VBox alignment="TOP_CENTER">
-        <fx:include source="../TopBar.fxml" />
-      <HexVBox fx:id="header" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
-         <children>
-                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="headerText" text="Hex Chess" textAlignment="CENTER" textOverrun="CLIP">
-                       <font>
-                           <Font name="Arial Bold" size="24.0" />
-                       </font>
-                   </Label>
-                   <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" text="Main Menu">
-                       <font>
-                           <Font size="18.0" />
-                       </font>
-                   </Label>
-         </children>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </HexVBox>
+        <fx:include source="../TopBar.fxml"/>
+        <HexVBox fx:id="header" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
+            <VBox.margin>
+                <Insets top="10.0"/>
+            </VBox.margin>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+                   styleClass="headerText" text="Hex Chess" textAlignment="CENTER" textOverrun="CLIP">
+                <font>
+                    <Font name="Arial Bold" size="24.0"/>
+                </font>
+            </Label>
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText"
+                   text="Main Menu">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+            </Label>
+        </HexVBox>
 
         <StackPane prefHeight="475.0" VBox.vgrow="ALWAYS">
-         <HexVBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
-            <children>
-                   <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="Local Game">
-                       <font>
-                           <Font size="18.0" />
-                       </font>
-                   </Label>
-               <VBox maxHeight="-Infinity" maxWidth="-Infinity">
-                  <children>
-                         <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton fx:id="startLocalGameButton" onAction="#onLocalAction" text="Local Game" />
-                         </StackPane>
-                  </children>
-                  <padding>
-                     <Insets bottom="10.0" left="40.0" />
-                  </padding>
-               </VBox>
-                   <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="LAN Game">
-                       <font>
-                           <Font size="18.0" />
-                       </font>
-                   </Label>
-               <VBox maxHeight="-Infinity" maxWidth="-Infinity">
-                  <children>
-                         <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton fx:id="HostGameButton" onAction="#onHostAction" text="Host Game" />
-                         </StackPane>
-                         <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton fx:id="JoinGameButton" onAction="#onJoinAction" text="Join Game" />
-                         </StackPane>
-                  </children>
-                  <padding>
-                     <Insets bottom="10.0" left="40.0" />
-                  </padding>
-               </VBox>
-                   <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="Others">
-                       <font>
-                           <Font size="18.0" />
-                       </font>
-                   </Label>
-               <VBox maxHeight="-Infinity" maxWidth="-Infinity">
-                  <children>
-                         <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton onAction="#onCustomBoardAction" text="Board Editor" />
-                         </StackPane>
-                         <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton onAction="#onSettingsAction" text="Settings" />
-                         </StackPane>
-                  </children>
-                  <padding>
-                     <Insets bottom="15.0" left="40.0" />
-                  </padding>
-               </VBox>
-               <VBox maxHeight="-Infinity" maxWidth="-Infinity">
-                  <children>
-                         <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton onAction="#onExitAction" text="Back" />
-                         </StackPane>
-                  </children>
-                  <padding>
-                     <Insets left="40.0" />
-                  </padding>
-               </VBox>
-            </children>
-         </HexVBox>
+            <HexVBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
+                <Label maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text" text="Local Game">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+                    <padding>
+                        <Insets bottom="10.0" left="40.0"/>
+                    </padding>
+                    <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                               styleClass="button-wrapper">
+                        <HexButton onAction="#onLocalAction" text="Local Game"/>
+                    </StackPane>
+                </VBox>
+                <Label maxHeight="-Infinity" maxWidth="-Infinity" text="LAN Game">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+                    <padding>
+                        <Insets bottom="10.0" left="40.0"/>
+                    </padding>
+                    <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                               styleClass="button-wrapper">
+                        <HexButton onAction="#onHostAction" text="Host Game"/>
+                    </StackPane>
+                    <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                               styleClass="button-wrapper">
+                        <HexButton onAction="#onJoinAction" text="Join Game"/>
+                    </StackPane>
+                </VBox>
+                <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Others">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+                    <padding>
+                        <Insets bottom="15.0" left="40.0"/>
+                    </padding>
+                    <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                               styleClass="button-wrapper">
+                        <HexButton onAction="#onCustomBoardAction" text="Board Editor"/>
+                    </StackPane>
+                    <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                               styleClass="button-wrapper">
+                        <HexButton onAction="#onSettingsAction" text="Settings"/>
+                    </StackPane>
+                </VBox>
+                <VBox maxHeight="-Infinity" maxWidth="-Infinity">
+                    <padding>
+                        <Insets left="40.0"/>
+                    </padding>
+                    <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity"
+                               styleClass="button-wrapper">
+                        <HexButton onAction="#onExitAction" text="Back"/>
+                    </StackPane>
+                </VBox>
+            </HexVBox>
         </StackPane>
     </VBox>
 </StackPane>

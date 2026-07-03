@@ -11,10 +11,6 @@ public class IntField extends TextField {
     private int value;
 
 
-    // expose an integer value property for the text field.
-    public int  getValue()                 { return this.value; }
-    public void setValue(int newValue)     { this.value = newValue; }
-
     public IntField() {
         // restrict key input to numerals.
         this.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
@@ -28,5 +24,14 @@ public class IntField extends TextField {
         this.textProperty().addListener((obs, oldText, newText) -> {
             value = newText.isEmpty() ? 0 : Integer.parseInt(newText);
         });
+    }
+
+    // expose an integer value property for the text field.
+    public int getValue() {
+        return this.value;
+    }
+
+    public void setValue(int newValue) {
+        this.value = newValue;
     }
 }

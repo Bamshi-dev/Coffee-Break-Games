@@ -12,8 +12,26 @@ public class ToggleSwitch extends HBox {
     private final Label label = new Label();
     private final Button button = new Button();
 
-    private SimpleBooleanProperty switchedOn = new SimpleBooleanProperty(false);
-    public SimpleBooleanProperty switchOnProperty() { return switchedOn; }
+    private final SimpleBooleanProperty switchedOn = new SimpleBooleanProperty(false);
+
+    public ToggleSwitch() {
+        init();
+        switchedOn.addListener((a, b, c) -> {
+            if (c) {
+                label.setText("ON");
+                setStyle("-fx-background-color: rgba(10, 160, 60, 0.45);-fx-text-fill:black; -fx-background-radius: 5;");
+                label.toFront();
+            } else {
+                label.setText("OFF");
+                setStyle("-fx-background-color: grey;-fx-text-fill:black; -fx-background-radius: 5;");
+                button.toFront();
+            }
+        });
+    }
+
+    public SimpleBooleanProperty switchOnProperty() {
+        return switchedOn;
+    }
 
     private void init() {
 
@@ -44,22 +62,6 @@ public class ToggleSwitch extends HBox {
         label.prefHeightProperty().bind(heightProperty());
         button.prefWidthProperty().bind(widthProperty().divide(2));
         button.prefHeightProperty().bind(heightProperty());
-    }
-
-    public ToggleSwitch() {
-        init();
-        switchedOn.addListener((a,b,c) -> {
-            if (c) {
-                label.setText("ON");
-                setStyle("-fx-background-color: rgba(10, 160, 60, 0.45);-fx-text-fill:black; -fx-background-radius: 5;");
-                label.toFront();
-            }
-            else {
-                label.setText("OFF");
-                setStyle("-fx-background-color: grey;-fx-text-fill:black; -fx-background-radius: 5;");
-                button.toFront();
-            }
-        });
     }
 
     public void setSwitchedOn(boolean value) {

@@ -18,11 +18,13 @@ public class StartingScreenController extends Controller implements Initializabl
         sC.play("button");
         BetterCallMain.cleanExit();
     }
+
     @FXML
     public void onMemoryAction() {
         sC.play("button");
         c.changeScene("/Views/Memory/MemoryMenu.fxml", header, vS);
     }
+
     @FXML
     public void onTetrisAction() {
         sC.play("button");
@@ -30,13 +32,13 @@ public class StartingScreenController extends Controller implements Initializabl
     }
 
     @FXML
-    protected void onHexChessAction(){
+    protected void onHexChessAction() {
         sC.play("button");
         c.changeScene("/Views/HexChess/ChessMenu.fxml", header, vS);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        super.initialize(url,resourceBundle);
+        super.initialize(url, resourceBundle);
     }
 }

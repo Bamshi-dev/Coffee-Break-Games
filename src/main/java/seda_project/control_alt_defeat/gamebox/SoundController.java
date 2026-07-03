@@ -25,11 +25,11 @@ public class SoundController {
     }
 
     //Method for sound Indicators like buttons etc.
-    public void play(String name){
-        play(name,1.0);
+    public void play(String name) {
+        play(name, 1.0);
     }
 
-    public void play(String name,double volume){
+    public void play(String name, double volume) {
         if (muteState) return;
         AudioClip clip = sfxclips.computeIfAbsent(name, key -> {
             URL url = getClass().getResource("/Sounds/" + key + ".wav");
@@ -38,9 +38,10 @@ public class SoundController {
 
         clip.play(volume);
     }
+
     //Method for background Music
     public void playLooping(String name) {
-        playLooping(name,1.0);
+        playLooping(name, 1.0);
     }
 
     public void playLooping(String name, double volume) {
@@ -67,7 +68,7 @@ public class SoundController {
         }
     }
 
-    public void activateKonami(){
+    public void activateKonami() {
         if (!konami) {
             konami = true;
             stopLooping();
@@ -75,15 +76,15 @@ public class SoundController {
         }
 
     }
-    private void next(){
-        Media media = new Media(getClass().getResource("/Sounds/konami_"+konamiSound+".wav").toString());
+
+    private void next() {
+        Media media = new Media(getClass().getResource("/Sounds/konami_" + konamiSound + ".wav").toString());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setOnEndOfMedia( () -> {
-            if (konamiSound == 11){
+        mediaPlayer.setOnEndOfMedia(() -> {
+            if (konamiSound == 11) {
                 konamiSound = 1;
-            }
-            else {
-                konamiSound ++;
+            } else {
+                konamiSound++;
             }
             next();
         });
@@ -99,8 +100,7 @@ public class SoundController {
         this.muteState = muteState;
         if (muteState) {
             pause();
-        }
-        else {
+        } else {
             resume();
         }
     }

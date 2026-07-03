@@ -11,13 +11,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public final class Toast
-{
-    public static void makeText(StackPane rootPane, String toastMsg)
-    {
+public final class Toast {
+    public static void makeText(StackPane rootPane, String toastMsg) {
         int toastMsgTime = 1000;
         int fadeInTime = 250;
-        int fadeOutTime= 250;
+        int fadeOutTime = 250;
 
         Label label = new Label(toastMsg);
         label.getStyleClass().add("normalText");
@@ -36,12 +34,9 @@ public final class Toast
         fadeInTimeline.setOnFinished((ae) ->
         {
             new Thread(() -> {
-                try
-                {
+                try {
                     Thread.sleep(toastMsgTime);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 Platform.runLater(() -> {

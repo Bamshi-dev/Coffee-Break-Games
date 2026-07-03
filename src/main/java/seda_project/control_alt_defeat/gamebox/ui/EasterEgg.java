@@ -14,13 +14,12 @@ public class EasterEgg {
     protected void onSpoilerClickAction(MouseEvent mouseEvent) {
         if (spoilerBox.getStyleClass().contains("spoilerBox")) {
             spoilerBox.getStyleClass().clear();
-            for (Node s : spoilerBox.getChildren()){
+            for (Node s : spoilerBox.getChildren()) {
                 s.getStyleClass().remove("hiddenText");
             }
-        }
-        else {
-            spoilerBox.getStyleClass().addAll("spoilerBox","box");
-            for (Node s : spoilerBox.getChildren()){
+        } else {
+            spoilerBox.getStyleClass().addAll("spoilerBox", "box");
+            for (Node s : spoilerBox.getChildren()) {
                 s.getStyleClass().add("hiddenText");
             }
         }

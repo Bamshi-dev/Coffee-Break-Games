@@ -1,7 +1,6 @@
 package seda_project.control_alt_defeat.gamebox.ui;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 
@@ -26,15 +25,15 @@ public class HexVBox extends VBox {
         if (w > 0 && h > 0) {
             drawHexagon(w, h);
         }
-        setPadding(new Insets(10,getWidth()*.1,10,getWidth()*.1));
+        setPadding(new Insets(10, getWidth() * .1, 10, getWidth() * .1));
     }
 
     private void drawHexagon(double width, double height) {
         hexShape.getPoints().setAll(
-                0.0 - width*.1, height * 0.5,
+                0.0 - width * .1, height * 0.5,
                 0.0, 0.0,
                 width, 0.0,
-                width + width*.1, height * 0.5,
+                width + width * .1, height * 0.5,
                 width, height,
                 0.0, height
         );

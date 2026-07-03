@@ -359,8 +359,6 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
 
     private void adaptLabels(Piece capturedPiece) {
         String labelId = piecetoString(capturedPiece).replace("Img", "");
-
-        VBox helper = (labelId.contains("1")) ? p1 : p2;
         Label capturedLabel = (Label) thisScene.lookup("#" + labelId);
         if (capturedLabel != null) {
             int current = Integer.parseInt(capturedLabel.getText().replace("x",""));

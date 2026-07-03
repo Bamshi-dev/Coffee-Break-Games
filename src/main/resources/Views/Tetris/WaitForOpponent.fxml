@@ -4,12 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
+<?import seda_project.control_alt_defeat.gamebox.ui.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 
-<?import seda_project.control_alt_defeat.gamebox.ui.HexLabel?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0"
            minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/26"
            fx:controller="seda_project.control_alt_defeat.gamebox.Tetris.Controller.WaitForOpponent">

@@ -17,6 +17,7 @@ import seda_project.control_alt_defeat.gamebox.SoundController;
 import seda_project.control_alt_defeat.gamebox.ViewStack;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -25,7 +26,7 @@ public class Controller implements Initializable {
     protected SoundController sC = SoundController.getInstance();
     protected boolean flipped = false;
     protected boolean rainbowed = false;
-    
+
     @FXML
     protected StackPane root;
 
@@ -62,22 +63,22 @@ public class Controller implements Initializable {
                     if (mouseEvent.getClickCount() == 2) {
                         c.crimson = !c.crimson;
                         if (c.crimson) {
-                            int pos = root.getStylesheets().indexOf(Controller.class.getResource("/css/stylesheets/MainTheme.css").toExternalForm());
-                            root.getStylesheets().remove(Controller.class.getResource("/css/stylesheets/MainTheme.css").toExternalForm());
-                            root.getStylesheets().add(pos,Controller.class.getResource("/css/stylesheets/CrimsonTheme.css").toExternalForm());
+                            int pos = root.getStylesheets().indexOf(Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/MainTheme.css")).toExternalForm());
+                            root.getStylesheets().remove(Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/MainTheme.css")).toExternalForm());
+                            root.getStylesheets().add(pos, Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/CrimsonTheme.css")).toExternalForm());
                         } else {
-                            int pos = root.getStylesheets().indexOf(Controller.class.getResource("/css/stylesheets/CrimsonTheme.css").toExternalForm());
-                            root.getStylesheets().remove(Controller.class.getResource("/css/stylesheets/CrimsonTheme.css").toExternalForm());
-                            root.getStylesheets().add(pos,Controller.class.getResource("/css/stylesheets/MainTheme.css").toExternalForm());
+                            int pos = root.getStylesheets().indexOf(Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/CrimsonTheme.css")).toExternalForm());
+                            root.getStylesheets().remove(Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/CrimsonTheme.css")).toExternalForm());
+                            root.getStylesheets().add(pos, Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/MainTheme.css")).toExternalForm());
                         }
                     }
                 }
             });
         }
-        if (c.crimson){
-            int pos = root.getStylesheets().indexOf(Controller.class.getResource("/css/stylesheets/MainTheme.css").toExternalForm());
-            root.getStylesheets().remove(Controller.class.getResource("/css/stylesheets/MainTheme.css").toExternalForm());
-            root.getStylesheets().add(pos,Controller.class.getResource("/css/stylesheets/CrimsonTheme.css").toExternalForm());
+        if (c.crimson) {
+            int pos = root.getStylesheets().indexOf(Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/MainTheme.css")).toExternalForm());
+            root.getStylesheets().remove(Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/MainTheme.css")).toExternalForm());
+            root.getStylesheets().add(pos, Objects.requireNonNull(Controller.class.getResource("/css/stylesheets/CrimsonTheme.css")).toExternalForm());
         }
         Rectangle clip = new Rectangle();
 

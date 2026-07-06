@@ -4,9 +4,16 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import seda_project.control_alt_defeat.gamebox.Configuration;
 import seda_project.control_alt_defeat.gamebox.HexChess.Engine.GameEngine;
 import seda_project.control_alt_defeat.gamebox.HexChess.Engine.PlayerColor;
 import seda_project.control_alt_defeat.gamebox.HexChess.Network.ChessMessage;
@@ -15,9 +22,9 @@ import seda_project.control_alt_defeat.gamebox.network.NetworkListener;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
-public class ResultScreen extends Controller {
+public class ResultScreen extends Controller{
     @FXML
-    private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel;
+    private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel, statusLabel;
 
     public void initNetwork() {
         Session s = Session.current();
@@ -46,7 +53,8 @@ public class ResultScreen extends Controller {
                 @Override
                 public void onDisconnected(String reason) {
                     Platform.runLater(() -> {
-                        resultLabel.setText("Opponent disconnected.");
+                        statusLabel.setVisible(true);
+                        statusLabel.setText("Opponent disconnected.");
                     });
                 }
             });
@@ -63,7 +71,8 @@ public class ResultScreen extends Controller {
     }
 
     private void scheduleStartGame(long delayMs) {
-        resultLabel.setText("Restarting in " + (delayMs / 1000) + "s...");
+        statusLabel.setVisible(true);
+        statusLabel.setText("Restarting in " + (delayMs / 1000) + "s...");
         PauseTransition pt = new PauseTransition(Duration.millis(delayMs));
         pt.setOnFinished(e -> startGameNow());
         pt.play();
@@ -117,8 +126,8 @@ public class ResultScreen extends Controller {
         if (s.network != null) {
             s.localReady = true;
             s.network.send(new ChessMessage.Ready(true));
-
-            resultLabel.setText("Waiting for opponent...");
+            statusLabel.setVisible(true);
+            statusLabel.setText("Waiting for opponent...");
 
             checkStart();
         } else {
@@ -136,8 +145,36 @@ public class ResultScreen extends Controller {
         GameEngine engine = new GameEngine();
         s.chessEngine = engine;
 
-        GameScreen controller = (GameScreen) c.changeScene("/Views/HexChess/GameScreen.fxml", header, vS);
+        StackPane parent = (StackPane) root.getParent();
+        parent.getChildren().remove(root);
+        GameScreen controller;
+        try {
+            FXMLLoader loader = new FXMLLoader(Configuration.class.getResource("/Views/HexChess/GameScreen.fxml"));
+            Parent root = loader.load();
+            vS.addFxmlLoaders("/Views/HexChess/GameScreen.fxml");
+            controller = loader.getController();
+            Stage stage = (Stage) parent.getScene().getWindow();
+            Scene currentScene = stage.getScene();
+
+            Platform.runLater(() -> {
+                double height = stage.getHeight();
+                double width = stage.getWidth();
+
+                currentScene.setFill(Color.TRANSPARENT);
+                currentScene.setRoot(root);
+
+                stage.sizeToScene();
+
+                stage.setWidth(Math.max(width, stage.getWidth()));
+                stage.setHeight(Math.max(height, stage.getHeight()));
+            });
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         controller.setGameEngine(engine);
+
 
         String p1 = p1NameLabel.getText();
         String p2 = p2NameLabel.getText();
@@ -156,7 +193,7 @@ public class ResultScreen extends Controller {
         if (p2.equals("Duck")){
             controller.p2Duck();
         }
-        controller.init(header.getScene());
+        controller.init(parent.getScene());
         if (flipped){
             controller.flip();
         }
@@ -206,5 +243,8 @@ public class ResultScreen extends Controller {
         p2Score.setText(String.valueOf(Double.parseDouble(p2Score.getText()) + .5));
         p1Awarded.setText("+0.5");
         p2Awarded.setText("+0.5");
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
     }
 }

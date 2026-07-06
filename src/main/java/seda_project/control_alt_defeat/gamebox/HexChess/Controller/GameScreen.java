@@ -49,6 +49,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     private Scene thisScene;
     private List<ImageView>p1Views;
     private List<ImageView>p2Views;
+    private boolean lanMode = false;
 
     @FXML
     private VBox header, p1, p2;
@@ -109,6 +110,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
             resign.setDisable(true);
             draw.setDisable(true);
         }
+        disableButtons();
     }
 
     public void setGameEngine(GameEngine gameEngine){
@@ -121,6 +123,21 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         this.gameEngine.setupInitalState(boardState);
         activePlayer = gameEngine.getActivePlayer();
         highlightActivePlayer(activePlayer);
+        disableButtons();
+    }
+
+    public void setLanMode(){
+        this.lanMode = true;
+    }
+
+    private void disableButtons() {
+        if (!lanMode) return;
+        Session s = Session.current();
+        Button resign = !s.isHost ? p1Resign : p2Resign;
+        Button draw = !s.isHost ? p1Draw : p2Draw;
+
+        resign.setDisable(true);
+        draw.setDisable(true);
     }
 
     @Override
@@ -418,21 +435,34 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
     public void showResultScreen(String reason, int winner) {
-        ResultScreen controller = (ResultScreen) c.changeScene("/Views/HexChess/ResultScreen.fxml", header, vS);
-        controller.handData(p1NameLabel.getText(), p2NameLabel.getText(), p1Score.getText(), p2Score.getText());
-        controller.initNetwork();
-        if (flipped){
-            controller.flip();
-        }
-        if (rainbowed){
-            controller.rainbow();
-        }
-        switch (reason) {
-            case "WIN" -> controller.winner(winner);
-            case "STALEMATE" -> controller.stalemate(winner);
-            case "REMIS" -> controller.remis();
-            case "PROPOSAL" -> controller.draw();
-            case "RESIGN" -> controller.resign(winner);
+        p1Draw.setDisable(true);
+        p2Draw.setDisable(true);
+        p1Resign.setDisable(true);
+        p2Resign.setDisable(true);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/HexChess/ResultScreen.fxml"));
+            Parent resultOverlay = loader.load();
+            ResultScreen controller = loader.getController();
+            controller.handData(p1NameLabel.getText(), p2NameLabel.getText(), p1Score.getText(), p2Score.getText());
+            controller.setGameScreen(this);
+            controller.initNetwork();
+
+            if (flipped)   controller.flip();
+            if (rainbowed) controller.rainbow();
+
+            switch (reason) {
+                case "WIN" -> controller.winner(winner);
+                case "STALEMATE" -> controller.stalemate(winner);
+                case "REMIS" -> controller.remis();
+                case "PROPOSAL" -> controller.draw();
+                case "RESIGN" -> controller.resign(winner);
+            }
+            stackPane.getChildren().add(resultOverlay);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load Result Screen overlay.");
         }
     }
 

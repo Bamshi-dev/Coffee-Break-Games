@@ -27,7 +27,7 @@ public class Promotion extends Controller {
 
 
     @FXML
-    private StackPane stackpane;
+    private StackPane root;
 
     @FXML
     private ImageView RookImgView, KnightImgView,  BishopImgView,  QueenImgView;
@@ -59,16 +59,16 @@ public class Promotion extends Controller {
     protected void onPromoteAction(){
         sC.play("button");
         if (selected == null){
-            Toast.makeText(stackpane,"You need to select a Pice!");
+            Toast.makeText(root,"You need to select a Pice!");
             return;
         }
         PieceType chosenType = VIEW_TO_TYPE.get(selected.getId());
         if (chosenType == null) {
-            Toast.makeText(stackpane, "Invalid piece selection!");
+            Toast.makeText(root, "Invalid piece selection!");
             return;
         }
         gameEngine.promote(chosenType);
 
-        ((Stage) stackpane.getScene().getWindow()).close();
+        ((Stage) root.getScene().getWindow()).close();
     }
 }

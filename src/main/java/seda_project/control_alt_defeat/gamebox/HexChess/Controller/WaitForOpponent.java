@@ -211,6 +211,7 @@ public class WaitForOpponent extends Controller {
         if (p2.equals("Duck")){
             controller.p2Duck();
         }
+        controller.setLanMode();
         if (s.isHost) {
             if (boardState == null) {
                 controller.init(header.getScene());
@@ -244,7 +245,6 @@ public class WaitForOpponent extends Controller {
         if (s.localReady && s.peerReady) {
             statusLabel.getStyleClass().clear();
             statusLabel.getStyleClass().add("ready");
-            statusLabel.getStyleClass().add("box");
             statusLabel.setText("All ready!");
         } else if (s.peerReady) {
             statusLabel.setText("Opponent is ready. Press Ready when you are.");

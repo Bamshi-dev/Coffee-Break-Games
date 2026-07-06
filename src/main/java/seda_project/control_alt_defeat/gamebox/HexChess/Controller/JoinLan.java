@@ -18,6 +18,7 @@ import seda_project.control_alt_defeat.gamebox.network.LanClient;
 import seda_project.control_alt_defeat.gamebox.network.NetworkLayer;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
+import seda_project.control_alt_defeat.gamebox.ui.HexLabel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -137,34 +138,32 @@ public class JoinLan extends Controller implements Initializable {
 
         for (Advertisement ad : ads) {
             if (ad.gameMode() != GameMode.HEXCHESS) continue;
-            Label l = makeHostLabel(ad);
+            HexLabel l = makeHostLabel(ad);
             availableHosts.add(l);
             scrollElements.getChildren().add(l);
             if (ad.ipAddress().equals(previouslySelectedIp)) {
                 selectedHost = l;
-                l.getStyleClass().add("box");
-                l.getStyleClass().add("ready");
+                l.getStyleClass().add("selectedItem");
             }
         }
         shownHostIps = newIps;
     }
 
 
-    private Label makeHostLabel(Advertisement ad) {
-        Label l = new Label(ad.name() + "   (" + ad.ipAddress() + ")");
+    private HexLabel makeHostLabel(Advertisement ad) {
+        HexLabel l = new HexLabel(ad.name() + "   (" + ad.ipAddress() + ")");
         l.setUserData(ad);
         l.setAlignment(Pos.CENTER);
         l.setOnMouseClicked(mouseEvent -> {
             deselectAll();
             selectedHost = l;
-            l.getStyleClass().add("box");
-            l.getStyleClass().add("ready");
+            l.getStyleClass().add("selectedItem");
         });
         return l;
     }
 
     private void deselectAll() {
-        for (Label l : availableHosts) l.getStyleClass().clear();
+        for (Label l : availableHosts) l.getStyleClass().remove("selectedItem");
     }
 
     @Override

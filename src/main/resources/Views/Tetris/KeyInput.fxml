@@ -15,12 +15,12 @@
         <URL value="@../../css/stylesheets/HexChessMenu.css" />
     </stylesheets>
 
-    <HexVBox alignment="CENTER" maxHeight="116.0" maxWidth="322.0" minHeight="116.0" minWidth="322.0" prefHeight="116.0" prefWidth="322.0" spacing="10.0" styleClass="box" StackPane.alignment="CENTER">
+    <HexVBox alignment="CENTER" maxHeight="116.0" maxWidth="322.0" minHeight="116.0" minWidth="322.0" prefHeight="116.0"
+             prefWidth="322.0" spacing="10.0" styleClass="box" StackPane.alignment="CENTER">
         <StackPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
         </StackPane.margin>
-      <children>
-           <Label styleClass="normalText" text="Press any unassigned key to assign it!" textAlignment="CENTER" wrapText="true" />
-      </children>
+        <Label styleClass="normalText" text="Press any unassigned key to assign it!" textAlignment="CENTER"
+               wrapText="true"/>
     </HexVBox>
 </StackPane>

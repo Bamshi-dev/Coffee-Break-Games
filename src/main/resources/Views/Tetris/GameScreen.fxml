@@ -7,7 +7,6 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import seda_project.control_alt_defeat.gamebox.ui.HexButton?>
-<?import seda_project.control_alt_defeat.gamebox.ui.HexHBox?>
 <?import seda_project.control_alt_defeat.gamebox.ui.HexVBox?>
 <?import java.net.URL?>
 
@@ -42,7 +41,7 @@
             </StackPane>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity">
                 <VBox spacing="10.0">
-                    <HexHBox styleClass="ready">
+                    <HBox styleClass="ready">
                         <padding>
                             <Insets bottom="10.0" left="15.0" right="15.0" top="10.0"/>
                         </padding>
@@ -329,8 +328,8 @@
                                 </Pane>
                             </GridPane>
                         </VBox>
-                    </HexHBox>
-                    <HexHBox styleClass="error">
+                    </HBox>
+                    <HBox styleClass="error">
                         <VBox alignment="CENTER">
                             <Label fx:id="player1NameLabel" alignment="CENTER"
                                    maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
@@ -608,7 +607,7 @@
                                 </Pane>
                             </GridPane>
                         </VBox>
-                    </HexHBox>
+                    </HBox>
                 </VBox>
             </StackPane>
             <Region maxWidth="104.0" minWidth="104.0" prefWidth="104.0"/>

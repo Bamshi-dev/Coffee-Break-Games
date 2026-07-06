@@ -36,7 +36,7 @@
 
 
         <StackPane prefHeight="465.0" VBox.vgrow="ALWAYS">
-            <HexVBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0" styleClass="box">
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0" styleClass="box">
                 <Label styleClass="normalText" text="Game Result" VBox.vgrow="ALWAYS"/>
                 <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" vgap="5.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
@@ -88,7 +88,7 @@
                 <padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                 </padding>
-            </HexVBox>
+            </VBox>
         </StackPane>
     </VBox>
     <stylesheets>

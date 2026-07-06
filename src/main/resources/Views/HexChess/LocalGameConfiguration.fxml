@@ -16,67 +16,66 @@
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seda_project.control_alt_defeat.gamebox.HexChess.Controller.LocalGameConfiguration">
     <VBox alignment="TOP_CENTER">
         <fx:include source="../TopBar.fxml" />
-      <HexVBox fx:id="header" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
-         <children>
-                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="headerText" text="Hex Chess" textAlignment="CENTER" textOverrun="CLIP">
-                       <font>
-                           <Font name="Arial Bold" size="24.0" />
-                       </font>
-                   </Label>
-                   <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" text="Local Game Configuration">
-                       <font>
-                           <Font size="18.0" />
-                       </font>
-                   </Label>
-         </children>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </HexVBox>
+        <HexVBox fx:id="header" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="headerText" text="Hex Chess" textAlignment="CENTER" textOverrun="CLIP">
+                <font>
+                    <Font name="Arial Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" text="Local Game Configuration">
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+        </HexVBox>
 
         <StackPane prefHeight="465.0" VBox.vgrow="ALWAYS">
-         <HexVBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="box">
-            <children>
-               <Label styleClass="normalText" text="Player 1">
-                  <padding>
-                     <Insets bottom="5.0" />
-                  </padding>
-               </Label>
-                   <HBox alignment="CENTER_LEFT">
-                       <Label text="Is Bot: " />
-                       <ToggleSwitch fx:id="isP1Bot" maxWidth="-Infinity" />
-                   </HBox>
-                   <HBox alignment="CENTER_LEFT">
-                       <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Player 1 Name: " />
-                       <TextField fx:id="player1TF" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Insert Player 1 Name " />
-                   </HBox>
-               <Label styleClass="normalText" text="Player 2">
-                  <padding>
-                     <Insets bottom="5.0" />
-                  </padding>
-               </Label>
-                   <HBox alignment="CENTER_LEFT">
-                       <Label text="Is Bot: " />
-                       <ToggleSwitch fx:id="isP2Bot" maxHeight="-Infinity" maxWidth="-Infinity" />
-                   </HBox>
-                   <HBox alignment="CENTER_LEFT">
-                       <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Player 2 Name" />
-                       <TextField fx:id="player2TF" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Insert Player 2 Name" />
-                   </HBox>
-                   <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                  <HexButton onAction="#onCustomBoardAction" text="Use Custom Board" />
-                   </StackPane>
-               <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
-                   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
-                       <StackPane styleClass="button-wrapper">
-                     <HexButton onAction="#onBackAction" text="Back" />
-                       </StackPane>
-                       <StackPane styleClass="button-wrapper">
-                     <HexButton onAction="#onStartAction" text="Start Game" />
-                       </StackPane>
-                   </HBox>
-            </children>
-         </HexVBox>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" styleClass="box">
+                <Label styleClass="normalText" text="Player 1">
+                    <padding>
+                        <Insets bottom="5.0" />
+                    </padding>
+                </Label>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Is Bot: " />
+                    <ToggleSwitch fx:id="isP1Bot" maxWidth="-Infinity" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Player 1 Name: " />
+                    <TextField fx:id="player1TF" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Insert Player 1 Name " />
+                </HBox>
+                <Label styleClass="normalText" text="Player 2">
+                    <padding>
+                        <Insets bottom="5.0" />
+                    </padding>
+                </Label>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Is Bot: " />
+                    <ToggleSwitch fx:id="isP2Bot" maxHeight="-Infinity" maxWidth="-Infinity" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label maxHeight="-Infinity" maxWidth="-Infinity" text="Player 2 Name" />
+                    <TextField fx:id="player2TF" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Insert Player 2 Name" />
+                </HBox>
+                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
+                    <HexButton onAction="#onCustomBoardAction" text="Use Custom Board" />
+                </StackPane>
+                <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
+                <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
+                    <StackPane styleClass="button-wrapper">
+                        <HexButton onAction="#onBackAction" text="Back" />
+                    </StackPane>
+                    <StackPane styleClass="button-wrapper">
+                        <HexButton onAction="#onStartAction" text="Start Game" />
+                    </StackPane>
+                </HBox>
+            <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            </VBox>
         </StackPane>
     </VBox>
 

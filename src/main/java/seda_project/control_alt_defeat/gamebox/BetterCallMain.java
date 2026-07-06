@@ -42,7 +42,6 @@ public class BetterCallMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FxmlKit.enableDevelopmentMode();
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle("Coffee Break Game");
         stage.centerOnScreen();

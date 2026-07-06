@@ -22,6 +22,7 @@ import seda_project.control_alt_defeat.gamebox.Memory.engine.GameEventListener;
 import seda_project.control_alt_defeat.gamebox.Memory.engine.GameSetup;
 import seda_project.control_alt_defeat.gamebox.Memory.engine.GameSnapshot;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
+import seda_project.control_alt_defeat.gamebox.ui.HexHBox;
 import seda_project.control_alt_defeat.gamebox.ui.MCard;
 import seda_project.control_alt_defeat.gamebox.ui.Toast;
 
@@ -49,7 +50,7 @@ public class GameScreen extends Controller {
     private Label sboardP1, sboardP2, sboardScoreP1, sboardScoreP2, activePlayerLabel;
 
     @FXML
-    private GridPane activePlayerGrid;
+    private HexHBox activePlayerGrid;
 
     @FXML
     private StackPane gamePane;

@@ -150,6 +150,12 @@ public class ResultScreen extends Controller {
             controller.setBotMode(false, null);
         }
 
+        if (p1.equals("Duck")) {
+            controller.p1Duck();
+        }
+        if (p2.equals("Duck")){
+            controller.p2Duck();
+        }
         controller.init(header.getScene());
         if (flipped){
             controller.flip();
@@ -157,13 +163,6 @@ public class ResultScreen extends Controller {
         if (rainbowed){
             controller.rainbow();
         }
-        if (p1.equals("Duck")) {
-            controller.p1Duck();
-        }
-        if (p2.equals("Duck")){
-            controller.p2Duck();
-        }
-
         if (s.network != null) {
             if (s.isHost) {
                 controller.attachHostBridge(s.network, engine);

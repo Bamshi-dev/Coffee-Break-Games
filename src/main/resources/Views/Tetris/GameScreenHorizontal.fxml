@@ -43,7 +43,7 @@
                     <HexButton onAction="#onExitGameAction" text="Exit Game"/>
                 </StackPane>
                 <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" spacing="40.0">
-                    <HexVBox alignment="CENTER" styleClass="error">
+                    <VBox alignment="CENTER" styleClass="error">
                         <Label fx:id="player1NameLabel" alignment="CENTER" maxHeight="-Infinity"
                                maxWidth="-Infinity" text="Player1Name"/>
                         <GridPane maxHeight="-Infinity" maxWidth="-Infinity">
@@ -300,8 +300,8 @@
                                            style="-fx-arc-width: 10px; -fx-arc-height: 10px;" width="50.0"/>
                             </Pane>
                         </GridPane>
-                    </HexVBox>
-                    <HexVBox alignment="CENTER" styleClass="ready">
+                    </VBox>
+                    <VBox alignment="CENTER" styleClass="ready">
                         <Label fx:id="player2NameLabel" alignment="CENTER" maxHeight="-Infinity"
                                maxWidth="-Infinity" text="Player2Name"/>
                         <GridPane maxHeight="-Infinity" maxWidth="-Infinity">
@@ -557,7 +557,7 @@
                                            style="-fx-arc-width: 10px; -fx-arc-height: 10px;" width="50.0"/>
                             </Pane>
                         </GridPane>
-                    </HexVBox>
+                    </VBox>
                 </HBox>
             </VBox>
         </StackPane>

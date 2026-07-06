@@ -21,7 +21,7 @@ public class HexLabel extends Label {
     private void initShape() {
         hexShape = new Polygon();
         setShape(hexShape);
-        setPadding(new Insets(0, 15, 0, 15));
+        setPadding(new Insets(5, 20,5,20));
     }
 
     @Override

@@ -44,7 +44,7 @@
         <StackPane fx:id="stackPane" prefHeight="485.0" VBox.vgrow="ALWAYS">
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" styleClass="box">
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="20.0">
-                    <HexVBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="error">
+                    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="error">
                         <Label styleClass="normalText" text="Player 1" />
                         <ColorPicker fx:id="p1ColorPicker" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onP1ColorAction" />
                         <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
@@ -69,8 +69,8 @@
                                 <Image url="@../../Images/HexChess/White/white-king.png" />
                             </ImageView>
                         </HBox>
-                    </HexVBox>
-                    <HexVBox alignment="CENTER" styleClass="ready">
+                    </VBox>
+                    <VBox alignment="CENTER" styleClass="ready">
                         <Label styleClass="normalText" text="Player 2" />
                         <ColorPicker fx:id="p2ColorPicker" onAction="#onP2ColorAction">
                             <value>
@@ -99,7 +99,7 @@
                                 <Image url="@../../Images/HexChess/Black/black-king.png" />
                             </ImageView>
                         </HBox>
-                    </HexVBox>
+                    </VBox>
                 </HBox>
                 <HBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="20.0">
                     <VBox alignment="CENTER" spacing="10.0">

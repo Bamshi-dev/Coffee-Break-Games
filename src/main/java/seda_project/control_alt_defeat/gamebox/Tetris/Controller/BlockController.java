@@ -17,6 +17,9 @@ import javafx.scene.shape.Rectangle;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.CustomBlock;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.BlockRegistry;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
+import seda_project.control_alt_defeat.gamebox.ui.HexButton;
+import seda_project.control_alt_defeat.gamebox.ui.HexHBox;
+import seda_project.control_alt_defeat.gamebox.ui.HexLabel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,7 +39,7 @@ public class BlockController extends Controller implements Initializable {
     private ScrollPane scrollPane;
 
     @FXML
-    private Button saveButton;
+    private HexButton saveButton, loadButton, deleteButton, resetButton;
 
     @FXML
     private ColorPicker colorPicker;
@@ -49,6 +52,10 @@ public class BlockController extends Controller implements Initializable {
         colorPicker.setValue(selectedColor);
         buildGrid();
         refreshList();
+        saveButton.setDisable(true);
+        loadButton.setDisable(true);
+        deleteButton.setDisable(true);
+        resetButton.setDisable(true);
 
     }
 
@@ -70,6 +77,8 @@ public class BlockController extends Controller implements Initializable {
         cell.setStrokeWidth(0.5);
 
         cell.setOnMouseClicked(e -> {
+            resetButton.setDisable(false);
+            saveButton.setDisable(false);
             boolean[][] grid = editorController.getGrid();
             boolean alreadyActive = grid[row][col];
             if (alreadyActive) {
@@ -190,7 +199,8 @@ public class BlockController extends Controller implements Initializable {
 
         Label name = new Label("Custom " + (index + 1));
 
-        HBox row = new HBox(8, preview, name);
+        HexHBox row = new HexHBox();
+        row.getChildren().addAll(preview,name);
         row.setAlignment(Pos.CENTER);
         row.getStyleClass().add("scrollItem");
         row.setStyle("-fx-padding: 4; -fx-cursor: hand;");
@@ -201,6 +211,8 @@ public class BlockController extends Controller implements Initializable {
                     n -> n.getStyleClass().remove("selectedItem")
             );
             row.getStyleClass().add("selectedItem");
+            deleteButton.setDisable(false);
+            loadButton.setDisable(false);
         });
         return row;
     }
@@ -233,6 +245,9 @@ public class BlockController extends Controller implements Initializable {
     protected void onLoadAction(){
         sC.play("button");
         if (selectedListIndex < 0) return;
+
+        saveButton.setDisable(false);
+        resetButton.setDisable(false);
 
         var customPieces = BlockRegistry.getInstance().getCustomPieces();
         if (selectedListIndex >= customPieces.size()) return;
@@ -272,7 +287,8 @@ public class BlockController extends Controller implements Initializable {
                 refreshList();
                 saveButton.setText("Save");
             }
-
+            saveButton.setDisable(true);
+            resetButton.setDisable(true);
         } catch (Exception ex) {
             saveButton.setText("Empty!");
             saveButton.setDisable(true);
@@ -291,7 +307,8 @@ public class BlockController extends Controller implements Initializable {
     protected void onDeleteAction(){
         sC.play("button");
         if (selectedListIndex < 0) return;
-
+        loadButton.setDisable(true);
+        deleteButton.setDisable(true);
         BlockRegistry pR = BlockRegistry.getInstance();
         CustomBlock cP = pR.getCustomPieces().get(selectedListIndex);
         pR.removeCustomPiece(cP);
@@ -313,5 +330,9 @@ public class BlockController extends Controller implements Initializable {
         editorController.reset();
         refreshGrid();
         refreshList();
+        resetButton.setDisable(true);
+        saveButton.setDisable(true);
+        loadButton.setDisable(true);
+        deleteButton.setDisable(true);
     }
 }

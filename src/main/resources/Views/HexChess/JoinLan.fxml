@@ -45,7 +45,7 @@
                 <ScrollPane fx:id="scrollPane" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="scroller">
                     <VBox fx:id="scrollElements" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="transparent-scroll-content" />
                 </ScrollPane>
-                <HexLabel fx:id="joinStatus" maxWidth="260.0" styleClass="error" visible="false" wrapText="true" />
+                <HexLabel fx:id="joinStatus" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <StackPane styleClass="button-wrapper">
                         <HexButton onAction="#onBackAction" text="Back" />

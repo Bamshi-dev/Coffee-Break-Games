@@ -67,14 +67,11 @@
                     <Label alignment="CENTER" text="Your Name:" />
                     <Label fx:id="yourNameLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" textAlignment="CENTER" GridPane.columnIndex="1" />
                     <Label text="Stauts" GridPane.rowIndex="3" />
-                    <HexLabel fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="130.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <HexLabel fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="130.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                         <styleClass>
                             <String fx:value="box" />
                             <String fx:value="information" />
                         </styleClass>
-                        <padding>
-                            <Insets left="5.0" right="5.0" />
-                        </padding>
                     </HexLabel>
                     <Label text="Opponent Name" GridPane.rowIndex="2" />
                     <Label fx:id="opponentNameLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />

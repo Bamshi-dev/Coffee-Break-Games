@@ -49,10 +49,10 @@
                         <HexButton onAction="#onBackAction" text="Cancel" />
                     </StackPane>
                     <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton onAction="#onUseAction" text="Use" />
+                        <HexButton fx:id="useButton" onAction="#onUseAction" text="Use" />
                     </StackPane>
                     <StackPane layoutX="101.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                        <HexButton onAction="#onDeleteAction" text="Delete" />
+                        <HexButton fx:id="deleteButton" onAction="#onDeleteAction" text="Delete" />
                     </StackPane>
                 </HBox>
             <padding>

@@ -60,10 +60,10 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                             <StackPane styleClass="button-wrapper">
-                                <HexButton maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onLoadAction" text="Load" />
+                                <HexButton fx:id="loadButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onLoadAction" text="Load" />
                             </StackPane>
                             <StackPane prefHeight="46.0" prefWidth="124.0" styleClass="button-wrapper">
-                                <HexButton maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onDeleteAction" text="Delete" />
+                                <HexButton fx:id="deleteButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onDeleteAction" text="Delete" />
                             </StackPane>
                         </HBox>
                     </VBox>
@@ -91,7 +91,7 @@
                         </GridPane>
                         <HBox alignment="CENTER">
                             <StackPane styleClass="button-wrapper">
-                                <HexButton onAction="#onResetAction" text="Reset" />
+                                <HexButton fx:id="resetButton" onAction="#onResetAction" text="Reset" />
                             </StackPane>
                             <StackPane styleClass="button-wrapper">
                                 <HexButton onAction="#onBackAction" text="Back" />

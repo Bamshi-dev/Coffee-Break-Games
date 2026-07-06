@@ -13,19 +13,4 @@
   "p2Bishop" : 3,
   "p2Queen" : 1,
   "p2King" : 0
-}, {
-  "FENState" : "5k5/11/11/8b2/11/3P7/9/3B3/5/3/K 1",
-  "startingPlayer" : 1,
-  "p1Pawn" : 8,
-  "p1Rook" : 2,
-  "p1Knight" : 2,
-  "p1Bishop" : 2,
-  "p1Queen" : 1,
-  "p1King" : 0,
-  "p2Pawn" : 9,
-  "p2Rook" : 2,
-  "p2Knight" : 2,
-  "p2Bishop" : 2,
-  "p2Queen" : 1,
-  "p2King" : 0
 } ]

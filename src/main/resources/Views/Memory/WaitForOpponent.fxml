@@ -68,7 +68,7 @@
                     <Label fx:id="opponentNameLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label fx:id="deckSizeLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label fx:id="matchSizeLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <HexLabel fx:id="statusLabel" maxWidth="130.0" styleClass="information" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <HexLabel fx:id="statusLabel" maxWidth="130.0" styleClass="information" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 </GridPane>
 
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0">

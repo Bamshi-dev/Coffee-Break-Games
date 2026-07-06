@@ -64,7 +64,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </GridPane>
-                <HexLabel fx:id="joinStatus" maxWidth="250.0" styleClass="error" wrapText="true" />
+                <HexLabel fx:id="joinStatus" maxWidth="270.0" styleClass="error" wrapText="true" />
 
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">

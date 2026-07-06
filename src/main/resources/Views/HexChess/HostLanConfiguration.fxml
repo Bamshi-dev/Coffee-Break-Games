@@ -41,7 +41,7 @@
                 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                     <HexButton onAction="#onCustomBoardAction" text="Use Custom Board" />
                 </StackPane>
-                <HexLabel fx:id="statusLabel" maxWidth="250.0" styleClass="error" visible="false" wrapText="true" />
+                <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
                 <HBox maxHeight="-Infinity" maxWidth="-Infinity">
                     <StackPane alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                         <HexButton onAction="#onBackAction" text="Back" />

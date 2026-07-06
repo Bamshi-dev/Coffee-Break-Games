@@ -98,7 +98,7 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </StackPane>
-                <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" wrapText="true" />
+                <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" textAlignment="CENTER" wrapText="true" />
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <VBox.margin>
                         <Insets bottom="10.0" />

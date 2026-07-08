@@ -72,11 +72,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.16.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.dlsc.fxmlkit</groupId>
-            <artifactId>fxmlkit</artifactId>
-            <version>1.5.1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -103,8 +98,6 @@
                     <jlinkImageName>gamebox</jlinkImageName>
                     <noManPages>true</noManPages>
                     <stripDebug>true</stripDebug>
-                    <noHeaderFiles>true</noHeaderFiles>
-                    <compress>2</compress>
                 </configuration>
             </plugin>
 

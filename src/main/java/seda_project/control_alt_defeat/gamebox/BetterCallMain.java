@@ -1,6 +1,5 @@
 package seda_project.control_alt_defeat.gamebox;
 
-import com.dlsc.fxmlkit.fxml.FxmlKit;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

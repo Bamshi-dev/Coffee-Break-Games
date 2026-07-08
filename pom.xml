@@ -103,6 +103,8 @@
                     <jlinkImageName>gamebox</jlinkImageName>
                     <noManPages>true</noManPages>
                     <stripDebug>true</stripDebug>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <compress>2</compress>
                 </configuration>
             </plugin>
 

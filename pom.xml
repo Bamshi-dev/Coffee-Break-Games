@@ -80,47 +80,58 @@
     </dependencies>
 
     <build>
-    <finalName>CoffeeBreakGames</finalName>
+        <finalName>GameBox</finalName>
 
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>${maven.compiler.version}</version>
-            <configuration>
-                <source>${java.version}</source>
-                <target>${java.version}</target>
-            </configuration>
-        </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
 
 
-        <plugin>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-maven-plugin</artifactId>
-            <version>${javafx.maven.version}</version>
-            <configuration>
-                <mainClass>seda_project.control_alt_defeat.gamebox.Launcher</mainClass>
-                <launcher>gamebox</launcher>
-                <jlinkImageName>gamebox</jlinkImageName>
-                <stripDebug>true</stripDebug>
-                <noManPages>true</noManPages>
-                <noHeaderFiles>true</noHeaderFiles>
-                <options>
-                    <option>--enable-native-access=javafx.graphics</option>
-                </options>
-            </configuration>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>${javafx.maven.version}</version>
+                <configuration>
+                    <mainClass>seda_project.control_alt_defeat.gamebox.Launcher</mainClass>
+                    <launcher>launcher</launcher>
+                    <jlinkImageName>image</jlinkImageName>
+                    <noManPages>true</noManPages>
+                    <stripDebug>true</stripDebug>
+                </configuration>
+            </plugin>
 
-            <executions>
-                <execution>
-                    <id>jlink</id>
-                    <goals>
-                        <goal>jlink</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven.assembly.version}</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>seda_project.control_alt_defeat.gamebox.Launcher</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>

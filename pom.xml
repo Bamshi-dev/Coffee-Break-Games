@@ -20,7 +20,7 @@
         <maven.compiler.version>3.13.0</maven.compiler.version>
         <maven.compiler.release>24</maven.compiler.release>
         <maven.assembly.version>3.7.1</maven.assembly.version>
-        <exec.maven.version>3.6.1</exec.maven.version>
+        <exec.maven.version>3.6.0</exec.maven.version>
         <maven.antrun.version>3.1.0</maven.antrun.version>
         <maven.resources.version>3.3.1</maven.resources.version>
 
@@ -80,7 +80,7 @@
     </dependencies>
 
     <build>
-        <finalName>GameBox</finalName>
+        <finalName>CoffeeBreakGames</finalName>
 
         <plugins>
             <plugin>
@@ -97,24 +97,6 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.version}</version>
-                <executions>
-                    <!-- This block ensures jlink runs during the package phase -->
-                    <execution>
-                        <id>create-jlink-image</id>
-                        <!-- Wird vor der Verpackung ausgeführt -->
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>jlink</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>seda_project.control_alt_defeat.gamebox.Launcher</mainClass>
-                            <launcher>launcher</launcher>
-                            <jlinkImageName>image</jlinkImageName>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                        </configuration>
-                    </execution>
-                </executions>
                 <configuration>
                     <mainClass>seda_project.control_alt_defeat.gamebox.Launcher</mainClass>
                     <launcher>launcher</launcher>
@@ -145,38 +127,6 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec.maven.version}</version>
-                <executions>
-                    <execution>
-                        <id>pack-with-warp</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>${project.basedir}\tools\warp-packer.exe</executable> <!-- -->
-                            <arguments>
-                                <argument>--arch</argument> <!-- -->
-                                <argument>windows-x64</argument> <!-- -->
-
-                                <argument>--input_dir</argument> <!--[cite: 1] -->
-                                <!-- Points to the jlinkImageName defined in your javafx-maven-plugin -->
-                                <argument>${project.build.directory}\image</argument> <!--[cite: 1] -->
-
-                                <argument>--exec</argument> <!--[cite: 1] -->
-                                <!-- Points to the launcher name defined in your javafx-maven-plugin -->
-                                <argument>bin\launcher.bat</argument> <!--[cite: 1] -->
-
-                                <argument>--output</argument> <!--[cite: 1] -->
-                                <argument>${project.build.directory}\${project.build.finalName}.exe</argument> <!--[cite: 1] -->
-                            </arguments>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

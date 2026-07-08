@@ -1,12 +1,16 @@
 package seda_project.control_alt_defeat.gamebox.Memory.Controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import seda_project.control_alt_defeat.gamebox.ui.Controller;
-
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
 public class LocalGameConfiguration extends Controller implements Initializable {
 
@@ -25,6 +29,9 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     @FXML
     private Label statusLabel;
 
+    /**
+     * Initializes the LocalGameConfiguration controller by setting up the user interface elements, including populating the match size ComboBox with values from 1 to 45 and selecting the third value (3) by default. It also sets the state of the ToggleGroup for deck size selection and hides the status label initially.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -37,18 +44,27 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         matchSize.getSelectionModel().select(2);
     }
 
+    /**
+     * Calculates the deck size based on the selected match size and updates the corresponding RadioButtons for small, medium, and large game options. It retrieves the selected match size from the ComboBox and calls the deckSize method of the Controller class to adjust the available deck size options accordingly. This method is typically called when the user changes the match size selection, ensuring that the deck size options are dynamically updated to reflect the new match size.
+     */
     @FXML
     private void calcDeckSize(){
         int tupleSize = matchSize.getSelectionModel().getSelectedItem();
         c.deckSize(tupleSize,smallGame,mediumGame,largeGame);
     }
 
+    /**
+     * Handles the action of going back to the previous scene. It plays a button sound effect and transitions back to the previous scene, passing along the player names and levels if the previous controller is an instance of HostLan or LocalGameConfiguration.
+     */
     @FXML
     protected void onBackAction(){
         sC.play("button");
         c.backScene(header,vS);
     }
 
+    /**
+     * Handles the action of opening the advanced settings for the local game. It plays a button sound effect, retrieves the current player names and levels from the input fields, and transitions to the AdvancedSettings scene, passing along the player data to the new controller.
+     */
     @FXML
     private void onStartGameAction(){
         sC.play("button");

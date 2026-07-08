@@ -9,7 +9,6 @@ public class DrawProposal extends Controller {
 
     /**
      * Handles the action when the draw proposal is accepted.
-     * Notifies the GameScreen and closes the dialog window.
      */
     public void onAcceptAction() {
         sC.play("button");
@@ -19,7 +18,6 @@ public class DrawProposal extends Controller {
 
     /**
      * Handles the action when the draw proposal is declined.
-     * Notifies the GameScreen and closes the dialog window.
      */
     public void onDeclineAction() {
         sC.play("button");

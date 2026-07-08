@@ -1,5 +1,8 @@
 package seda_project.control_alt_defeat.gamebox.Tetris.Controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,15 +10,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.VBox;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.TetrisAdvancedSettings;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 import seda_project.control_alt_defeat.gamebox.ui.IntField;
 import seda_project.control_alt_defeat.gamebox.ui.Toast;
 import seda_project.control_alt_defeat.gamebox.ui.ToggleSwitch;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
 public class AdvancedSettings extends Controller implements Initializable {
@@ -44,6 +43,9 @@ public class AdvancedSettings extends Controller implements Initializable {
             lGC.handLocalData(p1Name,p2Name,p1Level,p2Level);
         }
     }
+    /**
+     * Saves the advanced settings to the TetrisAdvancedSettings singleton instance and displays a toast message indicating that the settings have been saved. If the bomb chance exceeds 100%, it sets the bomb chance to 100% and displays a specific message.
+     */
     @FXML
     protected void onSaveAction(){
         sC.play("button");
@@ -70,6 +72,9 @@ public class AdvancedSettings extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Initializes the advanced settings controller by setting the initial values of the UI components based on the current settings in the TetrisAdvancedSettings singleton instance. It also sets up the toggle group for layout selection and initializes the toggle switch state.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
@@ -94,11 +99,17 @@ public class AdvancedSettings extends Controller implements Initializable {
         bombChance.setText(String.valueOf(advancedSettings.getBombChance()));
     }
 
+    /**
+     * Handles the data received from the host in a multiplayer game. It sets the player name and level for player 1 based on the provided parameters.
+     */
     public void handHostData(String yourName, int hostLevel) {
         this.p1Name = yourName;
         this.p1Level = hostLevel;
     }
 
+    /**
+     * Handles the data received from a local game configuration. It sets the player names and levels for both players based on the provided parameters.
+     */
     public void handLocalData(String p1Name, String p2Name, int p1Level, int p2Level) {
         this.p1Name = p1Name;
         this.p1Level = p1Level;

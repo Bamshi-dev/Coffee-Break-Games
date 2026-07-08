@@ -1,5 +1,12 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.Random;
+import java.util.ResourceBundle;
+import java.util.stream.Stream;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +26,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.ArcTo;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.ClosePath;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.QuadCurveTo;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import seda_project.control_alt_defeat.gamebox.Configuration;
-import seda_project.control_alt_defeat.gamebox.HexChess.Engine.*;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.ChessEventListener;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.GameEngine;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.HexBot;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.HexCell;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.Piece;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.PieceSettings;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.PieceType;
+import seda_project.control_alt_defeat.gamebox.HexChess.Engine.PlayerColor;
 import seda_project.control_alt_defeat.gamebox.HexChess.Network.ChessMessage;
 import seda_project.control_alt_defeat.gamebox.network.Message;
 import seda_project.control_alt_defeat.gamebox.network.NetworkLayer;
@@ -32,10 +52,6 @@ import seda_project.control_alt_defeat.gamebox.network.NetworkListener;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 import seda_project.control_alt_defeat.gamebox.ui.Toast;
-import java.io.IOException;
-import java.net.URL;
-import java.util.*;
-import java.util.stream.Stream;
 
 public class GameScreen extends Controller implements Initializable, ChessEventListener {
     PieceSettings settings = PieceSettings.getInstance();

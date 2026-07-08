@@ -24,22 +24,25 @@ import java.util.List;
 public class BetterCallMain extends Application {
     private static final Logger logger = LoggerFactory.getLogger(BetterCallMain.class);
     private static final ViewStack vS = ViewStack.getInstance();
-    @FXML
-    VBox header;
-    Configuration c = Configuration.getInstance();
+
     private final SoundController sC = SoundController.getInstance();
     private final List<KeyCode> konamiList = new ArrayList<>();
     private final List<KeyCode> comparisionList = List.of(KeyCode.UP, KeyCode.UP, KeyCode.DOWN, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.B, KeyCode.A);
-
-    private final double xOffset = 0;
-    private final double yOffset = 0;
-
+    /**
+     * Exit method to shut down the whole software
+     */
     public static void cleanExit() {
         logger.debug("Shutting down");
         Platform.exit();
         System.exit(0);
     }
 
+    /**
+     * Start of the Application. This methods sets the scene to the starting Menu and attaches the ResizeListener and also konamiListener to the Stage.
+     * In here the music is started
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         stage.initStyle(StageStyle.TRANSPARENT);
@@ -63,6 +66,12 @@ public class BetterCallMain extends Application {
         logger.debug("Startup completed");
     }
 
+
+    /**
+     * Attaches the konamiListener to the Stage.
+     * When UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT, A, B is pressed the music is changed
+     * @param stage
+     */
     private void konamiListener(Stage stage) {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (konamiList.size() == 1 && !konamiList.getFirst().equals(KeyCode.UP)) {
@@ -79,21 +88,16 @@ public class BetterCallMain extends Application {
                 konamiList.clear();
             }
             konamiList.add(event.getCode());
-            verify();
-            System.out.println(konamiList.toString());
+            if (konamiList.equals(comparisionList)) {
+                System.out.println("Is the same");
+                sC.activateKonami();
+            } else if (konamiList.size() >= 10) {
+                System.out.println("Clear");
+                konamiList.clear();
+            } else if (konamiList.stream().anyMatch(keyCode -> !comparisionList.contains(keyCode))) {
+                System.out.println("Clear");
+                konamiList.clear();
+            }
         });
-    }
-
-    private void verify() {
-        if (konamiList.equals(comparisionList)) {
-            System.out.println("Is the same");
-            sC.activateKonami();
-        } else if (konamiList.size() >= 10) {
-            System.out.println("Clear");
-            konamiList.clear();
-        } else if (konamiList.stream().anyMatch(keyCode -> !comparisionList.contains(keyCode))) {
-            System.out.println("Clear");
-            konamiList.clear();
-        }
     }
 }

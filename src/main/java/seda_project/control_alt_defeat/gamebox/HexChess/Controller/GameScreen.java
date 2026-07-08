@@ -83,17 +83,32 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         applyPiecePreviewImages();
     }
 
+    /**
+     * Set the names of the players in the according Labels
+     * @param p1Name Name of Player 1
+     * @param p2Name Name of Player 2
+     */
     public void setNames(String p1Name, String p2Name){
         p1NameLabel.setText(p1Name);
         p2NameLabel.setText(p2Name);
         highlightActivePlayer(activePlayer);
     }
 
+
+    /**
+     * Set the points of the players in the according Labels
+     * @param p1Points Points of Player 1
+     * @param p2Points Points of Player 2
+     */
     public void setPoints (double p1Points, double p2Points){
         p1Score.setText(String.valueOf(p1Points));
         p2Score.setText(String.valueOf(p2Points));
     }
 
+    /**
+     * Initialize the Game Screen.
+     * @param scene the FXML Scene of the GameScreen
+     */
     public void init(Scene scene){
         this.thisScene = scene;
 
@@ -113,23 +128,49 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         disableButtons();
     }
 
-    public void setGameEngine(GameEngine gameEngine){
-        this.gameEngine = gameEngine;
-    }
-
+    /**
+     * initialize the Game Screen with a custom Board State
+     * @param boardState The state to start from
+     * @param scene the FXML Scene of the GameScreen
+     */
     public void init(String boardState, Scene scene) {
         thisScene = scene;
         this.gameEngine.addListener(this);
         this.gameEngine.setupInitalState(boardState);
         activePlayer = gameEngine.getActivePlayer();
         highlightActivePlayer(activePlayer);
+
+        if (isBotMode) {
+            Button resign = botColor == PlayerColor.WHITE ? p1Resign : p2Resign;
+            Button draw = botColor == PlayerColor.WHITE ? p1Draw : p2Draw;
+
+            resign.setDisable(true);
+            draw.setDisable(true);
+        }
+
         disableButtons();
     }
 
+    /**
+     * Assigns the game engine instance that this controller will listen to and delegate moves, promotions, and rule queries to.
+     * @param gameEngine the game engine backing this screen
+     */
+    public void setGameEngine(GameEngine gameEngine){
+        this.gameEngine = gameEngine;
+    }
+
+
+    /**
+     * Setter for the lan mode
+     */
     public void setLanMode(){
         this.lanMode = true;
     }
 
+
+    /**
+     * Disable the Resign and Draw Button for the opponent in the lan mode
+     */
     private void disableButtons() {
         if (!lanMode) return;
         Session s = Session.current();
@@ -140,12 +181,16 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         draw.setDisable(true);
     }
 
+    /**
+     * Method from the ChessEventListener that is called whenever a piece is placed at a location during initialization
+     * @param id the id of the field the piece is placed on
+     * @param piece the piece that is moved
+     */
     @Override
     public void onPlaced(String id, Piece piece){
         String pieceId = piecetoString(piece);
         Polygon field = (Polygon) boardPane.lookup("#" + id);
 
-        ImageView sourceView = (ImageView) thisScene.lookup("#" + pieceId);
         Image img = getPieceImage(piece);
 
         ImageView newPiece = new ImageView(img);
@@ -161,6 +206,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         boardPane.getChildren().add(newPiece);
     }
 
+    /**
+     * Apply the TileColor set in the ChessSettings to the actual Board Polygons
+     */
     private void applyTileColor() {
         StringBuilder style = new StringBuilder();
         if (settings.getDarkTiles() != null)
@@ -173,6 +221,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
             root.setStyle(style.toString());
     }
 
+    /**
+     * Loads the Images of the settings and stores them in a list for an easy access
+     */
     private void applyPiecePreviewImages() {
         List<ImageView> p1 = settings.getP1Pieces();
         if (p1 != null && p1.size() >= 6) {
@@ -194,6 +245,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Transforms a Color to a hex CSS color string.
+     * @param color the color to convert
+     * @return the CSS hex color representation
+     */
     private static String toCssColor(Color color) {
         return String.format(
                 "#%02X%02X%02X",
@@ -202,6 +258,14 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
                 (int)(color.getBlue() * 255)
         );
     }
+
+    /**
+     * The actual selection and movement method for the game
+     * When clicking on a tile with a piece all the possible moves are shown.
+     * When clicking on such a tile the move is performed
+     * When selecting a different tile the legal moves of this tile are shown
+     * @param mouseEvent the mouse click event fired on the clicked board tile (polygon)
+     */
     @FXML
     public void handleTileClick(MouseEvent mouseEvent) {
         Session s = Session.current();
@@ -303,6 +367,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Play one of the 5 available sounds if a piece is moved
+     */
     private void playSound(){
         Random rand  = new Random();
         int sound = rand.nextInt(1,5);
@@ -310,6 +377,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         sC.play(soundName);
     }
 
+    /**
+     * Clear the UI Indicator for the last move
+     */
     private void clearMove() {
         for (Node node : boardPane.getChildren()) {
             if (node instanceof Polygon poly) {
@@ -319,6 +389,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Clear the UI indicator for the piece highlights and move indicators
+     */
     private void clearHighlights() {
         for (Node node : boardPane.getChildren()) {
             if ( node instanceof ImageView iv ){
@@ -333,11 +406,21 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         boardPane.getChildren().removeIf(node -> node instanceof Path || node instanceof Circle);
     }
 
+    /**
+     * Setter for the bot mode along with the color the bot plays as.
+     * @param isBotMode {@code true} if this game is played against a bot, {@code false} otherwise
+     * @param botColor the color controlled by the bot, or {@code null} if not in bot mode
+     */
     public void setBotMode(boolean isBotMode, PlayerColor botColor) {
         this.isBotMode = isBotMode;
         this.botColor = botColor;
     }
 
+    /**
+     * Method that is called when a piece is moved to a different tile
+     * @param fromId id of the tile it has been on
+     * @param toId id of the tile it is moved to
+     */
     @Override
     public void move(String fromId, String toId) {
         ImageView piece = null;
@@ -365,6 +448,12 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
 
+    /**
+     * Method that is called whenever a piece is captured
+     * @param fromId id of the tile the moving piece is coming from
+     * @param toId id of the tile the moving piece is goint to
+     * @param capturedPiece the actual piece that is captured
+     */
     @Override
     public void capture(String fromId, String toId, Piece capturedPiece) {
 
@@ -374,6 +463,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         adaptLabels(capturedPiece);
     }
 
+    /**
+     * Changes the Label counter if a piece is captured
+     * @param capturedPiece the captured Piece
+     */
     private void adaptLabels(Piece capturedPiece) {
         String labelId = piecetoString(capturedPiece).replace("Img", "");
         Label capturedLabel = (Label) thisScene.lookup("#" + labelId);
@@ -384,7 +477,12 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
-    @Override 
+    /**
+     * Method that is called if a capture is enpassent
+     * @param enpassentId the id of the field the captured pawn is sitting on
+     * @param enpassentPiece the enpassent pawn
+     */
+    @Override
     public void enpassent(String enpassentId, Piece enpassentPiece){
         ImageView img = getPieceAtPolygon(enpassentId);
         boardPane.getChildren().remove(img);
@@ -392,32 +490,56 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
 
+    /**
+     * Method that is called if the game does end in a win
+     * @param player the player that has lost
+     */
     @Override
     public void gameEnd(PlayerColor player) {
         int winner = (player == PlayerColor.WHITE) ? 2 : 1;
         handleNetworkGameEnd("WIN", winner);
     }
+
+    /**
+     * Method that is called if one player resigns
+     * @param playerColor the player that did not resign
+     */
     private void resign(PlayerColor playerColor) {
         int winner = (playerColor == PlayerColor.WHITE) ? 1 : 2;
         handleNetworkGameEnd("RESIGN",winner);
     }
 
 
+    /**
+     * Method that is called if the game ends in a remis
+     */
     @Override
     public void remis() {
         handleNetworkGameEnd("REMIS", 0);
     }
 
+    /**
+     * Method that is called if the game ends by a draw proposal
+     */
     public void drawProposal() {
         handleNetworkGameEnd("PROPOSAL", 0);
     }
 
+    /**
+     * Method that is called if the game ends in a stalemate
+     * @param currentTurn the winner of looser of the stalemate
+     */
     @Override
     public void stalemate(PlayerColor currentTurn) {
         int winner = (currentTurn == PlayerColor.WHITE) ? 2 : 1;
         handleNetworkGameEnd("STALEMATE", winner);
     }
 
+    /**
+     * Mehtod to handle the game end. Also handles the game End in case of a network game
+     * @param reason One of the following: Stalemate, Proposal, Remis, Resign, Win
+     * @param winner int of the player that has won
+     */
     private void handleNetworkGameEnd(String reason, int winner) {
         Session s = Session.current();
 
@@ -434,6 +556,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Method to show the result overlay
+     * @param reason reason One of the following: Stalemate, Proposal, Remis, Resign, Win
+     * @param winner int of the player that has won
+     */
     public void showResultScreen(String reason, int winner) {
         p1Draw.setDisable(true);
         p2Draw.setDisable(true);
@@ -466,6 +593,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Methodt that is called whenever a promotion occures. In case of a network game only the promoting player gets the UI for this
+     * @param currentTurn
+     */
     @Override
     public void promotion(PlayerColor currentTurn) {
         // Ignore UI. bot always chooses queen when promoted.
@@ -487,6 +618,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * the actual promotion window and handling
+     * @param currentTurn
+     */
     public void prom(PlayerColor currentTurn){
         try {
             Stage promotionStage = new Stage();
@@ -514,6 +649,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Method that is called whenever a promotion has been finished
+     * @param coordId id of the field where the promotion occured
+     * @param piece the new piece
+     */
     @Override
     public void onPromoted(String coordId, Piece piece){
         ImageView pawnView = getPieceAtPolygon(coordId);
@@ -532,6 +672,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Mehtod that is called if a King is endangered and an action has to be performed to not lose the game
+     * @param king
+     * @param isEndangered
+     */
     @Override
     public void endangered(Piece king, boolean isEndangered) {
         if (endangeredKingView != null) {
@@ -549,6 +694,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         endangeredKingView = kingView;
     }
 
+    /**
+     * Method that is called if the player changes. If its the turn of the bot the evaluation of the best move is done and the best move is performed
+     * @param currentTurn
+     */
     @Override
     public void activePlayer(PlayerColor currentTurn) {
         this.activePlayer = currentTurn;
@@ -579,6 +728,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Indicate the enpassent movement on the UI
+     * @param from
+     * @param to
+     */
     public void enpassentCoord(String from, String to) {
         Polygon fromPoly = (Polygon) boardPane.lookup("#" + from);
         Polygon toPoly = (Polygon) boardPane.lookup("#" + to);
@@ -616,6 +770,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
 
+    /**
+     * Method to exit the game
+     */
     @FXML
     protected void onExitAction(){
         sC.play("button");
@@ -629,6 +786,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         c.changeScene("/Views/StartingScreen.fxml",header,vS);
     }
 
+    /**
+     * Mehtod to get the Piece at a given polygon
+     * @param tileId
+     * @return
+     */
     private ImageView getPieceAtPolygon(String tileId) {
         for (Node node : boardPane.getChildren()) {
             if (node instanceof ImageView && tileId.equals(node.getUserData())) {
@@ -638,6 +800,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         return null;
     }
 
+    /**
+     * Converts a given piece to a String so that the GameScreen can get the correct Image
+     * @param piece
+     * @return
+     */
     private String piecetoString(Piece piece){
         StringBuilder sb = new StringBuilder();
         switch(piece.getPlayer()){
@@ -655,6 +822,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         return sb.toString();
     }
 
+    /**
+     * Method to handle dissconnects and a player leaving the game
+     * @param reason
+     */
     // Mid-game disconnect: opponent's window closed / connection dropped.
     // Show one alert and return to the main menu (idempotent so it fires once).
     private void handleDisconnect(String reason) {
@@ -673,6 +844,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         c.changeScene("/Views/StartingScreen.fxml", header, vS);
     }
 
+    /**
+     * Method to attack the Network to the curretn Game and send all the needede messages over the network
+     * @param network
+     * @param engine
+     */
     public void attachHostBridge(NetworkLayer network, GameEngine engine) {
         network.addListener(new NetworkListener() {
             @Override
@@ -715,6 +891,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         });
     }
 
+    /**
+     * Method to attack the Network to the curretn Game and send all the needede messages over the network
+     * @param network
+     * @param engine
+     */
     public void attachClientBridge(NetworkLayer network, GameEngine engine) {
         network.addListener(new NetworkListener() {
             @Override
@@ -749,6 +930,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         });
     }
 
+    /**
+     * Method to propose a draw to the other player
+     * @param proposing
+     */
     private void drawProposal(int proposing){
         sC.play("button");
         try {
@@ -776,6 +961,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Mehtod that is called if a draw proposal is done by player 1
+     */
     @FXML
     protected void onP1DrawAction() {
         sC.play("button");
@@ -788,6 +976,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Mehtod that is called if player 1 resigns
+     */
     @FXML
     protected void onP1ResignAction() {
         sC.play("button");
@@ -796,6 +987,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         resign(PlayerColor.BLACK);
     }
 
+    /**
+     * Mehtod that is called if a draw proposal is done by player 2
+     */
     @FXML
     protected void onP2DrawAction() {
         sC.play("button");
@@ -808,6 +1002,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         }
     }
 
+    /**
+     * Mehtod that is called if player 1 resigns
+     */
     @FXML
     protected void onP2ResignAction() {
         sC.play("button");
@@ -817,6 +1014,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
 
+    /**
+     * Method that is called if a player declines the draw offer
+     * @param proposing
+     */
     public void declined(int proposing) {
         Session s = Session.current();
         if (s.network != null) {
@@ -825,6 +1026,10 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         showDeclinedToast(proposing);
     }
 
+    /**
+     *
+     * @param proposing
+     */
     private void showDeclinedToast(int proposing) {
         if (proposing == 1){
             Toast.makeText(stackPane, p2NameLabel.getText() + " has declined the Draw Proposal");
@@ -833,13 +1038,26 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
             Toast.makeText(stackPane, p1NameLabel.getText() + " has declined the Draw Proposal");
         }
     }
+
+    /**
+     * Method to swap the norma Pawn Image to a Duck Image
+     */
     public void p1Duck(){
         p1PawnImg.setImage(settings.getP1Pieces().get(6).getImage());
     }
+
+    /**
+     *Method to swap the normal Pawn Image to a Duck Image
+     */
     public void p2Duck(){
        p2PawnImg.setImage(settings.getP2Pieces().get(6).getImage());
     }
 
+    /**
+     * Method to get the Image of a given Piece
+     * @param piece
+     * @return
+     */
     private Image getPieceImage(Piece piece) {
         List<ImageView> pieces = (piece.getPlayer() == PlayerColor.WHITE)
                 ? p1Views
@@ -856,6 +1074,11 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         return pieces.get(index).getImage();
     }
 
+
+    /**
+     * Method to highlight the currently active player
+     * @param playerColor
+     */
     private void highlightActivePlayer(PlayerColor playerColor) {
         if (activePlayer == PlayerColor.WHITE) {
             activePlayerLabel.setText(p1NameLabel.getText());

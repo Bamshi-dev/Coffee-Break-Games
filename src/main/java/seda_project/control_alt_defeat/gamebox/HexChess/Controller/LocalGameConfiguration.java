@@ -26,12 +26,18 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     @FXML
     private ToggleSwitch isP1Bot, isP2Bot;
 
+    /**
+     * Method to get back to the previous screen
+     */
     @FXML
     public void onBackAction() {
         sC.play("button");
         c.backScene(header, vS);
     }
 
+    /**
+     * Method to start the Game.
+     */
     @FXML
     public void onStartAction() {
         sC.play("button");
@@ -83,6 +89,9 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         }
     }
 
+    /**
+     * Method to bring the user to the Board Designer
+     */
     @FXML
     public void onCustomBoardAction() {
         BoardDesigner controller = (BoardDesigner) c.changeScene("/Views/HexChess/BoardDesigner.fxml",header,vS);
@@ -90,7 +99,12 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
 
-
+    /**
+     * Method to set the notation and names of players if coming from the Board Designer
+     * @param notation Starting Game State in a FEN linke Notation
+     * @param p1Name
+     * @param p2Name
+     */
     public void boardSelection(String notation, String p1Name, String p2Name) {
         boardState = notation;
         if (p1Name != null){
@@ -101,6 +115,11 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         }
     }
 
+    /**
+     * Method to handle bot selection. If one Bot is selected and the other one is selected this deselects the currently active one so that only one bot is active
+     * @param newValue
+     * @param player
+     */
     private void changeBot(boolean newValue, int player){
         if (player == 1) {
             if (newValue) {

@@ -24,11 +24,20 @@ public class SoundController {
         return instance;
     }
 
+    /**
+     * Play Sound file with volume 1
+     * @param name the name of the sound file
+     */
     //Method for sound Indicators like buttons etc.
     public void play(String name) {
         play(name, 1.0);
     }
 
+    /**
+     * Play a Sound file with a specified volume
+     * @param name the name of the sound file
+     * @param volume the volume of the sound to be played. Double in between 0 and 1
+     */
     public void play(String name, double volume) {
         if (muteState) return;
         AudioClip clip = sfxclips.computeIfAbsent(name, key -> {
@@ -39,11 +48,19 @@ public class SoundController {
         clip.play(volume);
     }
 
-    //Method for background Music
+    /**
+     * Play a sound file until it is stopped with a volume of 1
+     * @param name the name of the sound file
+     */
     public void playLooping(String name) {
         playLooping(name, 1.0);
     }
 
+    /**
+     * Play a sound file with a specified volume until it is stopped
+     * @param name the name of the sound file
+     * @param volume the volume of the sound to be played. Double in between 0 and 1
+     */
     public void playLooping(String name, double volume) {
         if (konami) return;
 
@@ -61,6 +78,9 @@ public class SoundController {
         mediaPlayer.play();
     }
 
+    /**
+     * Stop the currently running music
+     */
     public void stopLooping() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -68,6 +88,9 @@ public class SoundController {
         }
     }
 
+    /**
+     * Activate the Konami Code state in which only the music of Nemesis (Gradius) is played
+     */
     public void activateKonami() {
         if (!konami) {
             konami = true;
@@ -77,6 +100,10 @@ public class SoundController {
 
     }
 
+
+    /**
+     * Radio Player for the Konami code. If one has finished play the next one
+     */
     private void next() {
         Media media = new Media(getClass().getResource("/Sounds/konami_" + konamiSound + ".wav").toString());
         mediaPlayer = new MediaPlayer(media);
@@ -92,10 +119,16 @@ public class SoundController {
         mediaPlayer.play();
     }
 
+    /**
+     * @return returns the mute state of the sound Controller
+     */
     public boolean getMute() {
         return muteState;
     }
 
+    /** Set the mute state of the sound Controller and play/stop the music accordingly
+     * @param muteState
+     */
     public void setMute(boolean muteState) {
         this.muteState = muteState;
         if (muteState) {
@@ -105,12 +138,19 @@ public class SoundController {
         }
     }
 
+
+    /**
+     * Pause the music
+     */
     public void pause() {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
     }
 
+    /**
+     * Resume the music
+     */
     public void resume() {
         if (mediaPlayer != null) {
             mediaPlayer.play();

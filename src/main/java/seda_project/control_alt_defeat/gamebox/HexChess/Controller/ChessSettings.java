@@ -56,12 +56,19 @@ public class ChessSettings extends Controller implements Initializable {
     private List<Image> p1OriginalImages;
     private List<Image> p2OriginalImages;
 
+
+    /**
+     * Navigates back to the previous screen.
+     */
     @FXML
     protected void onBackAction() {
         sC.play("button");
         c.backScene(header,vS);
     }
 
+    /**
+     * Saves the currently selected piece and tile colors to the global PieceSettings.
+     */
     @FXML
     protected void onSaveAction() {
         sC.play("button");
@@ -77,6 +84,9 @@ public class ChessSettings extends Controller implements Initializable {
         Toast.makeText(stackPane, toastMsg);
     }
 
+    /**
+     * Resets all visual configurations (pieces and tiles) to their default values.
+     */
     @FXML
     protected void onDefaultAction() {
         sC.play("button");
@@ -105,6 +115,9 @@ public class ChessSettings extends Controller implements Initializable {
         lightPolygon.setFill(lightTileColor);
     }
 
+    /**
+     * Triggers the recoloring of Player 1's pieces based on the selected color.
+     */
     @FXML
     protected void onP1ColorAction(){
         Color c = p1ColorPicker.getValue();
@@ -112,12 +125,24 @@ public class ChessSettings extends Controller implements Initializable {
         p1Color = c;
     }
 
+    /**
+     * Triggers the recoloring of Player 2's pieces based on the selected color.
+     */
     @FXML
     protected void onP2ColorAction(){
         Color c = p2ColorPicker.getValue();
         redraw(c, p2Pieces, p2OriginalImages,p2DefaultColor);
         p2Color = c;
     }
+
+    /**
+     * Manipulates the pixels of the provided piece images to apply a new color.
+     *
+     * @param c         The new target color to apply.
+     * @param pieces    The list of ImageViews containing the pieces to recolor.
+     * @param originals The list of original uncolored piece images.
+     * @param oldColor  The color threshold to replace in the original image.
+     */
     private void redraw(Color c, List<ImageView> pieces,List<Image> originals, Color oldColor) {
         for (int i = 0; i < pieces.size(); i++) {
             Image original = originals.get(i);
@@ -184,21 +209,38 @@ public class ChessSettings extends Controller implements Initializable {
         lightPolygon.setFill(lightTileColor);
 
     }
+
+    /**
+     * Updates the dark tile preview polygon to match the ColorPicker selection.
+     */
     @FXML
     protected void onDarkTileAction() {
         darkTileColor = changeTileColor(darkTilesColorPicker,darkPolygon);
     }
 
+    /**
+     * Updates the light tile preview polygon to match the ColorPicker selection.
+     */
     @FXML
     protected void onLightTileaAction() {
         lightTileColor = changeTileColor(lightTilesColorPicker,lightPolygon);
     }
 
+    /**
+     * Updates the normal tile preview polygon to match the ColorPicker selection.
+     */
     @FXML
     protected void onNormalTileAction() {
         normalTileColor = changeTileColor(normalTilesColorPicker,normalPolygon);
     }
 
+    /**
+     * Helper method to apply a selected color from a ColorPicker to a target Polygon.
+     *
+     * @param colorPicker The source color picker.
+     * @param polygon     The target UI polygon to preview the color on.
+     * @return The newly selected color.
+     */
     private Color changeTileColor(ColorPicker colorPicker, Polygon polygon){
         Color newColor = colorPicker.getValue();
         polygon.setFill(newColor);

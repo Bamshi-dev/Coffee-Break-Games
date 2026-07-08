@@ -32,6 +32,11 @@ public class Promotion extends Controller {
     @FXML
     private ImageView RookImgView, KnightImgView,  BishopImgView,  QueenImgView;
 
+    /**
+     * Sends the pieces to which one can promote to.
+     * @param views all the ImageViews of the active player
+     * @param gameEngine the GameEngine to which the result is send
+     */
     public void sendPieces(List<ImageView> views, GameEngine gameEngine) {
         this.gameEngine = gameEngine;
         RookImgView.setImage(views.get(1).getImage());
@@ -40,6 +45,10 @@ public class Promotion extends Controller {
         QueenImgView.setImage(views.get(4).getImage());
     }
 
+    /**
+     * Preselection of one piece. This piece selected piece is highlighted
+     * @param event
+     */
     @FXML
     protected void onPieceClickedAction(MouseEvent event){
         deselectall();
@@ -48,6 +57,9 @@ public class Promotion extends Controller {
         selected = view;
     }
 
+    /**
+     * Deselect all pieces so there are not two pieces highlighted at the same time
+     */
     private void deselectall() {
         RookImgView.getStyleClass().clear();
         KnightImgView.getStyleClass().clear();
@@ -55,6 +67,9 @@ public class Promotion extends Controller {
         QueenImgView.getStyleClass().clear();
     }
 
+    /**
+     * Handles the actual promotion if a piece is selected and the  promotion button is clicked
+     */
     @FXML
     protected void onPromoteAction(){
         sC.play("button");

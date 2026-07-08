@@ -22,12 +22,6 @@
             <Image url="@../Images/others/egg.png"/>
         </ImageView>
     </HBox>
-    <HBox alignment="CENTER" layoutX="132.0" layoutY="10.0">
-        <ImageView fitHeight="15.0" fitWidth="15.0" onMouseClicked="#onQuestionAction" pickOnBounds="true"
-                   preserveRatio="true" styleClass="mute">
-            <Image url="@../Images/others/question.png"/>
-        </ImageView>
-    </HBox>
     <HBox alignment="CENTER">
         <ImageView fx:id="muteButton" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#changeMute" pickOnBounds="true"
                    preserveRatio="true" styleClass="mute">

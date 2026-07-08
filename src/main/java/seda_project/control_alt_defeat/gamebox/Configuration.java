@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class Configuration {
 
     private static Configuration instance;
@@ -26,6 +28,13 @@ public class Configuration {
     }
 
 
+    /**
+     * Calculates the available DeckSizes for the Memory Game and changes the appearance of the UI.
+     * @param tupleSize the amount of cards one tuple is build of
+     * @param smallGame the RadioButton for the small Game (few Cards and Tuples)
+     * @param mediumGame the RadioButton for a medium Game (normal Cards and Tuples)
+     * @param largeGame the RadioButton for a large Game (many Cards and Tuples)
+     */
     public void deckSize(int tupleSize, RadioButton smallGame, RadioButton mediumGame, RadioButton largeGame) {
         int max = 45 / tupleSize;
         int stepsize = max / 3;
@@ -53,6 +62,13 @@ public class Configuration {
         }
     }
 
+    /**
+     * Cheks if a name has more than 16 characters
+     * @param name the Name to be checked
+     * @param player the player Number (eiter 1 or 2)
+     * @param statusLabel the label to show the error message in case of one being there
+     * @return if the name has less character this methods does return ture otherwise it will return false
+     */
     public boolean checkNameLength(String name, int player, Label statusLabel) {
         int max = 16;
         int length = name.length();
@@ -64,6 +80,13 @@ public class Configuration {
         return true;
     }
 
+
+    /**
+     * If a User does not Input Name replace it with "Player" and the player number
+     * @param name the input of the User
+     * @param player the number of the player
+     * @return
+     */
     public String checkNameInput(String name, int player) {
         if (name.equals("")) {
             name = "Player " + player;
@@ -71,11 +94,22 @@ public class Configuration {
         return name;
     }
 
+
+    /**
+     * This method does select the first Player
+     * @return the integer that is the first player
+     */
     public int ActivePlayer() {
-        //TODO create function that either returns 1 or 2
-        return 1;
+        return new Random().nextInt(2) + 1;
     }
 
+    /**
+     * This is a universal method to trigger a scene change
+     * @param address is the location of the fxml file of the new scene
+     * @param header is a VBox element with the fx:id header to get the stage
+     * @param vS is the viewStack to store the scene history. Manly used for the backwards movement
+     * @return returns the controller for the next scene
+     */
     public Object changeScene(String address, VBox header, ViewStack vS) {
         try {
             FXMLLoader loader = new FXMLLoader(Configuration.class.getResource(address));
@@ -107,6 +141,12 @@ public class Configuration {
         return null;
     }
 
+    /**
+     * This method takes the last element of the ViewStack and displays it. So it can be used to navigate backwars
+     * @param header is a VBox element with the fx:id header to get the stage
+     * @param vS is the viewStack to store the scene history. Manly used for the backwards movement
+     * @return the Controller of the next scene
+     */
     public Object backScene(VBox header, ViewStack vS) {
         try {
             vS.popFxmlLoader();
@@ -129,6 +169,12 @@ public class Configuration {
     }
 
 
+    /**
+     * This method checks whether the Game- and Resultscreens should be displayed upside down
+     * @param player1Name the Name of the first Player
+     * @param player2Name the Name of the second Player
+     * @return if a name matches one of the strings true is returned
+     */
     public boolean checkFlip(String player1Name, String player2Name) {
         if (player1Name.equals("Upsidedown")) {
             return true;
@@ -148,6 +194,12 @@ public class Configuration {
         return player2Name.equals("Grumm");
     }
 
+    /**
+     * This method checks whether the background of the Gamae- and Resultscreen should have rainbow color
+     * @param player1Name the Name of the first Player
+     * @param player2Name the Name of the second Player
+     * @return if a name matches one of the strings true is returned
+     */
     public boolean checkRainbow(String player1Name, String player2Name) {
         if (player1Name.equals("jeb_")) {
             return true;

@@ -33,12 +33,22 @@ public class BoardSelection extends Controller implements Initializable {
     @FXML
     private HexButton useButton, deleteButton;
 
+    /**
+     * Receives the list of available board states from the BoardDesigner.
+     *
+     * @param designer     The BoardDesigner controller instance.
+     * @param listofBoards The list of currently saved custom board designs.
+     */
     public void passBoards(BoardDesigner designer, List<BoardDesignState> listofBoards) {
         this.designer = designer;
         this.boards = listofBoards;
         createList();
     }
 
+    /**
+     * Populates the scrollable UI list with the available board designs.
+     * Sets up click listeners for selecting specific board states.
+     */
     private void createList(){
         if (boards != null) {
             for (BoardDesignState board : boards) {
@@ -60,12 +70,18 @@ public class BoardSelection extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Removes the "selectedItem" styling from all listed board state labels.
+     */
     private void deselectAll() {
         for (HexLabel l : availableStates) {
             l.getStyleClass().remove("selectedItem");
         }
     }
 
+    /**
+     * Closes the board selection window and returns to the previous screen.
+     */
     @FXML
     protected void onBackAction(){
         sC.play("button");
@@ -73,6 +89,9 @@ public class BoardSelection extends Controller implements Initializable {
         stage.close();
     }
 
+    /**
+     * Deletes the currently selected board state from the list and the saved JSON file.
+     */
     @FXML
     protected void onDeleteAction(){
         sC.play("button");
@@ -86,6 +105,9 @@ public class BoardSelection extends Controller implements Initializable {
         selectedboard = null;
     }
 
+    /**
+     * Loads the currently selected board state into the BoardDesigner and closes the selection window.
+     */
     @FXML
     protected void onUseAction(){
         sC.play("button");

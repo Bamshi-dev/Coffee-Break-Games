@@ -26,6 +26,10 @@ public class WaitForOpponent extends Controller {
 
     @FXML
     private Button startButton;
+
+    /**
+     * Method to get Back to the previous screen
+     */
     @FXML
     protected void onBackAction() {
         sC.play("button");
@@ -40,6 +44,9 @@ public class WaitForOpponent extends Controller {
         }
     }
 
+    /**
+     * Sets a player Ready if not already and updates the state for the other network player
+     */
     @FXML
     protected void onStartGameAction() {
         sC.play("button");
@@ -55,6 +62,11 @@ public class WaitForOpponent extends Controller {
         maybeStartCountdown();
     }
 
+    /**
+     * Pass the Data of the joining Player to this scene and the network and retrieve the data of the host
+     * @param playerName
+     * @param ipAddress
+     */
     public void passJoinData(String playerName, String ipAddress) {
         myname = playerName;
         Session s = Session.current();
@@ -87,6 +99,11 @@ public class WaitForOpponent extends Controller {
         layer.send(new ChessMessage.Hello(playerName));
     }
 
+    /**
+     * Pass the data of the host to this scene and to the network
+     * @param hostName
+     * @param boardState
+     */
     public void passHostData(String hostName, String boardState){
         myname = hostName;
         this.boardState = boardState;
@@ -121,6 +138,11 @@ public class WaitForOpponent extends Controller {
                 })
         );
     }
+
+    /**
+     * Attack a listener for the host to listen for network messages
+     * @param layer
+     */
     private void attachHostListener(NetworkLayer layer) {
         layer.addListener(new NetworkListener() {
             @Override
@@ -134,6 +156,11 @@ public class WaitForOpponent extends Controller {
         });
     }
 
+    /**
+     * Method to handle the messages coming to the HostListener
+     * @param layer
+     * @param msg
+     */
     private void handleHostMessage(NetworkLayer layer, Message msg) {
         if (msg instanceof ChessMessage.Hello h) {
             Session s = Session.current();
@@ -146,6 +173,11 @@ public class WaitForOpponent extends Controller {
             maybeStartCountdown();
         }
     }
+
+    /**
+     * Method to handle Messages coming to the Join Listener
+     * @param msg
+     */
     private void handleJoinMessage(Message msg) {
         if (msg instanceof ChessMessage.LobbyInfo info) {
             Session.current().peerName = info.hostName();
@@ -160,6 +192,9 @@ public class WaitForOpponent extends Controller {
     }
 
 
+    /**
+     * Check wether both players are ready and the game start can be scheduled
+     */
     private void maybeStartCountdown() {
         Session s = Session.current();
         if (!s.isHost) return;
@@ -170,6 +205,10 @@ public class WaitForOpponent extends Controller {
         scheduleStartGame(delayMs);
     }
 
+    /**
+     * Schedule the gamestart
+     * @param delayMs
+     */
     private void scheduleStartGame(long delayMs) {
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
         startButton.setDisable(true);
@@ -178,6 +217,9 @@ public class WaitForOpponent extends Controller {
         pt.play();
     }
 
+    /**
+     * Start the actual game
+     */
     private void startGameNow() {
         sC.stopLooping();
         sC.playLooping("chess_background",.1);
@@ -234,12 +276,19 @@ public class WaitForOpponent extends Controller {
     }
 
 
+    /**
+     * Method to handle the player Join
+     * @param joinN
+     */
     private void playerJoin(String joinN) {
         if (loadingDots != null) loadingDots.stop();
         opponentNameLabel.setText(joinN);
         statusLabel.setText("Waiting for " + joinN + " to be ready!");
     }
 
+    /**
+     * Method to update the status Label for both players
+     */
     private void updatePeerStatus() {
         Session s = Session.current();
         if (s.localReady && s.peerReady) {
@@ -255,6 +304,9 @@ public class WaitForOpponent extends Controller {
         }
     }
 
+    /**
+     * Stops the announcer of the host, so that the host is no longer shown to the outside if there has somebody joined
+     */
     private void stopAnnouncer() {
         if (announcer != null) {
             try { announcer.close(); } catch (Exception ignored) {}

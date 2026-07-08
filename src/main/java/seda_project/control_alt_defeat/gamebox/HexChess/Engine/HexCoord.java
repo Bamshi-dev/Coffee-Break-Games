@@ -12,6 +12,11 @@ public class HexCoord {
         this.col = col;
     }
 
+    /**
+     * Transform a String into a HexCoord
+     * @param id
+     * @return
+     */
     public static HexCoord transformIdToHex(String id){
         char[] parts = id.toCharArray();
         int col = parts[0]- 'a';
@@ -19,10 +24,20 @@ public class HexCoord {
         return new HexCoord(col,row);
     }
 
+    /**
+     * Retuns the Id of a HexCoord
+     * @return
+     */
     public String transformHextoId(){
         return String.valueOf((char)(col +'a'))+row;
     }
 
+    /**
+     * Checks wether this Coord is a valid one
+     * @param col
+     * @param row
+     * @return
+     */
     public boolean isValid(int col, int row){
         if (col < 0 || col > 10) {
             return false;

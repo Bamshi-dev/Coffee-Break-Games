@@ -26,6 +26,10 @@ public class ResultScreen extends Controller{
     @FXML
     private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel, statusLabel;
 
+
+    /**
+     * Initializes network listeners for the result screen
+     */
     public void initNetwork() {
         Session s = Session.current();
         if (s.network != null) {
@@ -61,6 +65,9 @@ public class ResultScreen extends Controller{
         }
     }
 
+    /**
+     * Evaluates whether both players are ready to restart.
+     */
     private void checkStart() {
         Session s = Session.current();
         if (s.isHost && s.localReady && s.peerReady) {
@@ -70,6 +77,10 @@ public class ResultScreen extends Controller{
         }
     }
 
+    /**
+     * Schedules a visual countdown leading to a fresh game restart.
+     * @param delayMs
+     */
     private void scheduleStartGame(long delayMs) {
         statusLabel.setVisible(true);
         statusLabel.setText("Restarting in " + (delayMs / 1000) + "s...");
@@ -78,6 +89,13 @@ public class ResultScreen extends Controller{
         pt.play();
     }
 
+    /**
+     * Updates the text labels for player names and their base scores.
+     * @param p1Name
+     * @param p2Name
+     * @param p1Points
+     * @param p2Points
+     */
     public void handData(String p1Name, String p2Name, String p1Points, String p2Points){
         p1NameLabel.setText(p1Name);
         p2NameLabel.setText(p2Name);
@@ -85,16 +103,27 @@ public class ResultScreen extends Controller{
         p2Score.setText(""+p2Points);
     }
 
+    /**
+     * Processes a definitive checkmate victory scenario.
+     * @param winner
+     */
     public void winner(int winner){
         resultLabel.setText("Checkmate");
         onePoint(winner);
     }
 
+    /**
+     * Processes a mutual tie (Remis) scenario, awarding half points evenly.
+     */
     public void remis(){
         resultLabel.setText("Remis");
         halfPoint();
     }
 
+    /**
+     * Process a stalemate scenario
+     * @param winner
+     */
     public void stalemate(int winner){
         resultLabel.setText("Stalemate");
         if ((winner == 1)) {
@@ -110,6 +139,9 @@ public class ResultScreen extends Controller{
         }
     }
 
+    /**
+     * Method to bring a user back to the Main Menu
+     */
     public void onExitAction() {
         sC.play("button");
         sC.stopLooping();
@@ -119,6 +151,10 @@ public class ResultScreen extends Controller{
         c.changeScene("/Views/StartingScreen.fxml",header,vS);
     }
 
+
+    /**
+     * Method to start a new round. If in a Network Game just set tise player ready
+     */
     public void onPlayAgainAction() {
         sC.play("button");
         Session s = Session.current();
@@ -135,6 +171,9 @@ public class ResultScreen extends Controller{
         }
     }
 
+    /**
+     * Start a new Game Enginge and move all Player to the GameScreen that is linked to this Engine
+     */
     private void startGameNow() {
         Session s = Session.current();
 
@@ -216,16 +255,27 @@ public class ResultScreen extends Controller{
         }
     }
 
+    /**
+     * Process a Game that has ended in a Draw
+     */
     public void draw() {
         resultLabel.setText("Draw Proposal");
         halfPoint();
     }
 
+    /**
+     * Process a Game that has ended with a resign
+     * @param winner
+     */
     public void resign(int winner) {
         resultLabel.setText("Resigned");
         onePoint(winner);
     }
 
+    /**
+     * Method to award one Point
+     * @param winner
+     */
     private void onePoint(int winner) {
         if ((winner == 1)) {
             p1Score.setText(String.valueOf(Double.parseDouble(p1Score.getText()) + 1.0));
@@ -238,6 +288,9 @@ public class ResultScreen extends Controller{
         }
     }
 
+    /**
+     * Method to award half a Point
+     */
     private void halfPoint() {
         p1Score.setText(String.valueOf(Double.parseDouble(p1Score.getText()) + .5));
         p2Score.setText(String.valueOf(Double.parseDouble(p2Score.getText()) + .5));

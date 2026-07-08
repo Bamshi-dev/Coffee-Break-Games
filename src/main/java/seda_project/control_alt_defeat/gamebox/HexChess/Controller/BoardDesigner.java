@@ -28,8 +28,10 @@ import seda_project.control_alt_defeat.gamebox.ui.Toast;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +42,7 @@ public class BoardDesigner extends Controller implements Initializable {
     private boolean initial = false;
     private List<List<Polygon>> rows;
     private Map<String, Label> pieceLabels;
-    private JsonHandler jsonHandler = new JsonHandler();
+    private final JsonHandler jsonHandler = new JsonHandler();
     private List<BoardDesignState> listofBoards;
     private String p1Name, p2Name;
 
@@ -79,6 +81,15 @@ public class BoardDesigner extends Controller implements Initializable {
             j7, j6, j5, j4, j3, j2, j1,
             k6, k5, k4, k3, k2, k1;
 
+    private static String toCssColor(Color color) {
+        return String.format(
+                "#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255)
+        );
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
@@ -101,6 +112,11 @@ public class BoardDesigner extends Controller implements Initializable {
         );
     }
 
+    /**
+     * This method is Called once a ImageView receives a mouse press and hold.
+     *
+     * @param mouseEvent The mouse event to work with the drag and drop
+     */
     @FXML
     public void dragStart(MouseEvent mouseEvent) {
         initial = true;
@@ -135,6 +151,11 @@ public class BoardDesigner extends Controller implements Initializable {
         mouseEvent.consume();
     }
 
+    /**
+     * This method is fired whenever a drag event is over a polygon to highlight the location the piece would be placed on
+     *
+     * @param event
+     */
     @FXML
     private void dragOver(DragEvent event) {
         if (event.getDragboard().hasString()) {
@@ -146,6 +167,11 @@ public class BoardDesigner extends Controller implements Initializable {
         event.consume();
     }
 
+    /**
+     * This method is used for the end of a drag and drop action. If the drag does not end over a polygon restore the state it before the drag has started. If the drag does end over a polygon place the polygon in this location and adapt the labels accordingly
+     *
+     * @param event
+     */
     @FXML
     private void dragDrop(DragEvent event) {
         Object target = event.getSource();
@@ -165,6 +191,11 @@ public class BoardDesigner extends Controller implements Initializable {
         event.consume();
     }
 
+    /**
+     * This method is called when moving out of a dragged over polygon. So that this polygon has the same appearance as before
+     *
+     * @param event
+     */
     @FXML
     private void dragExited(DragEvent event) {
         Polygon target = (Polygon) event.getSource();
@@ -173,6 +204,9 @@ public class BoardDesigner extends Controller implements Initializable {
         target.setStrokeType(StrokeType.INSIDE);
     }
 
+    /**
+     * @param event
+     */
     @FXML
     private void dragDone(DragEvent event) {
         if (event.getTransferMode() == null) {
@@ -184,46 +218,53 @@ public class BoardDesigner extends Controller implements Initializable {
         event.consume();
     }
 
+    /**
+     * This method is called when the "Back" Button in the scene is clicked. Depending on the controller we get we send different names back to the next scene to restore name Values
+     */
     @FXML
-    protected void onBackAction(){
+    protected void onBackAction() {
         sC.play("button");
-        Object controller = c.backScene(header,vS);
-        if (controller instanceof LocalGameConfiguration lGC){
+        Object controller = c.backScene(header, vS);
+        if (controller instanceof LocalGameConfiguration lGC) {
             lGC.boardSelection(null, p1Name, p2Name);
         }
-        if (controller instanceof HostLanConfiguration hLC){
+        if (controller instanceof HostLanConfiguration hLC) {
             hLC.boardSelection(null, p1Name);
         }
     }
 
+    /**
+     * This method is called when the "Export" Button in the scene is clicked. If the current state is a valid state it is written to a JSON-File with the available pieces. If not the user is notified that this is an invalid state.
+     */
     @FXML
-    protected void onExportAction(){
+    protected void onExportAction() {
         sC.play("button");
         boolean exist = false;
-        for (BoardDesignState state :listofBoards){
-            if(state.getFENState().contains(engine.createNotation(rows))){
+        for (BoardDesignState state : listofBoards) {
+            if (state.getFENState().contains(engine.createNotation(rows))) {
                 exist = true;
             }
         }
         if (!exist) {
-            if (validateBoardState()){
-                listofBoards.add(jsonHandler.createNewState(engine.createNotation(rows), engine.getPieceAmounts(),engine.getActivePlayer()));
+            if (validateBoardState()) {
+                listofBoards.add(jsonHandler.createNewState(engine.createNotation(rows), engine.getPieceAmounts(), engine.getActivePlayer()));
                 jsonHandler.writeBoardStates(listofBoards);
-                Toast.makeText(stackPane,"State was added!");
-            }
-            else {
+                Toast.makeText(stackPane, "State was added!");
+            } else {
                 sC.play("error");
-                Toast.makeText(stackPane,"You can only add valid States");
+                Toast.makeText(stackPane, "You can only add valid States");
             }
-        }
-        else {
+        } else {
             sC.play("error");
-            Toast.makeText(stackPane,"This State does already exist");
+            Toast.makeText(stackPane, "This State does already exist");
         }
     }
 
+    /**
+     * This metho is called when the "Import" Button in the scene is clicked. This opens a new window in which the user can select and load/delete a state or can just cancel the action to get back to the Board Designer
+     */
     @FXML
-    protected void onImportAction(){
+    protected void onImportAction() {
         sC.play("button");
         try {
             Stage selectionStage = new Stage();
@@ -236,51 +277,66 @@ public class BoardDesigner extends Controller implements Initializable {
             selectionStage.show();
 
             BoardSelection controller = loader.getController();
-            controller.passBoards(this,listofBoards);
-        }
-        catch (IOException e) {
+            controller.passBoards(this, listofBoards);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * This method is called if the Button "Go First" for Player 1 is clicked. This sets the player to start be active if this state is loaded to Player 1 e.g. White
+     */
     @FXML
-    protected void onP1FirstAcion(){
+    protected void onP1FirstAcion() {
         sC.play("button");
         p1GoFirst.getStyleClass().add("ready");
         p2GoFirst.getStyleClass().remove("ready");
         engine.activePlayer(1);
     }
 
+    /**
+     * This method is called if the Button "Go First" for Player 2 is clicked. This sets the player to start be active if this state is loaded to Player 2 e.g. Black
+     */
     @FXML
-    protected void onP2FirstAction(){
+    protected void onP2FirstAction() {
         sC.play("button");
         p2GoFirst.getStyleClass().add("ready");
         p1GoFirst.getStyleClass().remove("ready");
         engine.activePlayer(2);
     }
 
+    /**
+     * This method is called if the Button "Use" is clicked. If the state is a valid one then this state is transformed to a FEN like notation and returned to the Controller
+     */
     @FXML
-    protected void onUseAction(){
+    protected void onUseAction() {
         sC.play("button");
         if (validateBoardState()) {
-            Object controller = c.backScene(header,vS);
-            if (controller instanceof LocalGameConfiguration lGC){
+            Object controller = c.backScene(header, vS);
+            if (controller instanceof LocalGameConfiguration lGC) {
                 lGC.boardSelection(engine.createNotation(rows), p1Name, p2Name);
             }
             if (controller instanceof HostLanConfiguration hLC) {
                 hLC.boardSelection(engine.createNotation(rows), p1Name);
             }
-        }
-        else {
+        } else {
             sC.play("error");
-            Toast.makeText(stackPane,"You can only use valid States");
+            Toast.makeText(stackPane, "You can only use valid States");
         }
     }
 
+    /**
+     * Disables the useButton if coming for the HexChess Menu
+     */
     public void disableUse() {
         useButton.setDisable(true);
     }
 
+    /**
+     * Handles the logic and UI updates for placing a game piece onto a specific field on the board.
+     * @param pieceId The unique CSS identifier (ID) of the piece being placed.
+     * @param fieldId The unique CSS identifier (ID) of the target polygon field on the board.
+     */
     private void handlePiecePlaced(String pieceId, String fieldId) {
         Polygon field = (Polygon) boardPane.lookup("#" + fieldId);
         field.setUserData(pieceId);
@@ -331,6 +387,11 @@ public class BoardDesigner extends Controller implements Initializable {
         boardPane.getChildren().add(piece);
     }
 
+
+    /**
+     * Updates the text values of UI labels tracking piece metrics.
+     * @param values A map containing look-up keys matching the piece labels map and the corresponding text values to apply.
+     */
     private void applyLabelValues(Map<String, String> values) {
         values.forEach((key, text) -> {
             Label label = pieceLabels.get(key);
@@ -340,23 +401,29 @@ public class BoardDesigner extends Controller implements Initializable {
         });
     }
 
+    /**
+     * Initializes the internal lookup map that links unique piece image keys to their respective JavaFX UI count labels for both players.
+     */
     private void buildPieceLabelsMap() {
         pieceLabels = new HashMap<>(Map.ofEntries(
-                Map.entry("p1PawnImg",   p1PawnAmountLabel),
-                Map.entry("p1RookImg",   p1RookAmountLabel),
+                Map.entry("p1PawnImg", p1PawnAmountLabel),
+                Map.entry("p1RookImg", p1RookAmountLabel),
                 Map.entry("p1KnightImg", p1KnightAmountLabel),
                 Map.entry("p1BishopImg", p1BishopAmountLabel),
-                Map.entry("p1QueenImg",  p1QueenAmountLabel),
-                Map.entry("p1KingImg",   p1KingAmountLabel),
-                Map.entry("p2PawnImg",   p2PawnAmountLabel),
-                Map.entry("p2RookImg",   p2RookAmountLabel),
+                Map.entry("p1QueenImg", p1QueenAmountLabel),
+                Map.entry("p1KingImg", p1KingAmountLabel),
+                Map.entry("p2PawnImg", p2PawnAmountLabel),
+                Map.entry("p2RookImg", p2RookAmountLabel),
                 Map.entry("p2KnightImg", p2KnightAmountLabel),
                 Map.entry("p2BishopImg", p2BishopAmountLabel),
-                Map.entry("p2QueenImg",  p2QueenAmountLabel),
-                Map.entry("p2KingImg",   p2KingAmountLabel)
+                Map.entry("p2QueenImg", p2QueenAmountLabel),
+                Map.entry("p2KingImg", p2KingAmountLabel)
         ));
     }
 
+    /**
+     * Loads and assigns custom piece artwork from the settings configuration onto the graphical piece display slots for both players.
+     */
     private void loadImages() {
         List<ImageView> p1Pieces = settings.getP1Pieces();
         if (p1Pieces != null) {
@@ -378,6 +445,9 @@ public class BoardDesigner extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Compiles custom tile coloration parameters from the current settings state and applies them directly onto the root container via CSS lookup variables.
+     */
     private void setCustomStyle() {
         StringBuilder style = new StringBuilder();
         if (settings.getDarkTiles() != null) {
@@ -394,16 +464,11 @@ public class BoardDesigner extends Controller implements Initializable {
         }
     }
 
-    private static String toCssColor(Color color) {
-        return String.format(
-                "#%02X%02X%02X",
-                (int) (color.getRed()   * 255),
-                (int) (color.getGreen() * 255),
-                (int) (color.getBlue()  * 255)
-        );
-    }
-
-    public void loadBoard(BoardDesignState state){
+    /**
+     * Resets the visual board layout and sets the representation to the selected model
+     * @param state The state that should be represented
+     */
+    public void loadBoard(BoardDesignState state) {
         boardPane.getChildren().removeIf(node -> node instanceof ImageView);
         for (List<Polygon> row : rows) {
             for (Polygon polygon : row) {
@@ -413,15 +478,19 @@ public class BoardDesigner extends Controller implements Initializable {
         engine.loadExport(state);
         applyLabelValues(engine.buildLabelValues("p1"));
         applyLabelValues(engine.buildLabelValues("p2"));
-        drawFen(state.getFENState().replace("\"",""));
+        drawFen(state.getFENState().replace("\"", ""));
     }
 
+    /**
+     * Parses a FEN like layout string snippet to set up current game actions and generate piece elements over the coordinate matrix map row-by-row.
+     *
+     * @param fenState A formatted FEN like string indicating piece locations and initial turn indices.
+     */
     private void drawFen(String fenState) {
         String[] starting = fenState.split(" ");
         if (Integer.parseInt(starting[1]) == 1) {
             onP1FirstAcion();
-        }
-        else {
+        } else {
             onP2FirstAction();
         }
         String[] fenrows = starting[0].split("/");
@@ -438,13 +507,18 @@ public class BoardDesigner extends Controller implements Initializable {
                     pos += gap;
                 } else {
                     String piece = getPiece(token);
-                    handlePiecePlaced(piece,rows.get(i).get(pos).getId());
-                    pos ++;
+                    handlePiecePlaced(piece, rows.get(i).get(pos).getId());
+                    pos++;
                 }
             }
         }
     }
 
+    /**
+     * Maps a single-character FEN token representation to its matching local UI resource string. Uppercase letters represent Player 1 items, while lowercase letters represent Player 2 items.
+     * @param s A single character FEN piece layout identifier token.
+     * @return The corresponding string that can be used as a key to get a UI piece.
+     */
     private String getPiece(String s) {
         return switch (s) {
             case "P" -> "p1PawnImg";
@@ -462,12 +536,22 @@ public class BoardDesigner extends Controller implements Initializable {
             default -> "?";
         };
     }
-
+    /**
+     * Store the Player Names so that they can be set when going back
+     *
+     * @param text  Player 1 Name
+     * @param text1 Player 2 Name
+     */
     public void handNames(String text, String text1) {
         p1Name = text;
         p2Name = text1;
     }
 
+    /**
+     *
+     * Runs validation checks over the board's setup configuration to check compliance with match legality constraints.
+     * @return true if the state follows the rules false if not
+     */
     private boolean validateBoardState() {
         int activePlayer = p1GoFirst.getStyleClass().contains("ready") ? 1 : 2;
         String fenNotation = engine.createNotation(rows) + " " + activePlayer;

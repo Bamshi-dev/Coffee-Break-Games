@@ -91,10 +91,6 @@ public class TopBarController implements Initializable {
     }
 
     @FXML
-    protected void onQuestionAction() {
-    }
-
-    @FXML
     public void onEggAction(MouseEvent mouseEvent) {
 
         StackPane root = (StackPane) topBar.getScene().getRoot();

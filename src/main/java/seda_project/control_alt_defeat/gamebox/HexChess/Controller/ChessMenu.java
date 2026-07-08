@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
+/**
+ * Menu controller for the HexChess module.
+ * Provides navigation to local games, LAN hosting, LAN joining, settings, and the board designer.
+ */
 public class ChessMenu extends Controller {
     @FXML
     private VBox header;

@@ -41,11 +41,18 @@ public class JoinLan extends Controller implements Initializable {
     @FXML
     private Label joinStatus, selectedHost;
 
+    /**
+     * Method to get back to the previous screen
+     */
     @FXML
     protected void onBackAction() {
         sC.play("button");
         c.backScene(header,vS);
     }
+
+    /**
+     * Method to handle the connection to a Host. If no Host is selected return an error
+     */
     @FXML
     protected void onConnectAction() {
         sC.play("button");
@@ -85,10 +92,17 @@ public class JoinLan extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Pass the relevant data to the Lobby Controller
+     * @param name
+     */
     public void handData(String name){
         joinPlayerNameTF.setText(name);
     }
 
+    /**
+     * Method to start the search for Hosts
+     */
     private void startDiscovery() {
         try {
             discoveryListener = Discovery.listen();
@@ -107,6 +121,9 @@ public class JoinLan extends Controller implements Initializable {
         refreshHostList();
     }
 
+    /**
+     * Method to stop the search for Hosts
+     */
     private void stopDiscovery() {
         if (refreshTimeline != null) {
             refreshTimeline.stop();
@@ -118,6 +135,9 @@ public class JoinLan extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Method to update the list of Hosts
+     */
     private void refreshHostList() {
         if (discoveryListener == null) return;
         List<Advertisement> ads = discoveryListener.currentHosts();
@@ -150,6 +170,11 @@ public class JoinLan extends Controller implements Initializable {
     }
 
 
+    /**
+     * Method to create a Label for a found Host
+     * @param ad
+     * @return
+     */
     private HexLabel makeHostLabel(Advertisement ad) {
         HexLabel l = new HexLabel(ad.name() + "   (" + ad.ipAddress() + ")");
         l.setUserData(ad);
@@ -162,6 +187,9 @@ public class JoinLan extends Controller implements Initializable {
         return l;
     }
 
+    /**
+     * Method to deselect all Hosts so that only the selected one is higlighted
+     */
     private void deselectAll() {
         for (Label l : availableHosts) l.getStyleClass().remove("selectedItem");
     }

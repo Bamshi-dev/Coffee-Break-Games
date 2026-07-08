@@ -13,6 +13,10 @@ public class BoardDesignerEngine {
     private Map<String, Integer> pieceAmounts;
     private int startingPlayer = 1;
 
+    /**
+     * Sets the default amount for each piece
+     * @return
+     */
     public static Map<String, Integer> defaultPieceAmounts() {
         return new HashMap<>(Map.ofEntries(
                 Map.entry("p1PawnImg",   9),
@@ -34,10 +38,19 @@ public class BoardDesignerEngine {
         this.pieceAmounts = defaultPieceAmounts();
     }
 
+    /**
+     * Returns the map of pieces with their currently available amounts
+     * @return
+     */
     public Map<String, Integer> getPieceAmounts() {
         return pieceAmounts;
     }
 
+    /**
+     * Compute the amount of available pieces. If a piece count is incremented
+     * @param pieceId
+     * @return
+     */
     public Map<String, String> computeIncrement(String pieceId) {
         String playerPrefix = pieceId.contains("1") ? "p1" : "p2";
         int amount = pieceAmounts.get(pieceId);
@@ -68,6 +81,11 @@ public class BoardDesignerEngine {
         return buildLabelValues(playerPrefix);
     }
 
+    /**
+     * Re-calculates and decrements the piece amount when a user selects and places a piece down onto the hex board grid[
+     * @param pieceId
+     * @return
+     */
     public Map<String, String> computeAdapt(String pieceId) {
         String playerPrefix = pieceId.contains("1") ? "p1" : "p2";
         boolean isPawn = pieceId.contains("Pawn");
@@ -88,6 +106,11 @@ public class BoardDesignerEngine {
         return buildLabelValues(playerPrefix);
     }
 
+    /**
+     * Create a map of that shows represents all the available pieces.
+     * @param playerPrefix
+     * @return
+     */
     public Map<String, String> buildLabelValues(String playerPrefix) {
         Map<String, String> result = new HashMap<>();
         for (String key : pieceAmounts.keySet()) {
@@ -103,6 +126,11 @@ public class BoardDesignerEngine {
         return result;
     }
 
+    /**
+     * creates a FEN like Notation of the current setup
+     * @param rows
+     * @return
+     */
     public String createNotation(List<List<Polygon>> rows) {
         StringBuilder sb = new StringBuilder();
         sb.append(rows.stream()
@@ -113,6 +141,11 @@ public class BoardDesignerEngine {
         return sb.toString();
     }
 
+    /**
+     * Helper Method to encode one row in a FEN like notation
+     * @param polygons
+     * @return
+     */
     private String encodeRow(List<Polygon> polygons) {
         int emptyCells = 0;
         StringBuilder sb = new StringBuilder();
@@ -148,6 +181,10 @@ public class BoardDesignerEngine {
         return sb.toString();
     }
 
+    /**
+     * Method to fill the piece amounts when loading an exported GameState
+     * @param state
+     */
     public void loadExport(BoardDesignState state) {
         pieceAmounts = new HashMap<>(Map.ofEntries(
                 Map.entry("p1PawnImg",   state.getP1Pawn()),
@@ -165,9 +202,18 @@ public class BoardDesignerEngine {
         ));
     }
 
+    /**
+     * Sets the active Player
+     * @param x
+     */
     public void activePlayer(int x){
         this.startingPlayer = x;
     }
+
+    /**
+     * Returns the active Player
+     * @return
+     */
     public int getActivePlayer(){
         return this.startingPlayer;
     }

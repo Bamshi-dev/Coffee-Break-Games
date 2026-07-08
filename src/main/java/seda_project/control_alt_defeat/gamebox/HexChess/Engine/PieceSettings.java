@@ -34,6 +34,11 @@ public class PieceSettings {
         p2Color = Color.BLACK;
     }
 
+    /**
+     * Method to load the inital pieces of a given player
+     * @param color
+     * @return
+     */
     private List<ImageView> loadPieces(String color) {
         ImageView[] views = new ImageView[PIECE_NAMES.length];
         for (int i = 0; i < PIECE_NAMES.length; i++) {

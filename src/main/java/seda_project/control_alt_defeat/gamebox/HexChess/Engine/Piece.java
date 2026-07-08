@@ -12,26 +12,51 @@ public class Piece {
         this.moved = false;
     }
 
+    /**
+     * Return type of this piece
+     * @return
+     */
     public PieceType getType() {
         return type;
     }
 
+    /**
+     * returns the player this Piece belings to
+     * @return
+     */
     public PlayerColor getPlayer() {
         return player;
     }
 
+    /**
+     * method to check whether this piece has been moved
+     * @return
+     */
     public boolean isMoved() {
         return moved;
     }
 
+    /**
+     * Method to set if a piece has been moved
+     * @param moved
+     */
     public void setMoved(boolean moved) {
         this.moved = moved;
     }
 
+    /**
+     * Method to retrieve the current position of this piece
+     * @return
+     */
     public HexCoord getPosition() {
         return position;
     }
 
+
+    /**
+     * Method to set the current position of this piece
+     * @param position
+     */
     public void setPosition(HexCoord position) {
         this.position = position;
     }

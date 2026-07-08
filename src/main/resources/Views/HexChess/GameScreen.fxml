@@ -45,13 +45,13 @@
         </HBox>
         <StackPane VBox.vgrow="ALWAYS">
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0">
-                <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="error">
+                <VBox fx:id="p1" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="error">
                     <Label fx:id="p1NameLabel" styleClass="normalText" text="P1Name" />
                     <HBox maxHeight="-Infinity" maxWidth="-Infinity">
                         <Label styleClass="normalText" text="Score: " />
                         <Label fx:id="p1Score" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" />
                     </HBox>
-                    <HBox>
+                    <HBox fx:id="p1Buttons">
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                             <HexButton fx:id="p1Draw" onAction="#onP1DrawAction" text="Draw" />
                         </StackPane>
@@ -1558,14 +1558,14 @@
                         </Polygon>
                     </Pane>
                 </StackPane>
-                <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="ready">
+                <VBox fx:id="p2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="ready">
                     <children>
                         <Label fx:id="p2NameLabel" styleClass="normalText" text="P2Name" />
                         <HBox maxHeight="-Infinity" maxWidth="-Infinity">
                             <Label styleClass="normalText" text="Score: " />
                             <Label fx:id="p2Score" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="normalText" />
                         </HBox>
-                        <HBox>
+                        <HBox fx:id="p2Buttons">
                             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                                 <HexButton fx:id="p2Draw" onAction="#onP2DrawAction" text="Draw" />
                             </StackPane>

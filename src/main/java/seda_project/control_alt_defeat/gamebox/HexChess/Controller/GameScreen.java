@@ -71,6 +71,9 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     private VBox header, p1, p2;
 
     @FXML
+    private HBox p1Buttons, p2Buttons;
+
+    @FXML
     private StackPane stackPane;
 
     @FXML
@@ -135,11 +138,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         highlightActivePlayer(activePlayer);
 
         if (isBotMode) {
-            Button resign = botColor == PlayerColor.WHITE ? p1Resign : p2Resign;
-            Button draw = botColor == PlayerColor.WHITE ? p1Draw : p2Draw;
-
-            resign.setDisable(true);
-            draw.setDisable(true);
+            p1.getChildren().remove(p1Buttons);
+            p2.getChildren().remove(p2Buttons);
         }
         disableButtons();
     }
@@ -157,11 +157,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         highlightActivePlayer(activePlayer);
 
         if (isBotMode) {
-            Button resign = botColor == PlayerColor.WHITE ? p1Resign : p2Resign;
-            Button draw = botColor == PlayerColor.WHITE ? p1Draw : p2Draw;
-
-            resign.setDisable(true);
-            draw.setDisable(true);
+            p1.getChildren().remove(p1Buttons);
+            p2.getChildren().remove(p2Buttons);
         }
 
         disableButtons();

@@ -101,7 +101,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     p1RotateKey, p1LeftKey, p1RightKey, p1DownKey, p2RotateKey, p2LeftKey, p2RightKey, p2DownKey;
 
     /**
-     * Loads the images for the power-ups used in the Tetris game. This method retrieves the image resources from the specified paths and assigns them to the corresponding Image variables. If the resource is not found, it will throw a NullPointerException due to the use of Objects.requireNonNull. The images are used to visually represent different power-ups in the game interface.
+     * Loads the images for the power-ups used in the Tetris game. This method retrieves the image resources from the
+     * specified paths and assigns them to the corresponding Image variables. If the resource is not found, it will
+     * throw a NullPointerException due to the use of Objects.requireNonNull. The images are used to visually represent
+     * different power-ups in the game interface.
      */
     private void loadPowerUpImages() {
         var stream = Objects.requireNonNull(getClass().getResource("/Images/Tetris/Swap.png")).toExternalForm();
@@ -139,7 +142,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Sets the controlled player for the Tetris game. This method is used in dual-engine LAN mode to specify which player (1 or 2) is being simulated by this machine. The controlledPlayer variable is set to the provided player number, allowing the game logic to differentiate between the local player's actions and the opponent's actions.
+     * Sets the controlled player for the Tetris game. This method is used in dual-engine LAN mode to specify which player
+     * (1 or 2) is being simulated by this machine. The controlledPlayer variable is set to the provided player number,
+     * allowing the game logic to differentiate between the local player's actions and the opponent's actions.
      */
     @FXML
     protected void onExitGameAction() {
@@ -175,7 +180,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Sets the number of lines cleared for the specified player in the Tetris game. This method updates the corresponding label in the user interface to reflect the current number of lines cleared by player 1 or player 2. It takes the player number (1 or 2) and the string representation of the lines cleared as parameters and updates the appropriate label accordingly.
+     * Sets the number of lines cleared for the specified player in the Tetris game. This method updates the corresponding
+     * label in the user interface to reflect the current number of lines cleared by player 1 or player 2. It takes the
+     * player number (1 or 2) and the string representation of the lines cleared as parameters and updates the appropriate
+     * label accordingly.
      */
     public void setPlayerLines(int player, String lines){
         if (player == 1){
@@ -200,9 +208,6 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         }
     }
 
-    /**
-     * Synchronizes the number of rows in the specified GridPane with the desired row count. This method ensures that the GridPane has the correct number of RowConstraints to match the current state of the game board. It adds or removes RowConstraints as needed to achieve the desired row count, maintaining a consistent visual representation of the game board for player 1 or player 2.
-     */
     private void showPowerUP(List<PowerUp> powerUps) {
         if (powerUps.isEmpty()){
             player1Field.getChildren().removeIf(node -> (node instanceof Rectangle r
@@ -242,9 +247,6 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         pulse.play();
     }
 
-    /**
-     * Synchronizes the number of rows in the specified GridPane with the desired row count. This method ensures that the GridPane has the correct number of RowConstraints to match the current state of the game board. It adds or removes RowConstraints as needed to achieve the desired row count, maintaining a consistent visual representation of the game board for player 1 or player 2.
-     */
     private Image getImage(PowerUp powerUp) {
         Image i = null;
         switch (powerUp.getType()) {
@@ -261,7 +263,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Removes the specified power-up from the game board for the corresponding player. This method identifies the target GridPane based on the player number associated with the power-up and removes any Rectangle nodes that match the power-up's position (row and column) and have the "PowerUp" style class. It effectively clears the visual representation of the power-up from the player's game board.
+     * Removes the specified power-up from the game board for the corresponding player. This method identifies the target
+     * GridPane based on the player number associated with the power-up and removes any Rectangle nodes that match the
+     * power-up's position (row and column) and have the "PowerUp" style class. It effectively clears the visual
+     * representation of the power-up from the player's game board.
      */
     private void removePowerUP(PowerUp powerUp) {
         GridPane targetField = powerUp.getPlayerNum() == 1 ? player1Field : player2Field;
@@ -274,9 +279,6 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         );
     }
 
-    /**
-     * Synchronizes the number of rows in the specified GridPane with the desired row count. This method ensures that the GridPane has the correct number of RowConstraints to match the current state of the game board. It adds or removes RowConstraints as needed to achieve the desired row count, maintaining a consistent visual representation of the game board for player 1 or player 2.
-     */
     private void drawGrid(String[][] colors, Block[] activeBlocks, GridPane grid, boolean isLost) {
         grid.getChildren().removeIf(node -> !(node instanceof Rectangle r && r.getStyleClass().contains("PowerUp")));
         int maxRows = grid.getRowConstraints().size();
@@ -317,9 +319,6 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         }
     }
 
-    /**
-     * Synchronizes the number of rows in the specified GridPane with the desired row count. This method ensures that the GridPane has the correct number of RowConstraints to match the current state of the game board. It adds or removes RowConstraints as needed to achieve the desired row count, maintaining a consistent visual representation of the game board for player 1 or player 2.
-     */
     public void create(String player1, String player2, int p1Level, int p2Level, TetrisEngine engine, Scene scene) {
         this.engine = engine;
         player1NameLabel.setText(player1);
@@ -366,16 +365,16 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         p2EngineTicker.play();
     }
 
-    /**
-     * Loads the images for the power-ups used in the Tetris game. This method retrieves the image resources from the specified paths and assigns them to the corresponding Image variables. If the resource is not found, it will throw a NullPointerException due to the use of Objects.requireNonNull. The images are used to visually represent different power-ups in the game interface.
-     */
     private void loadImages() {
         loadPowerUpImages();
         loadBombImages();
     }
 
     /**
-     * Loads the images for the bomb types used in the Tetris game. This method retrieves the image resources for radial and column bombs from the specified paths and assigns them to the corresponding Image variables. If the resource is not found, it will throw a NullPointerException due to the use of Objects.requireNonNull. The images are used to visually represent different bomb types in the game interface.
+     * Loads the images for the bomb types used in the Tetris game. This method retrieves the image resources for radial
+     * and column bombs from the specified paths and assigns them to the corresponding Image variables. If the resource
+     * is not found, it will throw a NullPointerException due to the use of Objects.requireNonNull. The images are used
+     * to visually represent different bomb types in the game interface.
      */
     private void loadBombImages() {
         var stream = Objects.requireNonNull(getClass().getResource("/Images/Tetris/RadialBomb.png")).toExternalForm();

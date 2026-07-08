@@ -53,7 +53,8 @@ public class JoinLan extends Controller implements Initializable {
     private HexButton searchButton;
 
     /**
-     * Handles the action of going back from the JoinLan scene. It stops the discovery of available hosts and transitions back to the previous scene.
+     * Handles the action of going back from the JoinLan scene. It stops the discovery of available hosts and transitions
+     * back to the previous scene.
      */
     @FXML
     protected void onBackAction(){
@@ -63,7 +64,10 @@ public class JoinLan extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of connecting to a selected host in a LAN game. It retrieves the player's name and level from the input fields, validates the name length, and if valid, attempts to join the selected host using the LanClient. If successful, it sets up the session with the player's data and transitions to the WaitForOpponent scene. If there is an error during connection, it displays an error message.
+     * Handles the action of connecting to a selected host in a LAN game. It retrieves the player's name and level from
+     * the input fields, validates the name length, and if valid, attempts to join the selected host using the LanClient.
+     * If successful, it sets up the session with the player's data and transitions to the WaitForOpponent scene. If there
+     * is an error during connection, it displays an error message.
      */
     @FXML
     private void onConnectAction(){
@@ -108,7 +112,9 @@ public class JoinLan extends Controller implements Initializable {
     }
 
     /**
-     * Initializes the JoinLan controller by setting up the user interface elements, including populating the level selection ComboBox with levels from 1 to 20 and selecting the first level by default. It also starts the discovery of available hosts in the LAN.
+     * Initializes the JoinLan controller by setting up the user interface elements, including populating the level selection
+     * ComboBox with levels from 1 to 20 and selecting the first level by default. It also starts the discovery of available
+     * hosts in the LAN.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,7 +135,8 @@ public class JoinLan extends Controller implements Initializable {
 
 
     /**
-     * Stops the discovery of available hosts when the JoinLan controller is no longer needed. It stops the refresh timeline and closes the discovery listener to free up resources and prevent further updates to the host list.
+     * Stops the discovery of available hosts when the JoinLan controller is no longer needed. It stops the refresh timeline
+     * and closes the discovery listener to free up resources and prevent further updates to the host list.
      */
     private void startDiscovery() {
         try {
@@ -150,7 +157,8 @@ public class JoinLan extends Controller implements Initializable {
     }
 
     /**
-     * Stops the discovery of available hosts when the JoinLan controller is no longer needed. It stops the refresh timeline and closes the discovery listener to free up resources and prevent further updates to the host list.
+     * Stops the discovery of available hosts when the JoinLan controller is no longer needed. It stops the refresh timeline
+     * and closes the discovery listener to free up resources and prevent further updates to the host list.
      */
     private void stopDiscovery() {
         if (refreshTimeline != null) {
@@ -164,7 +172,10 @@ public class JoinLan extends Controller implements Initializable {
     }
 
     /**
-     * Refreshes the list of available hosts by querying the discovery listener for the current advertisements. It updates the UI to display the available hosts, deselects any previously selected host, and enables or disables the search button based on whether a host is selected. If there are no available hosts, it displays a message indicating that no games were found.
+     * Refreshes the list of available hosts by querying the discovery listener for the current advertisements. It updates
+     * the UI to display the available hosts, deselects any previously selected host, and enables or disables the
+     * search button based on whether a host is selected. If there are no available hosts, it displays a message indicating
+     * that no games were found.
      */
     private void refreshHostList() {
         if (discoveryListener == null) return;
@@ -198,7 +209,9 @@ public class JoinLan extends Controller implements Initializable {
     }
 
     /**
-     * Creates a HexLabel for the given Advertisement representing a host in the LAN. The label displays the host's name and IP address, and when clicked, it deselects any previously selected host, marks the clicked label as selected, and enables the search button for connecting to the selected host.
+     * Creates a HexLabel for the given Advertisement representing a host in the LAN. The label displays the host's name
+     * and IP address, and when clicked, it deselects any previously selected host, marks the clicked label as selected,
+     * and enables the search button for connecting to the selected host.
      * @param ad The Advertisement object containing information about the host.
      */
     private HexLabel makeHostLabel(Advertisement ad) {
@@ -215,7 +228,8 @@ public class JoinLan extends Controller implements Initializable {
     }
 
     /**
-     * Deselects all available host labels by removing the "ready" style class from each label. This method is called when a new host is selected, ensuring that only the currently selected host is visually marked as ready for connection.
+     * Deselects all available host labels by removing the "ready" style class from each label. This method is called when
+     * a new host is selected, ensuring that only the currently selected host is visually marked as ready for connection.
      */
     private void deselectAll() {
         for (Label l : availableHosts) l.getStyleClass().remove("ready");

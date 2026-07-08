@@ -29,7 +29,9 @@ public class HostLan extends Controller implements Initializable {
     private ToggleSwitch toggleSwitch;
 
     /**
-     * Initializes the HostLan controller by setting up the user interface elements, including populating the level selection ComboBox with levels from 1 to 20 and selecting the first level by default. It also sets the state of the ToggleSwitch based on the current advanced settings for two blocks.
+     * Initializes the HostLan controller by setting up the user interface elements, including populating the level s
+     * election ComboBox with levels from 1 to 20 and selecting the first level by default. It also sets the state of
+     * the ToggleSwitch based on the current advanced settings for two blocks.
      */
     @FXML
     protected void onBackAction(){
@@ -40,7 +42,9 @@ public class HostLan extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of searching for an opponent in a LAN game. It retrieves the player's name and level from the input fields, validates the name length, and if valid, sets up the session with the player's data, marks the player as the host, and transitions to the WaitForOpponent scene. If the name is invalid, it plays an error sound.
+     * Handles the action of searching for an opponent in a LAN game. It retrieves the player's name and level from
+     * the input fields, validates the name length, and if valid, sets up the session with the player's data, marks
+     * the player as the host, and transitions to the WaitForOpponent scene. If the name is invalid, it plays an error sound.
      */
     @FXML
     private void onSearchAction(){
@@ -61,16 +65,6 @@ public class HostLan extends Controller implements Initializable {
         }
     }
 
-    /**
-     * Handles the action of opening the advanced settings for the LAN host. It transitions to the AdvancedSettings scene, passing the current player's name and level to the new controller. It also updates the advanced settings to reflect the state of the ToggleSwitch for two blocks.
-     */
-    public void handData(String hostName){
-        this.hostNameTF.setText(hostName);
-    }
-
-    /**
-     * Initializes the HostLan controller by setting up the user interface elements, including populating the level selection ComboBox with levels from 1 to 20 and selecting the first level by default. It also sets the state of the ToggleSwitch based on the current advanced settings for two blocks.
-     */
     @FXML
     private void onAdvancedSettingsAction(){
         AdvancedSettings controller = (AdvancedSettings) c.changeScene("/Views/Tetris/AdvancedSettings.fxml",header,vS);
@@ -84,9 +78,9 @@ public class HostLan extends Controller implements Initializable {
     }
 
     /**
-     * Initializes the HostLan controller by setting up the user interface elements, including populating the level selection ComboBox with levels from 1 to 20 and selecting the first level by default. It also sets the state of the ToggleSwitch based on the current advanced settings for two blocks.
-     * @param url
-     * @param resourceBundle
+     * Initializes the HostLan controller by setting up the user interface elements, including populating the level selection
+     * ComboBox with levels from 1 to 20 and selecting the first level by default. It also sets the state of the ToggleSwitch
+     * based on the current advanced settings for two blocks.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -104,7 +98,10 @@ public class HostLan extends Controller implements Initializable {
     }
 
     /**
-     * Handles the data received from the player in a multiplayer game. It sets the player name and level for player 1 based on the provided parameters.
+     * Handles the consistency of data over multiple screens. Resets the player name and player level to the values
+     * set before.
+     * @param p1Name the player name set before
+     * @param p1Level the player level set before
      */
     public void handPlayerData(String p1Name, int p1Level) {
         hostNameTF.setText(p1Name);

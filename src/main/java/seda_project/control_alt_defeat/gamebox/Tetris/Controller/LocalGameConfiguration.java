@@ -27,7 +27,9 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     private ComboBox<Integer> player1Level,player2Level;
 
     /**
-     * Initializes the LocalGameConfiguration controller by setting up the user interface elements, including populating the level selection ComboBoxes for both players with levels from 1 to 20 and selecting the first level by default. It also hides the status label initially.
+     * Initializes the LocalGameConfiguration controller by setting up the user interface elements, including populating
+     * the level selection ComboBoxes for both players with levels from 1 to 20 and selecting the first level by default.
+     * It also hides the status label initially.
      * @param location The location used to resolve relative paths for the root object, or null
      */
     @Override
@@ -47,7 +49,9 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
     /**
-     * Handles the action of going back to the previous scene. It plays a button sound effect and transitions back to the previous scene, passing along the player names and levels if the previous controller is an instance of HostLan or LocalGameConfiguration.
+     * Handles the action of going back to the previous scene. It plays a button sound effect and transitions back to the
+     * previous scene, passing along the player names and levels if the previous controller is an instance of HostLan or
+     * LocalGameConfiguration.
      */
     @FXML
     protected void onBackAction() {
@@ -56,7 +60,9 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
     /**
-     * Handles the action of opening the advanced settings for the local game. It plays a button sound effect, retrieves the current player names and levels from the input fields, and transitions to the AdvancedSettings scene, passing along the player data to the new controller.
+     * Handles the action of opening the advanced settings for the local game. It plays a button sound effect, retrieves
+     * the current player names and levels from the input fields, and transitions to the AdvancedSettings scene, passing
+     * along the player data to the new controller.
      */
     @FXML
     protected void onAdvancedSettingsAction(){
@@ -70,7 +76,11 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
     /**
-     * Handles the action of starting a local game. It retrieves the player names and levels from the input fields, validates the name lengths, and if valid, creates a new TetrisEngine instance with the provided data and advanced settings. It then transitions to the appropriate game screen based on the layout setting (vertical or horizontal) and initializes the game controller with the necessary data. If the name lengths are invalid, it plays an error sound effect.
+     * Handles the action of starting a local game. It retrieves the player names and levels from the input fields,
+     * validates the name lengths, and if valid, creates a new TetrisEngine instance with the provided data and
+     * advanced settings. It then transitions to the appropriate game screen based on the layout setting (vertical or
+     * horizontal) and initializes the game controller with the necessary data. If the name lengths are invalid, it
+     * plays an error sound effect.
      */
     @FXML
     protected void onStartAction() {
@@ -108,11 +118,8 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
     /**
-     * Handles the action of resetting the player names and levels to their default values. It clears the text fields for both players and resets the level selection ComboBoxes to the first level (1).
-     * @param p1Name 
-     * @param p2Name
-     * @param p1Level
-     * @param p2Level
+     * Handles the action of resetting the player names and levels to their default values. It clears the text fields
+     * for both players and resets the level selection ComboBoxes to the first level (1).
      */
     public void handLocalData(String p1Name, String p2Name, int p1Level, int p2Level) {
         player1TF.setText(p1Name);

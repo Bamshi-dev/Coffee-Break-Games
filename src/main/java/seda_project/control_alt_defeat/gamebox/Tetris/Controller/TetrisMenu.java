@@ -6,8 +6,10 @@ import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
 public class TetrisMenu extends Controller {
 
+
     /**
-     * Handles the action of going back from the Tetris menu. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of changing to the local game configuration. It plays a button sound effect and
+     * transitions to the next scene.
      */
     @FXML
     protected void onLocalAction(){
@@ -16,7 +18,8 @@ public class TetrisMenu extends Controller {
     }
 
     /**
-     * Handles the action of going back from the Tetris menu. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of changing to the host configuration. It plays a button sound effect and
+     * transitions to the next scene.
      */
     @FXML
     protected void onHostAction(){
@@ -25,7 +28,8 @@ public class TetrisMenu extends Controller {
     }
 
     /**
-     * Handles the action of going back from the Tetris menu. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of changing to the join configuration. It plays a button sound effect and
+     * transitions to the next scene.
      */
     @FXML
     protected void onJoinAction(){
@@ -34,7 +38,8 @@ public class TetrisMenu extends Controller {
     }
 
     /**
-     * Handles the action of going back from the Tetris menu. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of changing to the settings menu. It plays a button sound effect and
+     * transitions to the next scene.
      */
     @FXML
     protected void onSettingsAction(){
@@ -43,7 +48,8 @@ public class TetrisMenu extends Controller {
     }
 
     /**
-     * Handles the action of going back from the Tetris menu. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of changing to the Block Designer. It plays a button sound effect and
+     * transitions to the next scene.
      */
     @FXML
     protected void onPartDesignerAciton(){
@@ -52,7 +58,8 @@ public class TetrisMenu extends Controller {
     }
 
     /**
-     * Handles the action of exiting the Tetris menu. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of exiting the Tetris menu. It plays a button sound effect and transitions
+     * back to the previous scene.
      */
     @FXML
     protected void onExitAction(){

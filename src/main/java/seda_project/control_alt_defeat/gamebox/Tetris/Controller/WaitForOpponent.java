@@ -36,7 +36,8 @@ public class WaitForOpponent extends Controller {
     private Button startButton;
 
     /**
-     * Handles the action of going back from the WaitForOpponent scene. It stops the discovery of available hosts, clears the current session, and transitions back to the previous scene.
+     * Handles the action of going back from the WaitForOpponent scene. It stops the announcement of available hosts,
+     * clears the current session, and transitions back to the previous scene.
      */
     @FXML
     public void onBackAction() {
@@ -48,7 +49,8 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Handles the action of toggling the ready state for the local player. It sends a ready message to the opponent and updates the status label accordingly. If both players are ready, it initiates the countdown to start the game.
+     * Handles the action of toggling the ready state for the local player. It sends a ready message to the opponent and
+     * updates the status label accordingly. If both players are ready, it initiates the countdown to start the game.
      */
     @FXML
     public void onStartGameAction() {
@@ -66,9 +68,10 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Passes the host data to the WaitForOpponent controller, setting up the user interface elements and starting the necessary network components for hosting a game. It initializes the labels with the host's name and IP address, starts a loading animation for the opponent's name, announces the game over LAN, and opens a server socket to listen for incoming connections from opponents.
-     * @param hostName 
-     * @param hostLevel
+     * Passes the host data to the WaitForOpponent controller, setting up the user interface elements and starting the
+     * necessary network components for hosting a game. It initializes the labels with the host's name and IP address,
+     * starts a loading animation for the opponent's name, announces the game over LAN, and opens a server socket to
+     * listen for incoming connections from opponents.
      */
     public void passHostData(String hostName, int hostLevel) {
         yourNameLabel.setText(hostName);
@@ -103,10 +106,6 @@ public class WaitForOpponent extends Controller {
         );
     }
 
-    /**
-     * Passes the join data to the WaitForOpponent controller, setting up the user interface elements and starting the necessary network components for joining a game. It initializes the labels with the player's name and the host's IP address, and sets up a listener for incoming messages from the host.
-     * @param layer 
-     */
     private void attachHostListener(NetworkLayer layer) {
         layer.addListener(new NetworkListener() {
             @Override
@@ -120,9 +119,6 @@ public class WaitForOpponent extends Controller {
         });
     }
 
-    /**
-     * Handles the action of going back from the WaitForOpponent scene. It stops the discovery of available hosts, clears the current session, and transitions back to the previous scene.
-     */
     private void handleHostMessage(NetworkLayer layer, Message msg) {
         if (msg instanceof TetrisMessage.Hello h) {
             Session s = Session.current();
@@ -142,7 +138,9 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Passes the join data to the WaitForOpponent controller, setting up the user interface elements and starting the necessary network components for joining a game. It initializes the labels with the player's name and the host's IP address, and sets up a listener for incoming messages from the host.
+     * Passes the join data to the WaitForOpponent controller, setting up the user interface elements and starting the
+     * necessary network components for joining a game. It initializes the labels with the player's name and the host's
+     * IP address, and sets up a listener for incoming messages from the host.
      */
     public void passJoinData(String playerName, String ipAddress) {
         Session s = Session.current();
@@ -176,7 +174,9 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Handles incoming messages from the host during a LAN game. It processes different types of messages, including lobby information, settings synchronization, ready status updates, and countdown initiation. Based on the received message, it updates the user interface and game state accordingly.
+     * Handles incoming messages from the host in the Lobby. It processes different types of messages, including
+     * lobby information, settings synchronization, ready status updates, and countdown initiation. Based on the
+     * received message, it updates the user interface and game state accordingly.
      * @param msg
      */
     private void handleJoinMessage(Message msg) {
@@ -197,7 +197,8 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Checks if both players are ready and, if so, initiates the countdown to start the game. It sends a countdown message to the opponent and schedules the game start after the specified delay.
+     * Checks if both players are ready and, if so, initiates the countdown to start the game. It sends a countdown
+     * message to the opponent and schedules the game start after the specified delay.
      */
     private void maybeStartCountdown() {
         Session s = Session.current();
@@ -221,7 +222,9 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Starts the game immediately by setting up the game engine and transitioning to the appropriate game screen based on the current session's settings. It handles both dual-engine and legacy host-authoritative paths, creating the necessary game engine and attaching network bridges for multiplayer gameplay.
+     * Starts the game immediately by setting up the game engine and transitioning to the appropriate game screen based
+     * on the current session's settings. It handles both dual-engine and legacy host-authoritative paths, creating the
+     * necessary game engine and attaching network bridges for multiplayer gameplay.
      */
     private void startGameNow() {
         sC.stopLooping();
@@ -283,7 +286,9 @@ public class WaitForOpponent extends Controller {
 
 
     /**
-     * Passes the join data to the WaitForOpponent controller, setting up the user interface elements and starting the necessary network components for joining a game. It initializes the labels with the player's name and the host's IP address, and sets up a listener for incoming messages from the host.
+     * Passes the join data to the WaitForOpponent controller, setting up the user interface elements and starting the
+     * necessary network components for joining a game. It initializes the labels with the player's name and the host's
+     * IP address, and sets up a listener for incoming messages from the host.
      * @param joinN
      */
     private void playerJoin(String joinN) {
@@ -293,7 +298,8 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Handles the action of going back from the WaitForOpponent scene. It stops the discovery of available hosts, clears the current session, and transitions back to the previous scene.
+     * Handles the action of going back from the WaitForOpponent scene. It stops the discovery of available hosts, clears
+     * the current session, and transitions back to the previous scene.
      */
     private void updatePeerStatus() {
         Session s = Session.current();
@@ -312,7 +318,8 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Stops the announcer that broadcasts the game over LAN. It closes the announcer and sets it to null to prevent further announcements.
+     * Stops the announcer that broadcasts the game over LAN. It closes the announcer and sets it to null to prevent
+     * further announcements.
      */
     private void stopAnnouncer() {
         if (announcer != null) {

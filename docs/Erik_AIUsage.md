@@ -10,3 +10,7 @@
 * Help with Bugfixes
   * While for some Bugs it's easy to pinpoint why and where they happen this is not the case for all. In those cases where I was not able to pinpoint the reason for a Bug or why the Bug occurred LLMs can sometimes help.
 
+* Creation of Java Docs
+  * Since we neglected the documentation of our code during development we had a lot of uncommented code. LLMs are a 
+    good tool to create this documentation in a fast manner. The Comments still had to be reevaluated by myself for 
+    correctness

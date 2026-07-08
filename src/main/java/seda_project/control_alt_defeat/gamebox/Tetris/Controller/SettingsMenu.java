@@ -20,8 +20,10 @@ public class SettingsMenu extends Controller implements Initializable {
     Label player1Left,player1Right,player1Down,player1Up,player2Left,player2Right,player2Down,player2Up;
 
     /**
-     * Initializes the SettingsMenu controller by updating the displayed key bindings for both players based on the
-     * current settings in the TetrisSettings singleton instance.
+     * Handles the action of changing the key binding for player 1. It retrieves the button that was clicked,
+     * determines the position of the key to be changed, and updates the corresponding key binding in the TetrisSettings
+     * singleton instance. It also updates the displayed label for the changed key binding.
+     * @param event The ActionEvent triggered by clicking the button to change the key binding for player 2.
      */
     @FXML
     protected void changePlayer1(ActionEvent event) {
@@ -34,7 +36,9 @@ public class SettingsMenu extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of changing the key binding for player 2. It retrieves the button that was clicked, determines the position of the key to be changed, and updates the corresponding key binding in the TetrisSettings singleton instance. It also updates the displayed label for the changed key binding.
+     * Handles the action of changing the key binding for player 2. It retrieves the button that was clicked, determines
+     * the position of the key to be changed, and updates the corresponding key binding in the TetrisSettings singleton
+     * instance. It also updates the displayed label for the changed key binding.
      * @param event The ActionEvent triggered by clicking the button to change the key binding for player 2.
      */
     @FXML
@@ -49,7 +53,8 @@ public class SettingsMenu extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of going back to the previous scene. It plays a button sound effect and transitions back to the previous scene.
+     * Handles the action of going back to the previous scene. It plays a button sound effect and transitions back to
+     * the previous scene.
      */
     @FXML
     protected void onBackAction(){
@@ -88,7 +93,8 @@ public class SettingsMenu extends Controller implements Initializable {
     }
 
     /**
-     * Updates the displayed key bindings for both players based on the current settings in the TetrisSettings singleton instance. It retrieves the key codes for each player's controls and sets the corresponding labels to display the key names.
+     * Updates the displayed key bindings for both players based on the current settings in the TetrisSettings singleton
+     * instance. It retrieves the key codes for each player's controls and sets the corresponding labels to display the key names.
      */
     private void updateKeys() {
         ArrayList<KeyCode> p1keys = tS.getPlayer1Keys();
@@ -104,9 +110,8 @@ public class SettingsMenu extends Controller implements Initializable {
     }
 
     /**
-     * Initializes the SettingsMenu controller by updating the displayed key bindings for both players based on the current settings in the TetrisSettings singleton instance. It also sets up any necessary event handlers or additional initialization logic for the settings menu.
-     * @param url 
-     * @param resourceBundle
+     * Initializes the SettingsMenu controller by updating the displayed key bindings for both players based on the current
+     * settings in the TetrisSettings singleton instance.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

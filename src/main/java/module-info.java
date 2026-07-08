@@ -13,7 +13,6 @@ module seda_project.control_alt_defeat.gamebox {
     requires jdk.incubator.vector;
     requires jdk.dynalink;
     requires javafx.media;
-    requires com.dlsc.fxmlkit;
 
     // Main Package
     exports seda_project.control_alt_defeat.gamebox;

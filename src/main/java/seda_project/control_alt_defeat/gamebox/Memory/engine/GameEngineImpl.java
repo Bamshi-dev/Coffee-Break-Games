@@ -17,9 +17,12 @@ public class GameEngineImpl implements GameEngine {
     private final List<GameEventListener> listeners = new ArrayList<>();
 
     /**
-     * Initializes the game engine with the provided configuration and setup. It sets up the game board, scores, active player, and other necessary state variables based on the initial deck and first player specified in the GameSetup. This method is called at the start of a new game or when resetting the game with a new setup.
+     * Initializes the game engine with the provided configuration and setup. It sets up the game board, scores, active
+     * player, and other necessary state variables based on the initial deck and first player specified in the GameSetup.
+     * This method is called at the start of a new game or when resetting the game with a new setup.
      * @param config The GameConfig object containing the game settings, including player names, match size, and deck size.
-     * @param setup The GameSetup object containing the initial deck of cards and the first player to take a turn. It provides the necessary information to initialize the game state.
+     * @param setup The GameSetup object containing the initial deck of cards and the first player to take a turn.
+     *              It provides the necessary information to initialize the game state.
      */
     @Override
     public void start(GameConfig config, GameSetup setup) {
@@ -33,8 +36,11 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Returns a snapshot of the current game state, including the board configuration, scores, active player, flipped card IDs, and game over status. This snapshot can be used for saving the game state, displaying the current game status in the user interface, or for other purposes where a representation of the current game state is needed.
-     * @return A GameSnapshot object representing the current state of the game, including the board, scores, active player, flipped card IDs, and game over status.
+     * Returns a snapshot of the current game state, including the board configuration, scores, active player, flipped
+     * card IDs, and game over status. This snapshot can be used for saving the game state, displaying the current game
+     * status in the user interface, or for other purposes where a representation of the current game state is needed.
+     * @return A GameSnapshot object representing the current state of the game, including the board, scores, active
+     *          player, flipped card IDs, and game over status.
      */
     @Override
     public GameSnapshot getSnapshot() {
@@ -49,7 +55,8 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Returns the current game configuration, including player names, match size, and deck size. This method provides access to the settings that define the rules and parameters of the current game session.
+     * Returns the current game configuration, including player names, match size, and deck size. This method provides
+     * access to the settings that define the rules and parameters of the current game session.
      * @return The GameConfig object representing the current game configuration.
      */
     @Override
@@ -60,9 +67,12 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Checks if a card can be flipped based on its ID. It verifies that the card ID is within the valid range, that the game is not over, and that the card is neither removed nor already face-up. This method is used to determine whether a player can flip a specific card during their turn.
+     * Checks if a card can be flipped based on its ID. It verifies that the card ID is within the valid range, that
+     * the game is not over, and that the card is neither removed nor already face-up. This method is used to determine
+     * whether a player can flip a specific card during their turn.
      * @param cardId The ID of the card to check for flipping. It should be a valid index within the board list.
-     * @return True if the card can be flipped; false otherwise. A card can be flipped if it is within the valid range, the game is not over, and the card is neither removed nor already face-up.
+     * @return True if the card can be flipped; false otherwise. A card can be flipped if it is within the valid range,
+     *          the game is not over, and the card is neither removed nor already face-up.
      */
     public boolean canFlip(int cardId) {
         if (cardId < 0 || cardId >= board.size() || gameOver) return false;
@@ -71,9 +81,13 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Flips a card with the specified ID and handles the game logic for matching cards, scoring, and turn changes. It checks if the flip is valid, updates the card state, notifies listeners of the flip, and determines if a match has occurred. If a match is found, it updates the scores and removes the matched cards; otherwise, it switches the active player. The method also checks for game over conditions and notifies listeners accordingly.
+     * Flips a card with the specified ID and handles the game logic for matching cards, scoring, and turn changes. It
+     * checks if the flip is valid, updates the card state, notifies listeners of the flip, and determines if a match
+     * has occurred. If a match is found, it updates the scores and removes the matched cards; otherwise, it switches
+     * the active player. The method also checks for game over conditions and notifies listeners accordingly.
      * @param cardId The ID of the card to flip. It should be a valid index within the board list.
-     * @return A FlipResult object representing the outcome of the flip action, including whether it resulted in a match, mismatch, or game over, along with relevant information such as flipped card IDs, active player, and points scored. If the flip is invalid, it returns null.
+     * @return A FlipResult object representing the outcome of the flip action, including whether it resulted in a match,
+     *          mismatch, or game over, along with relevant information such as flipped card IDs, active player, and points scored. If the flip is invalid, it returns null.
      */
     @Override
     public FlipResult flip(int cardId) {
@@ -193,9 +207,13 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Returns the outcome of the game for a specific player based on their name. It checks if the game is over and compares the scores of both players to determine if the specified player has won, lost, or if the game ended in a draw. This method is used to provide feedback to players about their performance at the end of the game.
-     * @param playerName The name of the player for whom the game outcome is being queried. It should match one of the player names specified in the GameConfig.
-     * @return A GameOutcome enum value indicating whether the specified player has won, lost, or if the game ended in a draw. If the game is not over yet, it throws an IllegalStateException.
+     * Returns the outcome of the game for a specific player based on their name. It checks if the game is over and
+     * compares the scores of both players to determine if the specified player has won, lost, or if the game ended in
+     * a draw. This method is used to provide feedback to players about their performance at the end of the game.
+     * @param playerName The name of the player for whom the game outcome is being queried. It should match one of the
+     *                   player names specified in the GameConfig.
+     * @return A GameOutcome enum value indicating whether the specified player has won, lost, or if the game ended in
+     *          a draw. If the game is not over yet, it throws an IllegalStateException.
      */
     @Override
     public GameOutcome getOutcome(String playerName) {
@@ -211,8 +229,11 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Removes a previously added GameEventListener from the list of listeners. This allows for dynamic management of listeners, enabling the removal of listeners that are no longer needed or relevant to the current game session. If the specified listener is not found in the list, the method does nothing.
-     * @param listener The GameEventListener to be removed from the list of listeners. If the listener is not present, no action is taken.
+     * Removes a previously added GameEventListener from the list of listeners. This allows for dynamic management of
+     * listeners, enabling the removal of listeners that are no longer needed or relevant to the current game session.
+     * If the specified listener is not found in the list, the method does nothing.
+     * @param listener The GameEventListener to be removed from the list of listeners. If the listener is not present,
+     *                 no action is taken.
      */
     @Override
     public void removeListener(GameEventListener listener) {
@@ -220,8 +241,10 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Returns the name of the currently active player whose turn it is to make a move. This method provides access to the current turn information, allowing other components of the game to determine which player is currently taking their turn.
-     * @return A string representing the name of the active player. It corresponds to one of the player names specified in the GameConfig.
+     * Returns the name of the currently active player whose turn it is to make a move. This method provides access to
+     * the current turn information, allowing other components of the game to determine which player is currently taking their turn.
+     * @return A string representing the name of the active player. It corresponds to one of the player names specified
+     *          in the GameConfig.
      */
     @Override
     public String getActivePlayer() {
@@ -229,8 +252,11 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Checks if the game is over, indicating that all matches have been completed and no further moves can be made. This method provides a way to determine the end state of the game, allowing other components to take appropriate actions based on whether the game has concluded.
-     * @return True if the game is over; false otherwise. A game is considered over when all cards have been matched and removed from the board.
+     * Checks if the game is over, indicating that all matches have been completed and no further moves can be made.
+     * This method provides a way to determine the end state of the game, allowing other components to take appropriate
+     * actions based on whether the game has concluded.
+     * @return True if the game is over; false otherwise. A game is considered over when all cards have been matched and
+     *          removed from the board.
      */
     @Override
     public boolean isGameOver() {
@@ -238,8 +264,12 @@ public class GameEngineImpl implements GameEngine {
     }
 
     /**
-     * Resets the game engine with a new GameSetup, allowing for a fresh start with the same configuration. It reinitializes the game state, including the board, scores, active player, and other necessary variables based on the new setup provided. This method is typically called when starting a new game or when resetting the current game with a different deck or initial conditions.
-     * @param newSetup The GameSetup object containing the new initial deck of cards and the first player to take a turn. It provides the necessary information to reinitialize the game state for a new game session.
+     * Resets the game engine with a new GameSetup, allowing for a fresh start with the same configuration. It
+     * reinitializes the game state, including the board, scores, active player, and other necessary variables
+     * based on the new setup provided. This method is typically called when starting a new game or when resetting
+     * the current game with a different deck or initial conditions.
+     * @param newSetup The GameSetup object containing the new initial deck of cards and the first player to take a turn.
+     *                 It provides the necessary information to reinitialize the game state for a new game session.
      */
     @Override
     public void resetWith(GameSetup newSetup) {

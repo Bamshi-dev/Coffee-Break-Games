@@ -36,7 +36,10 @@ public class WaitForOpponent extends Controller {
     private Label yourNameLabel, opponentNameLabel, deckSizeLabel, matchSizeLabel, statusLabel, hostIpAddressLabel;
 
     /**
-     * Handles the action of going back from the WaitForOpponent scene. It plays a button sound effect, clears the current session, and transitions back to the previous scene. If the previous scene is HostLan or JoinLan, it passes the relevant data (host name, tuple size, deck size, join name, and IP address) back to that controller to restore the state of the previous scene.
+     * Handles the action of going back from the WaitForOpponent scene. It plays a button sound effect, clears the
+     * current session, and transitions back to the previous scene. If the previous scene is HostLan or JoinLan, it
+     * passes the relevant data (host name, tuple size, deck size, join name, and IP address) back to that controller
+     * to restore the state of the previous scene.
      */
     @FXML
     protected void onBackAction() {
@@ -52,7 +55,10 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Handles the action of starting the game from the WaitForOpponent scene. It plays a button sound effect, toggles the local ready state in the current session, sends a Ready message to the opponent, updates the start game button text, and updates the local status label to reflect the current ready state. If both players are ready, it initiates a countdown to start the game.
+     * Handles the action of starting the game from the WaitForOpponent scene. It plays a button sound effect, toggles
+     * the local ready state in the current session, sends a Ready message to the opponent, updates the start game button
+     * text, and updates the local status label to reflect the current ready state. If both players are ready, it
+     * initiates a countdown to start the game.
      */
     @FXML
     protected void onStartGameAction() {
@@ -71,7 +77,10 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Updates the local status label in the WaitForOpponent scene based on the current ready state of the local player and the opponent. It checks if both players are ready, and if so, it updates the status label to indicate that all players are ready. If only the local player is ready, it displays a message indicating that it is waiting for the opponent to be ready. If neither player is ready, it displays a message indicating that the local player is not ready.
+     * Updates the local status label in the WaitForOpponent scene based on the current ready state of the local player
+     * and the opponent. It checks if both players are ready, and if so, it updates the status label to indicate that
+     * all players are ready. If only the local player is ready, it displays a message indicating that it is waiting
+     * for the opponent to be ready. If neither player is ready, it displays a message indicating that the local player is not ready.
      */
     private void updateLocalStatus(boolean myReady) {
         if (myReady && Session.current().peerReady) {
@@ -87,7 +96,10 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Checks if both players are ready to start the game and initiates a countdown to start the game if both players are ready. It verifies that the current player is the host and that both the local player and the opponent are marked as ready in the current session. If these conditions are met, it sends a StartCountdown message to the opponent and schedules the game to start after a specified delay.
+     * Checks if both players are ready to start the game and initiates a countdown to start the game if both players are
+     * ready. It verifies that the current player is the host and that both the local player and the opponent are marked
+     * as ready in the current session. If these conditions are met, it sends a StartCountdown message to the opponent
+     * and schedules the game to start after a specified delay.
      */
     private void maybeStartCountdown() {
         Session s = Session.current();
@@ -100,8 +112,11 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Schedules the start of the game after a specified delay. It updates the status label to indicate the countdown time, disables the start game button, and sets up a PauseTransition to trigger the start of the game after the specified delay. When the transition finishes, it calls the startGameNow method to initiate the game.
-     * @param delayMs The delay in milliseconds before the game starts. This parameter is used to determine the countdown time displayed in the status label and the duration of the PauseTransition before starting the game.
+     * Schedules the start of the game after a specified delay. It updates the status label to indicate the countdown
+     * time, disables the start game button, and sets up a PauseTransition to trigger the start of the game after the
+     * specified delay. When the transition finishes, it calls the startGameNow method to initiate the game.
+     * @param delayMs The delay in milliseconds before the game starts. This parameter is used to determine the
+     *                countdown time displayed in the status label and the duration of the PauseTransition before starting the game.
      */
     private void scheduleStartGame(long delayMs) {
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
@@ -112,7 +127,10 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Starts the game immediately by transitioning to the GameScreen scene and passing the necessary data for the LAN game. It plays a looping background sound effect, retrieves the current session's configuration and setup, and initializes the GameScreen controller with the LAN data. If the flipped or rainbowed settings were enabled in the previous game, it applies those settings to the new game as well.
+     * Starts the game immediately by transitioning to the GameScreen scene and passing the necessary data for the LAN
+     * game. It plays a new background music, retrieves the current session's configuration and setup, and
+     * initializes the GameScreen controller with the LAN data. If the flipped or rainbowed settings were enabled in the
+     * previous game, it applies those settings to the new game as well.
      */
     private void startGameNow() {
         sC.playLooping("memory_background",.3);
@@ -128,10 +146,16 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Passes the host data to the WaitForOpponent controller, including the host name, match size, and deck size. It updates the user interface elements to display the host's name, match size, and deck size, and sets up a loading-dots animation while waiting for an opponent to join. It also opens a server socket to listen for incoming connections from clients and attaches a network listener to handle messages from the connected client. This method is typically called when transitioning to the WaitForOpponent scene as the host of a LAN game.
+     * Passes the host data to the WaitForOpponent controller, including the host name, match size, and deck size. It
+     * updates the user interface elements to display the host's name, match size, and deck size, and sets up a
+     * loading-dots animation while waiting for an opponent to join. It also opens a server socket to listen for incoming
+     * connections from clients and attaches a network listener to handle messages from the connected client.
+     * This method is typically called when transitioning to the WaitForOpponent scene as the host of a LAN game.
      * @param hostName The name of the host player, which is displayed in the WaitForOpponent scene to indicate the host's identity.
-     * @param tupleSize The match size (number of pairs) for the game, which is displayed in the WaitForOpponent scene to indicate the difficulty level of the game.
-     * @param deckSize The deck size (number of cards) for the game, which is displayed in the WaitForOpponent scene to indicate the complexity of the game.
+     * @param tupleSize The match size (number of pairs) for the game, which is displayed in the WaitForOpponent scene to
+     *                  indicate the difficulty level of the game.
+     * @param deckSize The deck size (number of cards) for the game, which is displayed in the WaitForOpponent scene to
+     *                 indicate the complexity of the game.
      */
     public void passHostData(String hostName, int tupleSize, int deckSize) {
         this.hostName = hostName;
@@ -169,9 +193,16 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Passes the join data to the WaitForOpponent controller, including the player's name and the IP address of the host. It updates the user interface elements to display the player's name, sets the start game button text to "Ready," and displays a status message indicating that it is waiting for game information from the host. It also sets up a network listener to handle messages from the host, such as receiving the lobby configuration and readiness status. This method is typically called when transitioning to the WaitForOpponent scene as a client joining a LAN game.
-     * @param playerName The name of the player joining the LAN game, which is displayed in the WaitForOpponent scene to indicate the player's identity.
-     * @param ipAddress The IP address of the host to which the player is connecting, which is used to establish a network connection and receive game information from the host.
+     * Passes the join data to the WaitForOpponent controller, including the player's name and the IP address of the
+     * host. It updates the user interface elements to display the player's name, sets the start game button text to
+     * "Ready," and displays a status message indicating that it is waiting for game information from the host. It also
+     * sets up a network listener to handle messages from the host, such as receiving the lobby configuration and
+     * readiness status. This method is typically called when transitioning to the WaitForOpponent scene as a client
+     * joining a LAN game.
+     * @param playerName The name of the player joining the LAN game, which is displayed in the WaitForOpponent scene
+     *                   to indicate the player's identity.
+     * @param ipAddress The IP address of the host to which the player is connecting, which is used to establish a
+     *                  network connection and receive game information from the host.
      */
     public void passJoinData(String playerName, String ipAddress) {
         this.joinName = playerName;
@@ -204,8 +235,13 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Attaches a network listener to the host's network layer to handle incoming messages from the connected client. It listens for messages such as Hello and Ready, and updates the session and user interface accordingly. If the client disconnects, it updates the status label to indicate that the opponent has disconnected. This method is called when the host successfully establishes a connection with a client in a LAN game.
-     * @param layer The NetworkLayer instance representing the established connection between the host and the client. This object is used for communication between the host and the client in the LAN game, allowing the host to receive messages from the client and respond accordingly.
+     * Attaches a network listener to the host's network layer to handle incoming messages from the connected client.
+     * It listens for messages such as Hello and Ready, and updates the session and user interface accordingly. If the
+     * client disconnects, it updates the status label to indicate that the opponent has disconnected. This method is
+     * called when the host successfully establishes a connection with a client in a LAN game.
+     * @param layer The NetworkLayer instance representing the established connection between the host and the client.
+     *              This object is used for communication between the host and the client in the LAN game, allowing the
+     *              host to receive messages from the client and respond accordingly.
      */
     private void attachHostListener(NetworkLayer layer) {
         layer.addListener(new NetworkListener() {
@@ -221,9 +257,16 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Handles incoming messages from the connected client when the current player is the host. It processes messages such as Hello and Ready, updating the session and user interface accordingly. When a Hello message is received, it updates the game configuration and setup to reflect the client's name and sends the updated lobby configuration back to the client. When a Ready message is received, it updates the peer's ready status and checks if both players are ready to start the game. If both players are ready, it initiates a countdown to start the game.
-     * @param layer The NetworkLayer instance representing the established connection between the host and the client. This object is used for communication between the host and the client in the LAN game, allowing the host to receive messages from the client and respond accordingly.
-     * @param msg The incoming message from the client, which can be of type Hello or Ready. The method processes the message based on its type and updates the session and user interface accordingly.
+     * Handles incoming messages from the connected client when the current player is the host. It processes messages
+     * such as Hello and Ready, updating the session and user interface accordingly. When a Hello message is received,
+     * it updates the game configuration and setup to reflect the client's name and sends the updated lobby configuration
+     * back to the client. When a Ready message is received, it updates the peer's ready status and checks if both
+     * players are ready to start the game. If both players are ready, it initiates a countdown to start the game.
+     * @param layer The NetworkLayer instance representing the established connection between the host and the client.
+     *              This object is used for communication between the host and the client in the LAN game, allowing the
+     *              host to receive messages from the client and respond accordingly.
+     * @param msg The incoming message from the client, which can be of type Hello or Ready. The method processes the
+     *            message based on its type and updates the session and user interface accordingly.
      */
     private void handleHostMessage(NetworkLayer layer, Message msg) {
         if (msg instanceof GameMessage.Hello h) {
@@ -256,8 +299,14 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Handles incoming messages from the connected host when the current player is a client joining a LAN game. It processes messages such as LobbyConfig, Ready, and StartCountdown, updating the session and user interface accordingly. When a LobbyConfig message is received, it updates the session's configuration and setup to reflect the host's game settings and updates the user interface to display the host's name, match size, and deck size. When a Ready message is received, it updates the peer's ready status and checks if both players are ready to start the game. If both players are ready, it initiates a countdown to start the game.
-     * @param msg The incoming message from the host, which can be of type LobbyConfig, Ready, or StartCountdown. The method processes the message based on its type and updates the session and user interface accordingly.
+     * Handles incoming messages from the connected host when the current player is a client joining a LAN game. It
+     * processes messages such as LobbyConfig, Ready, and StartCountdown, updating the session and user interface
+     * accordingly. When a LobbyConfig message is received, it updates the session's configuration and setup to reflect
+     * the host's game settings and updates the user interface to display the host's name, match size, and deck size.
+     * When a Ready message is received, it updates the peer's ready status and checks if both players are ready to start
+     * the game. If both players are ready, it initiates a countdown to start the game.
+     * @param msg The incoming message from the host, which can be of type LobbyConfig, Ready, or StartCountdown. The
+     *            method processes the message based on its type and updates the session and user interface accordingly.
      */
     private void handleJoinMessage(Message msg) {
         if (msg instanceof GameMessage.LobbyConfig lc) {
@@ -277,8 +326,12 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Updates the user interface to reflect that the opponent has joined the game. It stops the loading-dots animation, sets the opponent's name in the opponentNameLabel, and updates the status label to indicate that it is waiting for the opponent to be ready. This method is called when a Hello message is received from the client, indicating that the client has successfully connected to the host.
-     * @param joinN The name of the opponent who has joined the game, which is displayed in the opponentNameLabel to indicate the opponent's identity in the WaitForOpponent scene.
+     * Updates the user interface to reflect that the opponent has joined the game. It stops the loading-dots animation,
+     * sets the opponent's name in the opponentNameLabel, and updates the status label to indicate that it is waiting
+     * for the opponent to be ready. This method is called when a Hello message is received from the client, indicating
+     * that the client has successfully connected to the host.
+     * @param joinN The name of the opponent who has joined the game, which is displayed in the opponentNameLabel to
+     *              indicate the opponent's identity in the WaitForOpponent scene.
      */
     public void playerJoin(String joinN) {
         timeline.stop();
@@ -288,7 +341,11 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Updates the user interface to reflect the current readiness status of the opponent. It checks if both the local player and the opponent are marked as ready in the current session. If both players are ready, it updates the status label to indicate that all players are ready. If only the opponent is ready, it displays a message indicating that it is waiting for the local player to be ready. If neither player is ready, it displays a message indicating that it is waiting for the opponent to be ready.
+     * Updates the user interface to reflect the current readiness status of the opponent. It checks if both the local
+     * player and the opponent are marked as ready in the current session. If both players are ready, it updates the
+     * status label to indicate that all players are ready. If only the opponent is ready, it displays a message
+     * indicating that it is waiting for the local player to be ready. If neither player is ready, it displays a message
+     * indicating that it is waiting for the opponent to be ready.
      */
     private void updatePeerStatus() {
         Session s = Session.current();

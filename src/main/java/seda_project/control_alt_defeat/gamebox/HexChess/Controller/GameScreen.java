@@ -610,7 +610,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
     /**
-     * Methodt that is called whenever a promotion occures. In case of a network game only the promoting player gets the UI for this
+     * Methodt that is called whenever a promotion occurs. In case of a network game only the promoting player gets the UI for this
      * @param currentTurn
      */
     @Override

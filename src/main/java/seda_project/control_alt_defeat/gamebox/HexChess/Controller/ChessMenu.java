@@ -13,7 +13,8 @@ public class ChessMenu extends Controller {
     private VBox header;
 
     /**
-     * Handles the action of starting a local game in the HexChess menu. It plays a button sound effect and transitions to the LocalGameConfiguration scene, allowing the user to configure settings for a local game.
+     * Handles the action of starting a local game in the HexChess menu. It plays a button sound effect and transitions
+     * to the LocalGameConfiguration scene, allowing the user to configure settings for a local game.
      */
     @FXML
     protected void onLocalAction() {
@@ -22,7 +23,8 @@ public class ChessMenu extends Controller {
     }
 
     /**
-     * Handles the action of joining a LAN game in the HexChess menu. It plays a button sound effect and transitions to the JoinLan scene, allowing the user to connect to an existing LAN game as a client.
+     * Handles the action of joining a LAN game in the HexChess menu. It plays a button sound effect and transitions
+     * to the JoinLan scene, allowing the user to connect to an existing LAN game as a client.
      */
     @FXML
     protected void onJoinAction() {
@@ -31,7 +33,8 @@ public class ChessMenu extends Controller {
     }
 
     /**
-     * Handles the action of hosting a LAN game in the HexChess menu. It plays a button sound effect and transitions to the HostLanConfiguration scene, allowing the user to set up a LAN game as the host.
+     * Handles the action of hosting a LAN game in the HexChess menu. It plays a button sound effect and transitions
+     * to the HostLanConfiguration scene, allowing the user to set up a LAN game as the host.
      */
     @FXML
     protected void onHostAction() {
@@ -40,7 +43,8 @@ public class ChessMenu extends Controller {
     }
 
     /**
-     * Handles the action of opening the settings menu in the HexChess menu. It plays a button sound effect and transitions to the SettingsMenu scene, allowing the user to configure various settings for the game.
+     * Handles the action of opening the settings menu in the HexChess menu. It plays a button sound effect and
+     * transitions to the SettingsMenu scene, allowing the user to configure various settings for the game.
      */
     @FXML
     protected void onExitAction() {
@@ -49,7 +53,8 @@ public class ChessMenu extends Controller {
     }
 
     /**
-     * Handles the action of opening the settings menu in the HexChess menu. It plays a button sound effect and transitions to the SettingsMenu scene, allowing the user to configure various settings for the game.
+     * Handles the action of opening the settings menu in the HexChess menu. It plays a button sound effect and
+     * transitions to the SettingsMenu scene, allowing the user to configure various settings for the game.
      */
     @FXML
     protected void onSettingsAction() {
@@ -58,7 +63,9 @@ public class ChessMenu extends Controller {
     }
 
     /**
-     * Handles the action of opening the board designer in the HexChess menu. It plays a button sound effect, transitions to the BoardDesigner scene, and disables the "Use" button in the designer, allowing the user to create or edit custom board designs without immediately applying them.
+     * Handles the action of opening the board designer in the HexChess menu. It plays a button sound effect,
+     * transitions to the BoardDesigner scene, and disables the "Use" button in the designer, allowing the user to
+     * create or edit custom board designs without immediately applying them.
      */
     @FXML
     public void onCustomBoardAction() {

@@ -76,7 +76,9 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Initializes the BoardDesigner controller by setting up the user interface elements, including building a map of piece labels, loading images for the pieces, applying custom styles, and reading the list of board states from a JSON file. It also defines the rows of polygons representing the hexagonal chessboard.
+     * Initializes the BoardDesigner controller by setting up the user interface elements, including building a map of
+     * piece labels, loading images for the pieces, applying custom styles, and reading the list of board states from a
+     * JSON file. It also defines the rows of polygons representing the hexagonal chessboard.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,7 +91,11 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Builds a map of piece labels for both players, associating each piece type with its corresponding label in the user interface. This method initializes the pieceLabels map with key-value pairs, where the keys are strings representing the piece types (e.g., "p1Pawn", "p2Rook") and the values are the corresponding Label objects that display the amount of each piece available for both players. The map is used to update the displayed amounts of pieces during gameplay.
+     * Builds a map of piece labels for both players, associating each piece type with its corresponding label in the
+     * user interface. This method initializes the pieceLabels map with key-value pairs, where the keys are strings
+     * representing the piece types (e.g., "p1Pawn", "p2Rook") and the values are the corresponding Label objects that
+     * display the amount of each piece available for both players. The map is used to update the displayed amounts of
+     * pieces during gameplay.
      */
     @FXML
     public void dragStart(MouseEvent mouseEvent) {
@@ -125,11 +131,7 @@ public class BoardDesigner extends Controller implements Initializable {
         mouseEvent.consume();
     }
 
-    /**
-     * This method is called when the "Back" button in the BoardDesigner scene is clicked. It plays a button sound effect, clears the current session, and transitions back to the previous scene. This method allows the user to return to the previous screen without saving any changes made in the BoardDesigner.
-     *
-     * @param event The MouseEvent triggered by clicking the "Back" button. This event is used to handle the user interaction and initiate the transition back to the previous scene.
-     */
+
     @FXML
     private void dragOver(DragEvent event) {
         if (event.getDragboard().hasString()) {
@@ -142,9 +144,14 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when a dragged piece is dropped onto a polygon on the board. It retrieves the piece ID from the dragboard, identifies the target polygon, and calls the handlePiecePlaced method to update the board state accordingly. If the drop occurs outside of a polygon, it still processes the piece placement without specifying a target polygon. The method also updates the piece amounts displayed in the user interface based on the current state of the board.
+     * This method is called when a dragged piece is dropped onto a polygon on the board. It retrieves the piece ID
+     * from the dragboard, identifies the target polygon, and calls the handlePiecePlaced method to update the board
+     * state accordingly. If the drop occurs outside of a polygon, it still processes the piece placement without
+     * specifying a target polygon. The method also updates the piece amounts displayed in the user interface based
+     * on the current state of the board.
      *
-     * @param event The DragEvent triggered by dropping a piece onto the board. This event is used to handle the user interaction and update the board state based on the dropped piece and its target location.
+     * @param event The DragEvent triggered by dropping a piece onto the board. This event is used to handle the user
+     *              interaction and update the board state based on the dropped piece and its target location.
      */
     @FXML
     private void dragDrop(DragEvent event) {
@@ -165,11 +172,6 @@ public class BoardDesigner extends Controller implements Initializable {
         event.consume();
     }
 
-    /**
-     * This method is called when a dragged piece is dropped outside of a polygon on the board. It retrieves the piece ID from the dragboard and calls the handlePiecePlaced method to update the board state accordingly, without specifying a target polygon. The method also updates the piece amounts displayed in the user interface based on the current state of the board.
-     *
-     * @param event The DragEvent triggered by dropping a piece outside of a polygon. This event is used to handle the user interaction and update the board state based on the dropped piece, even if it is not placed on a specific polygon.
-     */
     @FXML
     private void dragExited(DragEvent event) {
         Polygon target = (Polygon) event.getSource();
@@ -178,11 +180,6 @@ public class BoardDesigner extends Controller implements Initializable {
         target.setStrokeType(StrokeType.INSIDE);
     }
 
-    /**
-     * This method is called when a dragged piece is dropped outside of a polygon on the board. It retrieves the piece ID from the dragboard and calls the handlePiecePlaced method to update the board state accordingly, without specifying a target polygon. The method also updates the piece amounts displayed in the user interface based on the current state of the board.
-     *
-     * @param event The DragEvent triggered by dropping a piece outside of a polygon. This event is used to handle the user interaction and update the board state based on the dropped piece, even if it is not placed on a specific polygon.
-     */
     @FXML
     private void dragDone(DragEvent event) {
         if (event.getTransferMode() == null) {
@@ -195,7 +192,9 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when the "Back" button in the BoardDesigner scene is clicked. It plays a button sound effect, clears the current session, and transitions back to the previous scene. This method allows the user to return to the previous screen without saving any changes made in the BoardDesigner.
+     * This method is called when the "Back" button in the BoardDesigner scene is clicked. It plays a button sound
+     * effect, clears the current session, and transitions back to the previous scene. This method allows the user to
+     * return to the previous screen without saving any changes made in the BoardDesigner.
      */
     @FXML
     protected void onBackAction() {
@@ -210,7 +209,11 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when the "Export" button in the BoardDesigner scene is clicked. It plays a button sound effect, checks if the current board state already exists in the list of saved states, and if not, validates the board state. If the state is valid, it creates a new BoardDesignState object, adds it to the list of saved states, and writes the updated list to a JSON file. If the state is invalid or already exists, it plays an error sound effect and displays a toast message indicating the issue.
+     * This method is called when the "Export" button in the BoardDesigner scene is clicked. It plays a button sound
+     * effect, checks if the current board state already exists in the list of saved states, and if not, validates
+     * the board state. If the state is valid, it creates a new BoardDesignState object, adds it to the list of
+     * saved states, and writes the updated list to a JSON file. If the state is invalid or already exists,
+     * it plays an error sound effect and displays a toast message indicating the issue.
      */
     @FXML
     protected void onExportAction() {
@@ -237,7 +240,10 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when the "Import" button in the BoardDesigner scene is clicked. It plays a button sound effect, opens a new modal window for board selection, and allows the user to choose from a list of saved board states. The selected board state is then passed back to the BoardDesigner controller for further processing. If an error occurs while loading the board selection view, it throws a RuntimeException.
+     * This method is called when the "Import" button in the BoardDesigner scene is clicked. It plays a button sound
+     * effect, opens a new modal window for board selection, and allows the user to choose from a list of saved board
+     * states. The selected board state is then passed back to the BoardDesigner controller for further processing.
+     * If an error occurs while loading the board selection view, it throws a RuntimeException.
      */
     @FXML
     protected void onImportAction() {
@@ -260,7 +266,9 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when the "Go First" button for Player 1 is clicked. It plays a button sound effect, updates the UI to indicate that Player 1 will go first, and sets the active player in the engine to Player 1. This allows the user to specify which player will take the first turn in the game.
+     * This method is called when the "Go First" button for Player 1 is clicked. It plays a button sound effect,
+     * updates the UI to indicate that Player 1 will go first, and sets the active player in the engine to Player 1.
+     * This allows the user to specify which player will take the first turn in the game.
      */
     @FXML
     protected void onP1FirstAcion() {
@@ -271,7 +279,9 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when the "Go First" button for Player 2 is clicked. It plays a button sound effect, updates the UI to indicate that Player 2 will go first, and sets the active player in the engine to Player 2. This allows the user to specify which player will take the first turn in the game.
+     * This method is called when the "Go First" button for Player 2 is clicked. It plays a button sound effect,
+     * updates the UI to indicate that Player 2 will go first, and sets the active player in the engine to Player 2.
+     * This allows the user to specify which player will take the first turn in the game.
      */
     @FXML
     protected void onP2FirstAction() {
@@ -282,7 +292,11 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * This method is called when the "Use" button in the BoardDesigner scene is clicked. It plays a button sound effect, validates the current board state, and if valid, transitions back to the previous scene while passing the current board notation and player names. If the board state is invalid, it plays an error sound effect and displays a toast message indicating that only valid states can be used. This allows the user to finalize their custom board design and proceed with the game setup.
+     * This method is called when the "Use" button in the BoardDesigner scene is clicked. It plays a button sound
+     * effect, validates the current board state, and if valid, transitions back to the previous scene while passing
+     * the current board notation and player names. If the board state is invalid, it plays an error sound effect
+     * and displays a toast message indicating that only valid states can be used. This allows the user to finalize
+     * their custom board design and proceed with the game setup.
      */
     @FXML
     protected void onUseAction() {
@@ -302,14 +316,20 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Disables the "Use" button in the BoardDesigner scene, preventing the user from finalizing and using the current board state. This method can be called when certain conditions are met, such as when the board state is invalid or when the user is not allowed to proceed with using the current design. It updates the UI to reflect that the "Use" action is not available.
+     * Disables the "Use" button in the BoardDesigner scene, preventing the user from finalizing and using the
+     * current board state. This method can be called when certain conditions are met, such as
+     * when the user is not allowed to proceed with using the current design. It updates the UI to reflect that the
+     * "Use" action is not available.
      */
     public void disableUse() {
         useButton.setDisable(true);
     }
 
     /**
-     * Handles the placement of a piece on the board when it is dropped onto a polygon field. It updates the user data of the target polygon to associate it with the piece ID, removes any existing piece on that field, and updates the piece amounts displayed in the UI. If the same piece is being placed again, it does not increment the count. The method also creates a new ImageView for the placed piece and sets up drag-and-drop functionality for it.
+     * Handles the placement of a piece on the board when it is dropped onto a polygon field. It updates the user data
+     * of the target polygon to associate it with the piece ID, removes any existing piece on that field, and updates
+     * the piece amounts displayed in the UI. If the same piece is being placed again, it does not increment the count.
+     * The method also creates a new ImageView for the placed piece and sets up drag-and-drop functionality for it.
      *
      * @param pieceId The unique CSS identifier (ID) of the piece being placed.
      * @param fieldId The unique CSS identifier (ID) of the target polygon field on the board.
@@ -366,9 +386,14 @@ public class BoardDesigner extends Controller implements Initializable {
 
 
     /**
-     * Applies the provided label values to the corresponding piece labels in the user interface. It iterates through the given map of key-value pairs, where each key corresponds to a unique piece image identifier and each value is the text to be displayed on the associated label. If a label exists for a given key, its text is updated with the provided value.
+     * Applies the provided label values to the corresponding piece labels in the user interface. It iterates through
+     * the given map of key-value pairs, where each key corresponds to a unique piece image identifier and each value
+     * is the text to be displayed on the associated label. If a label exists for a given key, its text is updated with
+     * the provided value.
      *
-     * @param values A map containing key-value pairs where the key is a unique piece image identifier and the value is the text to be displayed on the corresponding label. The method updates the text of each label based on the provided values.
+     * @param values A map containing key-value pairs where the key is a unique piece image identifier and the value
+     *               is the text to be displayed on the corresponding label. The method updates the text of each label
+     *               based on the provided values.
      */
     private void applyLabelValues(Map<String, String> values) {
         values.forEach((key, text) -> {
@@ -380,14 +405,34 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Builds a mapping of piece image identifiers to their corresponding amount labels in the user interface. This method initializes the pieceLabels map with key-value pairs, where each key is a unique string representing a piece image identifier (e.g., "p1PawnImg", "p2RookImg") and each value is the corresponding Label object that displays the amount of that piece available for both players. The mapping allows for easy updating of the displayed amounts of pieces during gameplay.
+     * Builds a mapping of piece image identifiers to their corresponding amount labels in the user interface. This
+     * method initializes the pieceLabels map with key-value pairs, where each key is a unique string representing a
+     * piece image identifier (e.g., "p1PawnImg", "p2RookImg") and each value is the corresponding Label object that
+     * displays the amount of that piece available for both players. The mapping allows for easy updating of the
+     * displayed amounts of pieces during gameplay.
      */
     private void buildPieceLabelsMap() {
-        pieceLabels = new HashMap<>(Map.ofEntries(Map.entry("p1PawnImg", p1PawnAmountLabel), Map.entry("p1RookImg", p1RookAmountLabel), Map.entry("p1KnightImg", p1KnightAmountLabel), Map.entry("p1BishopImg", p1BishopAmountLabel), Map.entry("p1QueenImg", p1QueenAmountLabel), Map.entry("p1KingImg", p1KingAmountLabel), Map.entry("p2PawnImg", p2PawnAmountLabel), Map.entry("p2RookImg", p2RookAmountLabel), Map.entry("p2KnightImg", p2KnightAmountLabel), Map.entry("p2BishopImg", p2BishopAmountLabel), Map.entry("p2QueenImg", p2QueenAmountLabel), Map.entry("p2KingImg", p2KingAmountLabel)));
+        pieceLabels = new HashMap<>( Map.ofEntries(
+                Map.entry("p1PawnImg", p1PawnAmountLabel),
+                Map.entry("p1RookImg", p1RookAmountLabel),
+                Map.entry("p1KnightImg", p1KnightAmountLabel),
+                Map.entry("p1BishopImg", p1BishopAmountLabel),
+                Map.entry("p1QueenImg", p1QueenAmountLabel),
+                Map.entry("p1KingImg", p1KingAmountLabel),
+                Map.entry("p2PawnImg", p2PawnAmountLabel),
+                Map.entry("p2RookImg", p2RookAmountLabel),
+                Map.entry("p2KnightImg", p2KnightAmountLabel),
+                Map.entry("p2BishopImg", p2BishopAmountLabel),
+                Map.entry("p2QueenImg", p2QueenAmountLabel),
+                Map.entry("p2KingImg", p2KingAmountLabel)));
     }
 
     /**
-     * Loads the images for the pieces of both players from the current settings state and applies them to the corresponding ImageView elements in the user interface. It retrieves the list of ImageView objects for Player 1 and Player 2 pieces from the settings, and if they are not null, it sets the images for each piece type (Pawn, Rook, Knight, Bishop, Queen, King) accordingly. This method ensures that the correct images are displayed for each player's pieces based on the selected settings.
+     * Loads the images for the pieces of both players from the current settings state and applies them to the
+     * corresponding ImageView elements in the user interface. It retrieves the list of ImageView objects for Player 1
+     * and Player 2 pieces from the settings, and if they are not null, it sets the images for each piece type
+     * (Pawn, Rook, Knight, Bishop, Queen, King) accordingly. This method ensures that the correct images are displayed
+     * for each player's pieces based on the selected settings.
      */
     private void loadImages() {
         List<ImageView> p1Pieces = settings.getP1Pieces();
@@ -411,7 +456,11 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Applies custom styles to the board's visual layout based on the current settings state. It retrieves the colors for dark, normal, and light tiles from the settings and constructs a CSS style string to set the corresponding properties for the root element. If any of the tile colors are not null, it appends the appropriate CSS property to the style string and applies it to the root element, allowing for a customized appearance of the board based on user preferences.
+     * Applies custom styles to the board's visual layout based on the current settings state. It retrieves the colors
+     * for dark, normal, and light tiles from the settings and constructs a CSS style string to set the corresponding
+     * properties for the root element. If any of the tile colors are not null, it appends the appropriate CSS property
+     * to the style string and applies it to the root element, allowing for a customized appearance of the board based
+     * on user preferences.
      */
     private void setCustomStyle() {
         StringBuilder style = new StringBuilder();
@@ -430,9 +479,15 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Loads a previously saved board state into the BoardDesigner, clearing any existing pieces and resetting the board to match the provided BoardDesignState. It removes all ImageView elements representing pieces from the boardPane, clears the user data of each polygon in the rows, and then uses the engine to load the exported state. The method also applies label values for both players based on the loaded state and draws the FEN representation of the board to visually represent the piece placements.
+     * Loads a previously saved board state into the BoardDesigner, clearing any existing pieces and resetting the board
+     * to match the provided BoardDesignState. It removes all ImageView elements representing pieces from the boardPane,
+     * clears the user data of each polygon in the rows, and then uses the engine to load the exported state. The method
+     * also applies label values for both players based on the loaded state and draws the FEN representation of the board
+     * to visually represent the piece placements.
      *
-     * @param state The BoardDesignState object representing the saved board configuration to be loaded into the BoardDesigner. This state contains information about piece placements, player turns, and other relevant data needed to restore the board to its previous configuration.
+     * @param state The BoardDesignState object representing the saved board configuration to be loaded into the
+     *              BoardDesigner. This state contains information about piece placements, player turns, and other
+     *              relevant data needed to restore the board to its previous configuration.
      */
     public void loadBoard(BoardDesignState state) {
         boardPane.getChildren().removeIf(node -> node instanceof ImageView);
@@ -448,9 +503,15 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Draws the board state represented by a FEN (Forsyth-Edwards Notation) string onto the board. It splits the FEN string into its components, determines which player goes first, and iterates through each row of the FEN representation to place pieces on the corresponding polygons. The method uses regular expressions to parse the FEN tokens, handling both piece identifiers and empty spaces, and calls handlePiecePlaced to update the board visually with the correct piece placements.
+     * Draws the board state represented by a FEN string onto the board. It splits the FEN string into its components,
+     * determines which player goes first, and iterates through each row of the FEN representation to place pieces on
+     * the corresponding polygons. The method uses regular expressions to parse the FEN tokens, handling both piece
+     * identifiers and empty spaces, and calls handlePiecePlaced to update the board visually with the correct piece
+     * placements.
      *
-     * @param fenState The FEN string representing the board state to be drawn. This string contains information about piece placements, player turns, and other relevant data needed to visually represent the board configuration in the BoardDesigner.
+     * @param fenState The FEN string representing the board state to be drawn. This string contains information about
+     *                 piece placements, player turns, and other relevant data needed to visually represent the board
+     *                 configuration in the BoardDesigner.
      */
     private void drawFen(String fenState) {
         String[] starting = fenState.split(" ");
@@ -481,10 +542,15 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Maps a piece identifier from the FEN notation to its corresponding ImageView ID in the user interface. It uses a switch statement to match the provided string (representing a piece type) to the appropriate ImageView ID for both Player 1 and Player 2 pieces. If the input string does not match any known piece type, it returns a default value of "?". This method is used to facilitate the drawing of pieces on the board based on FEN notation.
+     * Maps a piece identifier from the FEN notation to its corresponding ImageView ID in the user interface. It uses a
+     * switch statement to match the provided string (representing a piece type) to the appropriate ImageView ID for
+     * both Player 1 and Player 2 pieces. If the input string does not match any known piece type, it returns a default
+     * value of "?". This method is used to facilitate the drawing of pieces on the board based on FEN notation.
      *
-     * @param s The string representing a piece type in FEN notation (e.g., "P" for Player 1 Pawn, "k" for Player 2 King). The method maps this string to the corresponding ImageView ID used in the user interface to display the piece.
-     * @return The ImageView ID corresponding to the provided piece type string. If the input string does not match any known piece type, it returns a default value of "?".
+     * @param s The string representing a piece type in FEN notation (e.g., "P" for Player 1 Pawn, "k" for Player 2 King).
+     *          The method maps this string to the corresponding ImageView ID used in the user interface to display the piece.
+     * @return The ImageView ID corresponding to the provided piece type string. If the input string does not match any
+     *          known piece type, it returns a default value of "?".
      */
     private String getPiece(String s) {
         return switch (s) {
@@ -505,7 +571,10 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Sets the names of Player 1 and Player 2 in the BoardDesigner. This method is used to store the provided player names in the corresponding instance variables, allowing them to be accessed later when transitioning back to the previous scene or when saving the board state. The names are passed as parameters and assigned to the p1Name and p2Name variables.
+     * Sets the names of Player 1 and Player 2 in the BoardDesigner. This method is used to store the provided player
+     * names in the corresponding instance variables, allowing them to be accessed later when transitioning back to the
+     * previous scene. The names are passed as parameters and assigned to the p1Name and
+     * p2Name variables.
      *
      * @param text  The name of Player 1 to be set in the BoardDesigner.
      * @param text1 The name of Player 2 to be set in the BoardDesigner.
@@ -516,7 +585,11 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Validates the current board state by checking for the presence of exactly one white king and one black king, ensuring that no pawns are placed on promotion squares, and verifying that neither king is in check. It also checks for sufficient material to continue the game. The method uses a GameEngine instance to set up the board state based on the current FEN notation and performs various checks to determine if the board configuration is valid for gameplay. If any of the validation conditions fail, it returns false; otherwise, it returns true.
+     * Validates the current board state by checking for the presence of exactly one white king and one black king,
+     * ensuring that no pawns are placed on promotion squares, and verifying that neither king is in check. It also
+     * checks for sufficient material to continue the game. The method uses a GameEngine instance to set up the board
+     * state based on the current FEN notation and performs various checks to determine if the board configuration is
+     * valid for gameplay. If any of the validation conditions fail, it returns false; otherwise, it returns true.
      *
      * @return true if the board state is valid; false otherwise.
      */

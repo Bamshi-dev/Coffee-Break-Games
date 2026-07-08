@@ -57,7 +57,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Builds the grid of rectangles representing the block editor. Each rectangle corresponds to a cell in the 4x4 grid and is initialized with a transparent fill and gray stroke. The rectangles are added to the gridPane, and mouse click events are set up to handle toggling the cells and updating their visual representation.
+     * Builds the grid of rectangles representing the block editor. Each rectangle corresponds to a cell in the 4x4 grid
+     * and is initialized with a transparent fill and gray stroke. The rectangles are added to the gridPane, and mouse
+     * click events are set up to handle toggling the cells and updating their visual representation.
      */
     private void buildGrid() {
         gridPane.getChildren().clear();
@@ -71,7 +73,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Creates a rectangle representing a cell in the block editor grid. The rectangle is initialized with a transparent fill and gray stroke. Mouse click events are set up to handle toggling the cell's state, updating its visual representation, and updating adjacent cells' visual representation based on the current state of the grid.
+     * Creates a rectangle representing a cell in the block editor grid. The rectangle is initialized with a transparent
+     * fill and gray stroke. Mouse click events are set up to handle toggling the cell's state, updating its visual
+     * representation, and updating adjacent cells' visual representation based on the current state of the grid.
      */
     private Rectangle createCell(int row, int col) {
         Rectangle cell = new Rectangle(RECTANGLE_SIZE, RECTANGLE_SIZE);
@@ -103,7 +107,10 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Updates the visual representation of adjacent cells in the block editor grid based on the current state of the grid. It checks the four adjacent cells (up, down, left, right) and updates their visual representation accordingly. If an adjacent cell is out of bounds or null, it catches the NullPointerException and prints the exception message to the console.
+     * Updates the visual representation of adjacent cells in the block editor grid based on the current state of the
+     * grid. It checks the four adjacent cells (up, down, left, right) and updates their visual representation accordingly.
+     * If an adjacent cell is out of bounds or null, it catches the NullPointerException and prints the exception message
+     * to the console.
      */
     private void updateAdjacent(int row, int col) {
         try{
@@ -134,7 +141,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Updates the visual representation of a specific cell in the block editor grid based on its current state. It checks if the cell is active (filled) or inactive (empty) and sets the fill color accordingly. If the cell is active, it uses the selected color; otherwise, it sets the fill to transparent.
+     * Updates the visual representation of a specific cell in the block editor grid based on its current state. It checks
+     * if the cell is active (filled) or inactive (empty) and sets the fill color accordingly. If the cell is active, it
+     * uses the selected color; otherwise, it sets the fill to transparent.
      */
     private void updateAdjacentCellsVisual(int row, int col) {
         if (row < 0 || row >= 4 || col < 0 || col >= 4) return;
@@ -150,7 +159,8 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Checks if a specific cell in the block editor grid is adjacent to any active (filled) cells. It checks the four adjacent cells (up, down, left, right) and returns true if any of them are active; otherwise, it returns false.
+     * Checks if a specific cell in the block editor grid is adjacent to any active (filled) cells. It checks the four
+     * adjacent cells (up, down, left, right) and returns true if any of them are active; otherwise, it returns false.
      */
     private boolean isAdjacentToActive(int row, int col) {
         boolean[][] grid = editorController.getGrid();
@@ -163,7 +173,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Retrieves the rectangle representing a specific cell in the block editor grid based on its row and column indices. It iterates through the children of the gridPane and checks their row and column indices to find the matching rectangle. If found, it returns the rectangle; otherwise, it returns null.
+     * Retrieves the rectangle representing a specific cell in the block editor grid based on its row and column indices.
+     * It iterates through the children of the gridPane and checks their row and column indices to find the matching rectangle.
+     * If found, it returns the rectangle; otherwise, it returns null.
      */
     private Rectangle getCellAt(int row, int col) {
         for (var node : gridPane.getChildren()) {
@@ -174,7 +186,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Updates the visual representation of a specific cell in the block editor grid based on its current state. It checks if the cell is active (filled) or inactive (empty) and sets the fill color accordingly. If the cell is active, it uses the selected color; otherwise, it sets the fill to transparent.
+     * Updates the visual representation of a specific cell in the block editor grid based on its current state. It checks
+     * if the cell is active (filled) or inactive (empty) and sets the fill color accordingly. If the cell is active, it
+     * uses the selected color; otherwise, it sets the fill to transparent.
      */
     private void updateCellVisual(Rectangle cell, int row, int col) {
         boolean active = editorController.getGrid()[row][col];
@@ -182,7 +196,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Refreshes the visual representation of the entire block editor grid based on the current state of the grid. It iterates through all the rectangles in the gridPane and updates their fill color based on whether they are active (filled) or inactive (empty). It also updates the visual representation of adjacent cells for each cell in the grid.
+     * Refreshes the visual representation of the entire block editor grid based on the current state of the grid. It
+     * iterates through all the rectangles in the gridPane and updates their fill color based on whether they are active
+     * (filled) or inactive (empty). It also updates the visual representation of adjacent cells for each cell in the grid.
      */
     private void refreshGrid() {
         boolean[][] grid = editorController.getGrid();
@@ -199,7 +215,10 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Refreshes the list of custom blocks displayed in the scrollPane. It retrieves the list of custom pieces from the BlockRegistry singleton instance and creates a VBox containing rows for each custom block. Each row consists of a mini preview of the block and its name. The rows are added to the VBox, which is then set as the content of the scrollPane. If there are no custom pieces, it sets the selectedListIndex to -1.
+     * Refreshes the list of custom blocks displayed in the scrollPane. It retrieves the list of custom pieces from the
+     * BlockRegistry singleton instance and creates a VBox containing rows for each custom block. Each row consists of
+     * a mini preview of the block and its name. The rows are added to the VBox, which is then set as the content of the
+     * scrollPane. If there are no custom pieces, it sets the selectedListIndex to -1.
      */
     private void refreshList() {
         VBox list = new VBox(8);
@@ -219,7 +238,9 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /** 
-     * Builds a row in the list of custom blocks displayed in the scrollPane. Each row consists of a mini preview of the block and its name. The row is created as an HBox, and mouse click events are set up to handle selecting the row, updating the selectedListIndex, and enabling/disabling the load and delete buttons based on the selection.
+     * Builds a row in the list of custom blocks displayed in the scrollPane. Each row consists of a mini preview of the
+     * block and its name. The row is created as an HBox, and mouse click events are set up to handle selecting the row,
+     * updating the selectedListIndex, and enabling/disabling the load and delete buttons based on the selection.
      */
     private HBox buildListRow(CustomBlock piece, int index) {
         Pane preview = buildMiniPreview(piece);
@@ -230,7 +251,7 @@ public class BlockController extends Controller implements Initializable {
         row.getChildren().addAll(preview,name);
         row.setAlignment(Pos.CENTER);
         row.getStyleClass().add("scrollItem");
-        row.setStyle("-fx-padding: 4; -fx-cursor: hand;");
+        row.setStyle("-fx-cursor: hand;");
 
         row.setOnMouseClicked(e -> {
             selectedListIndex = index;
@@ -245,7 +266,10 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Builds a mini preview of a custom block for display in the list of custom blocks. It creates a GridPane and populates it with rectangles representing the shape of the custom block. Each rectangle is filled with the color of the block if it is part of the shape; otherwise, it is transparent. The rectangles are added to the GridPane, which is then returned as a Pane for display.
+     * Builds a mini preview of a custom block for display in the list of custom blocks. It creates a GridPane and
+     * populates it with rectangles representing the shape of the custom block. Each rectangle is filled with the color
+     * of the block if it is part of the shape; otherwise, it is transparent. The rectangles are added to the GridPane,
+     * which is then returned as a Pane for display.
      */
     private Pane buildMiniPreview(CustomBlock piece) {
         GridPane preview = new GridPane();
@@ -266,7 +290,8 @@ public class BlockController extends Controller implements Initializable {
 
 
     /**
-     * Handles the action of going back to the previous scene. It plays a button click sound and navigates back to the previous scene using the controller's backScene method. If the previous scene is an instance of HostLan, it passes the player data (name and level) to the HostLan controller. If the previous scene is an instance of LocalGameConfiguration, it passes the local game data (player names and levels) to the LocalGameConfiguration controller.
+     * Handles the action of going back to the previous scene. It plays a button click sound and navigates back to the
+     * previous scene using the controller's backScene method.
      */
     @FXML
     protected void onBackAction(){
@@ -275,7 +300,10 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of loading a selected custom block from the list. It plays a button click sound and checks if a valid custom block is selected. If a valid block is selected, it enables the save and reset buttons, retrieves the selected custom block from the BlockRegistry, and loads it into the block editor for updating. It also updates the visual representation of the grid and adjacent cells based on the loaded block's shape.
+     * Handles the action of loading a selected custom block from the list. It plays a button click sound and checks if
+     * a valid custom block is selected. If a valid block is selected, it enables the save and reset buttons, retrieves
+     * the selected custom block from the BlockRegistry, and loads it into the block editor for updating. It also updates
+     * the visual representation of the grid and adjacent cells based on the loaded block's shape.
      */
     @FXML
     protected void onLoadAction(){
@@ -306,7 +334,11 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of saving or updating a custom block in the block editor. It plays a button click sound and checks if the editor is in update mode or not. If not in update mode, it saves the new custom block; otherwise, it updates the existing custom block. After saving or updating, it resets the editor, refreshes the grid and list, and disables the save and reset buttons. If an exception occurs during saving or updating, it displays an error message on the save button and temporarily disables it before resetting its text and enabling it again.
+     * Handles the action of saving or updating a custom block in the block editor. It plays a button click sound and
+     * checks if the editor is in update mode or not. If not in update mode, it saves the new custom block; otherwise,
+     * it updates the existing custom block. After saving or updating, it resets the editor, refreshes the grid and list,
+     * and disables the save and reset buttons. If an exception occurs during saving or updating, it displays an error
+     * message on the save button and temporarily disables it before resetting its text and enabling it again.
      */
     @FXML
     protected void onSaveAction(){
@@ -343,7 +375,10 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of deleting a selected custom block from the list. It plays a button click sound and checks if a valid custom block is selected. If a valid block is selected, it disables the load and delete buttons, retrieves the selected custom block from the BlockRegistry, removes it from the registry, and refreshes the list of custom blocks displayed in the scrollPane. It also prints the index of the deleted block to the console.
+     * Handles the action of deleting a selected custom block from the list. It plays a button click sound and checks if
+     * a valid custom block is selected. If a valid block is selected, it disables the load and delete buttons, retrieves
+     * the selected custom block from the BlockRegistry, removes it from the registry, and refreshes the list of custom
+     * blocks displayed in the scrollPane. It also prints the index of the deleted block to the console.
      */
     @FXML
     protected void onDeleteAction(){
@@ -359,7 +394,8 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of resetting the block editor to its initial state. It plays a button click sound, resets the editor, refreshes the grid and list of custom blocks, and disables the save, load, delete, and reset buttons.
+     * Handles the action of selecting a new Color. It plays a button click sound, updates the selected color and
+     * refreshes the Grid
      */
     @FXML
     protected void onColorAction(){
@@ -370,7 +406,8 @@ public class BlockController extends Controller implements Initializable {
     }
 
     /**
-     * Handles the action of resetting the block editor to its initial state. It plays a button click sound, resets the editor, refreshes the grid and list of custom blocks, and disables the save, load, delete, and reset buttons.
+     * Handles the action of resetting the block editor to its initial state. It plays a button click sound, resets the
+     * editor, refreshes the grid and list of custom blocks, and disables the save, load, delete, and reset buttons.
      */
     @FXML
     protected void onResetAction(){

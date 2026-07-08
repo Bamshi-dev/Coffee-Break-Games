@@ -33,6 +33,10 @@ public class AdvancedSettings extends Controller implements Initializable {
     @FXML
     private ToggleSwitch toggleSwitch;
 
+    /**
+     * Method that is called when clicking on the "Back" Button. The user is brought back to the screen they came from
+     * and restores the before set values
+     */
     @FXML
     protected void onBackAction(){
         sC.play("button");
@@ -44,7 +48,9 @@ public class AdvancedSettings extends Controller implements Initializable {
         }
     }
     /**
-     * Saves the advanced settings to the TetrisAdvancedSettings singleton instance and displays a toast message indicating that the settings have been saved. If the bomb chance exceeds 100%, it sets the bomb chance to 100% and displays a specific message.
+     * Saves the advanced settings to the TetrisAdvancedSettings singleton instance and displays a toast message indicating
+     * that the settings have been saved. If the bomb chance exceeds 100%, it sets the bomb chance to 100% and displays
+     * a specific message.
      */
     @FXML
     protected void onSaveAction(){
@@ -73,7 +79,9 @@ public class AdvancedSettings extends Controller implements Initializable {
     }
 
     /**
-     * Initializes the advanced settings controller by setting the initial values of the UI components based on the current settings in the TetrisAdvancedSettings singleton instance. It also sets up the toggle group for layout selection and initializes the toggle switch state.
+     * Initializes the advanced settings controller by setting the initial values of the UI components based on the
+     * current settings in the TetrisAdvancedSettings singleton instance. It also sets up the toggle group for layout
+     * selection and initializes the toggle switch state.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -100,7 +108,7 @@ public class AdvancedSettings extends Controller implements Initializable {
     }
 
     /**
-     * Handles the data received from the host in a multiplayer game. It sets the player name and level for player 1 based on the provided parameters.
+     * Method to store the data (e.g. player name and player leve) form the Host Screen
      */
     public void handHostData(String yourName, int hostLevel) {
         this.p1Name = yourName;
@@ -108,7 +116,8 @@ public class AdvancedSettings extends Controller implements Initializable {
     }
 
     /**
-     * Handles the data received from a local game configuration. It sets the player names and levels for both players based on the provided parameters.
+     * Handles the data received from a local game configuration. It sets the player names and levels for both players
+     * based on the provided parameters.
      */
     public void handLocalData(String p1Name, String p2Name, int p1Level, int p2Level) {
         this.p1Name = p1Name;

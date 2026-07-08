@@ -20,8 +20,8 @@ public class SettingsMenu extends Controller implements Initializable {
     Label player1Left,player1Right,player1Down,player1Up,player2Left,player2Right,player2Down,player2Up;
 
     /**
-     * Initializes the SettingsMenu controller by updating the displayed key bindings for both players based on the current settings in the TetrisSettings singleton instance.
-     * @param url The location used to resolve relative paths for the root object, or null
+     * Initializes the SettingsMenu controller by updating the displayed key bindings for both players based on the
+     * current settings in the TetrisSettings singleton instance.
      */
     @FXML
     protected void changePlayer1(ActionEvent event) {
@@ -31,7 +31,6 @@ public class SettingsMenu extends Controller implements Initializable {
         KeyCode input= tS.change(0,position);
         Label change = getPlayerLabel(0,position);
         change.setText(input.toString());
-
     }
 
     /**

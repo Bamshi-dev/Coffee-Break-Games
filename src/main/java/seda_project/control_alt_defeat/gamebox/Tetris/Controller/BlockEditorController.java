@@ -19,21 +19,25 @@ public class BlockEditorController {
     }
 
     /**
-     * Toggles the state of a cell in the grid at the specified row and column. If the cell is currently active (true), it will be deactivated (set to false), and if it is inactive (false), it will be activated (set to true).
+     * Toggles the state of a cell in the grid at the specified row and column. If the cell is currently active (true),
+     * it will be deactivated (set to false), and if it is inactive (false), it will be activated (set to true).
      */
     public void toggleCell(int row, int col) {
         grid[row][col] = !grid[row][col];
     }
 
     /**
-     * Sets the selected color for the custom block being edited. This color will be used when saving or updating the custom block in the BlockRegistry.
+     * Sets the selected color for the custom block being edited. This color will be used when saving or updating the
+     * custom block in the BlockRegistry.
      */
     public void setColor(Color color) {
         this.selectedColor = color;
     }
 
     /**
-     * Saves the current state of the grid as a new custom block in the BlockRegistry. It trims the grid to remove any empty rows and columns, checks if the resulting piece is not empty, and then adds it to the registry with the selected color. If the piece is empty, an IllegalStateException is thrown.
+     * Saves the current state of the grid as a new custom block in the BlockRegistry. It trims the grid to remove any
+     * empty rows and columns, checks if the resulting piece is not empty, and then adds it to the registry with the
+     * selected color. If the piece is empty, an IllegalStateException is thrown.
      */
     public void savePiece() {
         boolean[][] trimmed = trimGrid(grid);
@@ -42,7 +46,8 @@ public class BlockEditorController {
     }
 
     /**
-     * Loads a custom block into the editor for updating. It sets the pieceToUpdate field to the provided CustomBlock instance, allowing the user to modify the existing block's shape and color in the editor.
+     * Loads a custom block into the editor for updating. It sets the pieceToUpdate field to the provided CustomBlock
+     * instance, allowing the user to modify the existing block's shape and color in the editor.
      * @param customBlock
      */
     public void loadForUpdate(CustomBlock customBlock) {
@@ -50,7 +55,9 @@ public class BlockEditorController {
     }
 
     /**
-     * Updates the existing custom block in the BlockRegistry with the current state of the grid. It trims the grid to remove any empty rows and columns, checks if the resulting piece is not empty, and then updates the registry with the new shape and selected color for the pieceToUpdate. If the piece is empty, an IllegalStateException is thrown.
+     * Updates the existing custom block in the BlockRegistry with the current state of the grid. It trims the grid to
+     * remove any empty rows and columns, checks if the resulting piece is not empty, and then updates the registry with
+     * the new shape and selected color for the pieceToUpdate. If the piece is empty, an IllegalStateException is thrown.
      */
     public void updatePiece(){
         boolean[][] trimmed = trimGrid(grid);
@@ -60,14 +67,17 @@ public class BlockEditorController {
     }
 
     /**
-     * Resets the grid to its initial state by setting all cells to false (inactive). This method is typically called when the user wants to clear the editor and start creating a new custom block from scratch.
+     * Resets the grid to its initial state by setting all cells to false (inactive). This method is typically called when
+     * the user wants to clear the editor and start creating a new custom block from scratch.
      */
     public void reset() {
         for (boolean[] row : grid) Arrays.fill(row, false);
     }
 
     /**
-     * Trims the provided grid to remove any empty rows and columns, returning a new grid that contains only the active cells. The method calculates the minimum and maximum row and column indices that contain active cells, creates a new grid of the appropriate size, and copies the active cells from the original grid to the new trimmed grid.
+     * Trims the provided grid to remove any empty rows and columns, returning a new grid that contains only the active
+     * cells. The method calculates the minimum and maximum row and column indices that contain active cells, creates a
+     * new grid of the appropriate size, and copies the active cells from the original grid to the new trimmed grid.
      * @param g
      * @return
      */
@@ -95,7 +105,9 @@ public class BlockEditorController {
     }
 
     /**
-     * Checks if the provided grid is empty, meaning that all cells are inactive (false). It iterates through each cell in the grid and returns false if any cell is found to be active (true). If all cells are inactive, it returns true, indicating that the grid is empty.
+     * Checks if the provided grid is empty, meaning that all cells are inactive (false). It iterates through each cell
+     * in the grid and returns false if any cell is found to be active (true). If all cells are inactive, it returns true,
+     * indicating that the grid is empty.
      */
     private boolean isEmpty(boolean[][] g) {
         for (boolean[] row : g)
@@ -105,21 +117,28 @@ public class BlockEditorController {
     }
 
     /**
-     * Returns the current state of the grid as a 2D boolean array. Each cell in the array represents whether the corresponding cell in the editor is active (true) or inactive (false). This method allows other parts of the application to access the current configuration of the custom block being edited.
+     * Returns the current state of the grid as a 2D boolean array. Each cell in the array represents whether the corresponding
+     * cell in the editor is active (true) or inactive (false). This method allows other parts of the application to access
+     * the current configuration of the custom block being edited.
      */
     public boolean[][] getGrid() {
         return grid;
     }
 
     /**
-     * Checks if the current grid is empty, meaning that all cells are inactive (false). It calls the isEmpty method with the current grid and returns the result. This method can be used to determine if the user has created any active cells in the editor or if the grid is still in its initial empty state.
+     * Checks if the current grid is empty, meaning that all cells are inactive (false). It calls the isEmpty method with
+     * the current grid and returns the result. This method can be used to determine if the user has created any active
+     * cells in the editor or if the grid is still in its initial empty state.
      */
     public boolean checkEmpty() {
         return isEmpty(this.grid);
     }
 
     /**
-     * Checks if removing a cell at the specified row and column from the grid would result in a disconnected configuration. It creates a simulated copy of the grid with the specified cell removed and then checks if the remaining active cells are still connected. If the removal would cause disconnection, it returns false; otherwise, it returns true, indicating that the removal is safe.
+     * Checks if removing a cell at the specified row and column from the grid would result in a disconnected configuration.
+     * It creates a simulated copy of the grid with the specified cell removed and then checks if the remaining active cells
+     * are still connected. If the removal would cause disconnection, it returns false; otherwise, it returns true,
+     * indicating that the removal is safe.
      */
     public boolean isRemovalSafe(int row, int col) {
         if (!grid[row][col]) return true;
@@ -131,7 +150,9 @@ public class BlockEditorController {
     }
 
     /**
-     * Creates a copy of the provided 2D boolean array (grid) and returns the new copy. This method is used to create a simulated version of the grid for checking connectivity without modifying the original grid. It iterates through each row of the source array and creates a new array with the same values, effectively duplicating the grid structure.
+     * Creates a copy of the provided 2D boolean array (grid) and returns the new copy. This method is used to create a
+     * simulated version of the grid for checking connectivity without modifying the original grid. It iterates through
+     * each row of the source array and creates a new array with the same values, effectively duplicating the grid structure.
      * @param source
      * @return
      */
@@ -143,7 +164,11 @@ public class BlockEditorController {
     }
 
     /**
-     * Checks if the active cells in the provided grid are connected, meaning that there is a path between any two active cells. It uses a breadth-first search (BFS) algorithm to traverse the grid starting from the first active cell found. The method counts the number of visited active cells and compares it to the total number of active cells in the grid. If all active cells are reachable from the starting cell, it returns true; otherwise, it returns false, indicating that the grid is disconnected.
+     * Checks if the active cells in the provided grid are connected, meaning that there is a path between any two active
+     * cells. It uses a breadth-first search (BFS) algorithm to traverse the grid starting from the first active cell found.
+     * The method counts the number of visited active cells and compares it to the total number of active cells in the grid.
+     * If all active cells are reachable from the starting cell, it returns true; otherwise, it returns false, indicating that
+     * the grid is disconnected.
      */
     private boolean isConnected(boolean[][] g) {
         int startRow = -1, startCol = -1;

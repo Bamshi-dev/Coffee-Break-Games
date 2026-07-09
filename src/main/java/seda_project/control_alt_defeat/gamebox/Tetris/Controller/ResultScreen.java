@@ -163,9 +163,14 @@ public class ResultScreen extends Controller {
                         BlockRegistry.getInstance(), TetrisAdvancedSettings.getInstance());
                 s.tetrisEngine = engine;
             }
-            controller.createDual(state.p1Name(), state.p2Name(), p1L, p2L, engine, controlled);
-            controller.setInitialLevels(p1L, p2L);
-            controller.attachDualBridge(s.network, controlled);
+            // changeScene swaps the root deferred, so the new screen's scene is
+            // still null here; defer like WaitForOpponent.startGameNow does.
+            final TetrisEngine dualEngine = engine;
+            Platform.runLater(() -> {
+                controller.createDual(state.p1Name(), state.p2Name(), p1L, p2L, dualEngine, controlled);
+                controller.setInitialLevels(p1L, p2L);
+                controller.attachDualBridge(s.network, controlled);
+            });
             return;
         }
 

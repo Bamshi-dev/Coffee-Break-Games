@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
 public enum BlockType implements TBlock {
 
         /**
-        * Represents the I-shaped Tetris block, which is a straight line of four blocks. It is colored AQUA and has a vertical orientation in its default shape. 
+        * Represents the I-shaped Tetris block, which is a straight line of four blocks. It is colored AQUA and has a
+         * vertical orientation in its default shape.
         */    
     I(Color.AQUA, new boolean[][] {
             { false, false, true, false },
@@ -17,14 +18,16 @@ public enum BlockType implements TBlock {
             { false, false, true, false }
     }),
         /**
-         * Represents the O-shaped Tetris block, which is a square block consisting of four blocks arranged in a 2x2 grid. It is colored RED and has a fixed shape that does not change with rotation.
+         * Represents the O-shaped Tetris block, which is a square block consisting of four blocks arranged in a
+         * 2x2 grid. It is colored RED and has a fixed shape that does not change with rotation.
          */
     O(Color.RED, new boolean[][] {
             { true, true },
             { true, true }
     }),
         /**
-         * Represents the T-shaped Tetris block, which consists of three blocks in a horizontal line with one block centered above them. It is colored BLUE and has a default orientation that resembles the letter "T".
+         * Represents the T-shaped Tetris block, which consists of three blocks in a horizontal line with one block
+         * centered above them. It is colored BLUE and has a default orientation that resembles the letter "T".
          */
     T(Color.GREEN, new boolean[][] {
             { true, true,  true },
@@ -32,7 +35,9 @@ public enum BlockType implements TBlock {
             {false,false,false}
     }),
         /**
-         * Represents the L-shaped Tetris block, which consists of three blocks in a vertical line with one block extending to the right at the bottom. It is colored ORANGE and has a default orientation that resembles the letter "L".
+         * Represents the L-shaped Tetris block, which consists of three blocks in a vertical line with one block
+         * ^extending to the right at the bottom. It is colored ORANGE and has a default orientation that resembles the
+         * letter "L".
          */
     L(Color.ORANGE, new boolean[][] {
             { true,  false, false },
@@ -40,7 +45,9 @@ public enum BlockType implements TBlock {
             { true,  true,  false }
     }),
         /**
-         * Represents the inverted L-shaped Tetris block, which consists of three blocks in a vertical line with one block extending to the left at the bottom. It is colored PINK and has a default orientation that resembles an inverted letter "L".
+         * Represents the inverted L-shaped Tetris block, which consists of three blocks in a vertical line with one
+         * ^block extending to the left at the bottom. It is colored PINK and has a default orientation that resembles
+         * an inverted letter "L".
          */
     L_INV(Color.PINK, new boolean[][] {
             { false, false, true },
@@ -48,7 +55,9 @@ public enum BlockType implements TBlock {
             { false, true,  true }
     }),
         /**
-         * Represents the Z-shaped Tetris block, which consists of two blocks in a horizontal line with two blocks extending diagonally down to the right. It is colored PURPLE and has a default orientation that resembles the letter "Z".
+         * Represents the Z-shaped Tetris block, which consists of two blocks in a horizontal line with two blocks
+         * extending diagonally down to the right. It is colored PURPLE and has a default orientation that resembles
+         * the letter "Z".
          */
     Z(Color.PURPLE, new boolean[][] {
             { false, false, false },
@@ -56,7 +65,9 @@ public enum BlockType implements TBlock {
             { false, true,  true  }
     }),
         /**
-         * Represents the inverted Z-shaped Tetris block, which consists of two blocks in a horizontal line with two blocks extending diagonally down to the left. It is colored YELLOW and has a default orientation that resembles an inverted letter "Z".
+         * Represents the inverted Z-shaped Tetris block, which consists of two blocks in a horizontal line with two
+         * blocks extending diagonally down to the left. It is colored YELLOW and has a default orientation that
+         * resembles an inverted letter "Z".
          */
     Z_INV(Color.YELLOW, new boolean[][] {
             { false, false, false },
@@ -68,7 +79,8 @@ public enum BlockType implements TBlock {
     public final boolean[][] shape;
 
     /**
-     * Constructs a BlockType enum constant with the specified color and shape. Each BlockType represents a unique Tetris block with its associated color and shape configuration.
+     * Constructs a BlockType enum constant with the specified color and shape. Each BlockType represents a unique
+     * Tetris block with its associated color and shape configuration.
      */
     BlockType(Color color, boolean[][] shape) {
         this.color = color;
@@ -76,7 +88,8 @@ public enum BlockType implements TBlock {
     }
     
     /**
-     * Creates a list of standard Tetris pieces based on the predefined BlockType enum constants. This method generates a new Block instance for each BlockType, allowing for easy access to the standard Tetris blocks in the game.
+     * Creates a list of standard Tetris pieces based on the predefined BlockType enum constants. This method generates
+     * a new Block instance for each BlockType, allowing for easy access to the standard Tetris blocks in the game.
      * @return An ArrayList containing Block instances for each standard Tetris piece.
      */
     public static ArrayList<Block> createStandardPieces() {
@@ -86,7 +99,9 @@ public enum BlockType implements TBlock {
     }
 
     /**
-     * Returns the shape of the Tetris block as a 2D boolean array, where true indicates the presence of a block and false indicates an empty space. This method is part of the TBlock interface implementation and provides access to the block's shape for game logic and rendering purposes.
+     * Returns the shape of the Tetris block as a 2D boolean array, where true indicates the presence of a block and
+     * false indicates an empty space. This method is part of the TBlock interface implementation and provides access
+     * to the block's shape for game logic and rendering purposes.
      * @return A 2D boolean array representing the shape of the Tetris block.
      */
     @Override
@@ -95,7 +110,8 @@ public enum BlockType implements TBlock {
     }
 
     /**
-     * Returns the color of the Tetris block as a JavaFX Color object. This method is part of the TBlock interface implementation and provides access to the block's color for rendering purposes in the game.
+     * Returns the color of the Tetris block as a JavaFX Color object. This method is part of the TBlock interface
+     * implementation and provides access to the block's color for rendering purposes in the game.
      * @return A JavaFX Color object representing the color of the Tetris block.
      */
     @Override public Color getColor() {
@@ -103,7 +119,9 @@ public enum BlockType implements TBlock {
     }
 
     /**
-     * Creates a new Block instance based on the current BlockType's shape and color. This method is part of the TBlock interface implementation and allows for the creation of a Block object that can be used in the game, representing the specific Tetris piece defined by the BlockType.
+     * Creates a new Block instance based on the current BlockType's shape and color. This method is part of the
+     * TBlock interface implementation and allows for the creation of a Block object that can be used in the game,
+     * representing the specific Tetris piece defined by the BlockType.
      * @return A new Block instance with the shape and color of the current BlockType.
      */
     @Override

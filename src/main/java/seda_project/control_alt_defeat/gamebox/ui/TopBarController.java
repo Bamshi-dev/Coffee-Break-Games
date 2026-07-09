@@ -100,7 +100,6 @@ public class TopBarController implements Initializable {
      */
     @FXML
     public void onDragMovement(MouseEvent mouseEvent) {
-
         Stage stage = (Stage) topBar.getScene().getWindow();
 
         stage.setX(mouseEvent.getScreenX() - offsetX);

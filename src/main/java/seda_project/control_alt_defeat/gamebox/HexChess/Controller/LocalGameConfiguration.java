@@ -116,7 +116,8 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
     /**
-     * Method to handle bot selection. If one Bot is selected and the other one is selected this deselects the currently active one so that only one bot is active
+     * Method to handle bot selection. If one Bot is selected and the other one is selected this deselects the currently
+     * active one so that only one bot is active
      * @param newValue
      * @param player
      */

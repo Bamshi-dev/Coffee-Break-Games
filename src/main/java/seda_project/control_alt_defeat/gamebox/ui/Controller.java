@@ -21,7 +21,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * The Controller class serves as a base class for all controllers in the gamebox application. It provides common functionality for scene management, sound control, and user interface interactions. The class implements the Initializable interface to allow for initialization of UI components and event handling.
+ * The Controller class serves as a base class for all controllers in the gamebox application. It provides common
+ * functionality for scene management, sound control, and user interface interactions. The class implements the
+ * Initializable interface to allow for initialization of UI components and event handling.
  */
 public class Controller implements Initializable {
     protected Configuration c = Configuration.getInstance();
@@ -37,7 +39,9 @@ public class Controller implements Initializable {
     protected VBox header;
 
     /**
-     * Flips the root StackPane by 180 degrees, creating a visual effect of flipping the entire scene. This method can be used to create a unique user interface experience, such as revealing hidden content or providing a different perspective on the current scene. The flipped state is tracked by the 'flipped' boolean variable.
+     * Flips the root StackPane by 180 degrees, creating a visual effect of flipping the entire scene. This method can
+     * be used to create a unique user interface experience, such as revealing hidden content or providing a different
+     * perspective on the current scene. The flipped state is tracked by the 'flipped' boolean variable.
      */
     public void flip() {
         flipped = true;
@@ -45,7 +49,10 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Applies a continuous rainbow color effect to the background of the root StackPane. The method creates a Timeline animation that cycles through hues from 0 to 360 degrees, updating the background color of the root pane in real-time. This creates a visually appealing effect that can be used for special events or themes within the application. The rainbowed state is tracked by the 'rainbowed' boolean variable.
+     * Applies a continuous rainbow color effect to the background of the root StackPane. The method creates a Timeline
+     * animation that cycles through hues from 0 to 360 degrees, updating the background color of the root pane in
+     * real-time. This creates a visually appealing effect that can be used for special events or themes within the
+     * application. The rainbowed state is tracked by the 'rainbowed' boolean variable.
      */
     public void rainbow() {
         rainbowed = true;
@@ -65,7 +72,10 @@ public class Controller implements Initializable {
 
 
     /**
-     * Initializes the Controller by setting up the user interface elements and event handlers. This method is called automatically when the controller is created and allows for customization of the scene's appearance and behavior. It also sets up a double-click event on the header to toggle between different themes (MainTheme and CrimsonTheme) based on user interaction.
+     * Initializes the Controller by setting up the user interface elements and event handlers. This method is called
+     * automatically when the controller is created and allows for customization of the scene's appearance and behavior.
+     * It also sets up a double-click event on the header to toggle between different themes
+     * (MainTheme and CrimsonTheme) based on user interaction.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

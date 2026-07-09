@@ -146,7 +146,7 @@ public class BoardDesigner extends Controller implements Initializable {
     /**
      * This method is called when a dragged piece is dropped onto a polygon on the board. It retrieves the piece ID
      * from the dragboard, identifies the target polygon, and calls the handlePiecePlaced method to update the board
-     * state accordingly. If the drop occurs outside of a polygon, it still processes the piece placement without
+     * state accordingly. If the drop occurs outside a polygon, it still processes the piece placement without
      * specifying a target polygon. The method also updates the piece amounts displayed in the user interface based
      * on the current state of the board.
      *

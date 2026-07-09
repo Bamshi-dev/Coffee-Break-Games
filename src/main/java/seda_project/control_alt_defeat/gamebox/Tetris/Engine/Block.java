@@ -10,7 +10,9 @@ public class Block implements Serializable {
     private String hexColor;
 
     /**
-     * Creates a new Block instance with the specified shape and color. The shape is represented as a 2D boolean array, where true indicates the presence of a block and false indicates an empty space. The color is represented as a JavaFX Color object, which is converted to a hexadecimal string for storage.
+     * Creates a new Block instance with the specified shape and color. The shape is represented as a 2D boolean array,
+     * where true indicates the presence of a block and false indicates an empty space. The color is represented as a
+     * JavaFX Color object, which is converted to a hexadecimal string for storage.
      * The block is initialized at the default spawn position (x=3, y=0) on the Tetris board.
      * @param shape A 2D boolean array representing the shape of the block.
      */
@@ -29,7 +31,8 @@ public class Block implements Serializable {
     }
 
     /**
-     * Private constructor used for cloning a Block instance. It creates a new Block with the specified shape, color, and position (x, y). This constructor is used internally when creating a snapshot of the block's current state.
+     * Private constructor used for cloning a Block instance. It creates a new Block with the specified shape, color,
+     * and position (x, y). This constructor is used internally when creating a snapshot of the block's current state.
      * @param clonedShape A 2D boolean array representing the shape of the block.
      * @param hexColor A hexadecimal string representing the color of the block.
      * @param x The x-coordinate of the block's position on the Tetris board.
@@ -43,7 +46,9 @@ public class Block implements Serializable {
     }
 
     /**
-     * Creates a deep copy of the current Block instance, including its shape, color, and position. This method is useful for creating a snapshot of the block's state without affecting the original instance. The cloned block can be manipulated independently of the original.
+     * Creates a deep copy of the current Block instance, including its shape, color, and position. This method is
+     * useful for creating a snapshot of the block's state without affecting the original instance. The cloned block
+     * can be manipulated independently of the original.
      * @return A new Block instance that is a deep copy of the current block.
      */
     public Block cloneForSnapshot() {
@@ -60,7 +65,9 @@ public class Block implements Serializable {
     public void moveRight() { x++; }
 
     /**
-     * Rotates the block's shape 90 degrees clockwise. The method creates a new 2D boolean array to hold the rotated shape and updates the block's shape accordingly. This rotation is performed in-place, modifying the current block instance.
+     * Rotates the block's shape 90 degrees clockwise. The method creates a new 2D boolean array to hold the rotated
+     * shape and updates the block's shape accordingly. This rotation is performed in-place, modifying the current
+     * block instance.
      */
     public void rotateClockwise() {
         int n = blocks.length;
@@ -74,7 +81,9 @@ public class Block implements Serializable {
     }
 
     /**
-     * Rotates the block's shape 90 degrees counter-clockwise. The method creates a new 2D boolean array to hold the rotated shape and updates the block's shape accordingly. This rotation is performed in-place, modifying the current block instance.
+     * Rotates the block's shape 90 degrees counter-clockwise. The method creates a new 2D boolean array to hold the
+     * rotated shape and updates the block's shape accordingly. This rotation is performed in-place, modifying
+     * the current block instance.
      */
     public void rotateCounterClockwise() {
         int n = blocks.length;

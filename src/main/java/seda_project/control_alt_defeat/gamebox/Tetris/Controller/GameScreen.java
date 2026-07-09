@@ -389,7 +389,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
 
 
     /**
-     * Renders the current state of the Tetris game for the specified player. This method updates the visual representation of the game board based on the provided GameState snapshot. It draws the locked blocks, active blocks, and any power-ups on the grid for player 1 or player 2. The method also synchronizes the row count of the player's field with the game state to ensure that the display accurately reflects the current game conditions.
+     * Renders the current state of the Tetris game for the specified player. This method updates the visual
+     * representation of the game board based on the provided GameState snapshot. It draws the locked blocks, active
+     * blocks, and any power-ups on the grid for player 1 or player 2. The method also synchronizes the row count of the
+     * player's field with the game state to ensure that the display accurately reflects the current game conditions.
      */
     @Override
     public void onTick(TetrisEngine.GameState snapshot, int player) {
@@ -397,7 +400,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Renders the current state of the Tetris game when a block is locked in place. This method updates the visual representation of the game board based on the provided GameState snapshot and the player number. It sets the player's points label to reflect the current score and calls the render method to update the display for the specified player. This ensures that the game interface accurately reflects the changes resulting from a block being locked in place.
+     * Renders the current state of the Tetris game when a block is locked in place. This method updates the visual
+     * representation of the game board based on the provided GameState snapshot and the player number. It sets the
+     * player's points label to reflect the current score and calls the render method to update the display for the
+     * specified player. This ensures that the game interface accurately reflects the changes resulting from a block
+     * being locked in place.
      */
     @Override
     public void onBlockLocked(int playerNum, TetrisEngine.GameState snapshot) {
@@ -408,7 +415,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles changes in the size of the game board for a specific player. This method is called when the number of rows in a player's board changes, typically due to line clears or other game events. It updates the visual representation of the game board by adding or removing RowConstraints in the corresponding GridPane (player1Field or player2Field) to match the new board size. The method also calls the render method to update the display for both players, ensuring that the game interface accurately reflects the current state of the game boards.
+     * Handles changes in the size of the game board for a specific player. This method is called when the number of
+     * rows in a player's board changes due to line clears. It updates the visual representation of the game board by
+     * adding or removing RowConstraints in the corresponding GridPane (player1Field or player2Field) to match the new
+     * board size. The method also calls the render method to update the display for both players, ensuring that the
+     * game interface accurately reflects the current state of the game boards.
      */
     @Override
     public void onBoardSizeChange (int playerNum, int linesCleared, TetrisEngine.GameState snapshot) {
@@ -438,7 +449,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a player clears lines in the Tetris game. This method is called with the player number, the count of lines cleared, and a snapshot of the current game state. It updates the player's line count and score labels accordingly, plays a sound effect for line clearance, and calls the render method to update the visual representation of the game board for the specified player. This ensures that the game interface accurately reflects the changes resulting from line clears.
+     * Handles the event when a player clears lines in the Tetris game. This method is called with the player number,
+     * the count of lines cleared, and a snapshot of the current game state. It updates the player's line count and
+     * score labels accordingly, plays a sound effect for line clearance, and calls the render method to update the
+     * visual representation of the game board for the specified player. This ensures that the game interface accurately
+     * reflects the changes resulting from line clears.
      */
     @Override
     public void onLinesCleared(int playerNum, int lineCount, TetrisEngine.GameState snapshot) {
@@ -458,7 +473,12 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a player's level changes in the Tetris game. This method is called with the new tick interval in milliseconds, a snapshot of the current game state, and the player number. It updates the tick speed for the specified player by adjusting the corresponding Timeline (p1EngineTicker or p2EngineTicker) to reflect the new tick interval. The method also plays a sound effect for leveling up and updates the player's level label in the user interface. This ensures that the game interface accurately reflects the changes resulting from a level change.
+     * Handles the event when a player's level changes in the Tetris game. This method is called with the new tick
+     * interval in milliseconds, a snapshot of the current game state, and the player number. It updates the tick speed
+     * for the specified player by adjusting the corresponding Timeline (p1EngineTicker or p2EngineTicker) to reflect
+     * the new tick interval. The method also plays a sound effect for leveling up and updates the player's level label
+     * in the user interface. This ensures that the game interface accurately reflects the changes resulting from a
+     * level change.
      */
     @Override
     public void onLevelChanged(long newTickIntervalMs, TetrisEngine.GameState snapshot, int player) {
@@ -480,7 +500,12 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Changes the tick speed for the specified player in the Tetris game. This method is called with the player number and the new tick speed in milliseconds. It updates the corresponding Timeline (p1EngineTicker or p2EngineTicker) to reflect the new tick speed, allowing the game to adjust the rate at which blocks fall for that player. The method stops the existing Timeline, sets a new KeyFrame with the updated tick speed, and then restarts the Timeline to apply the change. This ensures that the game mechanics accurately reflect the new tick speed for the specified player.
+     * Changes the tick speed for the specified player in the Tetris game. This method is called with the player number
+     * and the new tick speed in milliseconds. It updates the corresponding Timeline (p1EngineTicker or p2EngineTicker)
+     * to reflect the new tick speed, allowing the game to adjust the rate at which blocks fall for that player. The
+     * method stops the existing Timeline, sets a new KeyFrame with the updated tick speed, and then restarts the
+     * Timeline to apply the change. This ensures that the game mechanics accurately reflect the new tick speed for
+     * the specified player.
      */
     public void changeTickSpeed(int playerNum, long newTickSpeed) {
         Timeline timeline = playerNum == 1 ? p1EngineTicker : p2EngineTicker;
@@ -494,7 +519,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Plays the sound effect for a radial bomb event in the Tetris game. This method is called when a radial bomb is triggered, and it uses the sound controller (sC) to play the corresponding sound effect. The sound effect enhances the gameplay experience by providing audio feedback for the radial bomb action.
+     * Plays the sound effect for a radial bomb event in the Tetris game. This method is called when a radial bomb is
+     * triggered, and it uses the sound controller (sC) to play the corresponding sound effect. The sound effect
+     * enhances the gameplay experience by providing audio feedback for the radial bomb action.
      */
     @Override
     public void radialBomb() {
@@ -502,7 +529,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a player loses in the Tetris game. This method is called with the player number and a snapshot of the current game state. It updates the visual representation of the game board for the specified player by calling the render method, ensuring that the game interface accurately reflects the player's loss.
+     * Handles the event when a player loses in the Tetris game. This method is called with the player number and a
+     * snapshot of the current game state. It updates the visual representation of the game board for the specified
+     * player by calling the render method, ensuring that the game interface accurately reflects the player's loss.
      */
     @Override
     public void onPlayerLost(int playerNum, TetrisEngine.GameState snapshot) {
@@ -510,7 +539,12 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when the game is over in the Tetris game. This method is called with a snapshot of the final game state. It stops the engine tickers for both players (if they exist) and the key handler, then transitions to the ResultScreen scene to display the final results. The method also passes the initial levels and final game state to the ResultScreen controller, allowing it to present the outcome of the game accurately. If any special visual effects (like flipped or rainbowed) were applied during gameplay, those are also passed to the ResultScreen controller for consistent presentation.
+     * Handles the event when the game is over in the Tetris game. This method is called with a snapshot of the final
+     * game state. It stops the engine tickers for both players (if they exist) and the key handler, then transitions
+     * to the ResultScreen scene to display the final results. The method also passes the initial levels and final game
+     * state to the ResultScreen controller, allowing it to present the outcome of the game accurately. If any special
+     * visual effects (like flipped or rainbowed) were applied during gameplay, those are also passed to the ResultScreen
+     * controller for consistent presentation.
      */
     @Override
     public void onGameOver(TetrisEngine.GameState snapshot) {
@@ -532,9 +566,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a power-up is triggered in the Tetris game. This method is called with a snapshot of the current game state and the specific PowerUp that was triggered. It removes the visual representation of the triggered power-up from the game board by calling removePowerUP, and updates the currentPowerUps list to reflect the new state of power-ups in the game. This ensures that the game interface accurately reflects the changes resulting from a power-up being activated.
-     * @param snapshot
-     * @param p
+     * Handles the event when a power-up is triggered in the Tetris game. This method is called with a snapshot of the
+     * current game state and the specific PowerUp that was triggered. It removes the visual representation of the
+     * triggered power-up from the game board by calling removePowerUP, and updates the currentPowerUps list to reflect
+     * the new state of power-ups in the game. This ensures that the game interface accurately reflects the changes
+     * resulting from a power-up being activated.
      */
     @Override
     public void onPowerUpTriggered(TetrisEngine.GameState snapshot, PowerUp p) {
@@ -543,7 +579,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Clears all power-ups from the game board for both players in the Tetris game. This method removes any Rectangle nodes that have the "PowerUp" style class from both player1Field and player2Field GridPanes. It also clears the currentPowerUps list to ensure that the internal state accurately reflects that no power-ups are currently active on either player's board. This is typically called when resetting the game or when a new game starts.
+     * Clears all power-ups from the game board for both players in the Tetris game. This method removes any Rectangle
+     * nodes that have the "PowerUp" style class from both player1Field and player2Field GridPanes. It also clears the
+     * currentPowerUps list to ensure that the internal state accurately reflects that no power-ups are currently active
+     * on either player's board. This is typically called when resetting the game or when a new game starts.
      */
     @Override
     public void clearPowerUps(){
@@ -555,7 +594,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a new power-up is spawned in the Tetris game. This method is called with a snapshot of the current game state. It updates the visual representation of the game board to show the newly spawned power-ups by calling showPowerUP, and updates the currentPowerUps list to reflect the new state of power-ups in the game. This ensures that the game interface accurately reflects the changes resulting from a power-up being added to the game.
+     * Handles the event when a new power-up is spawned in the Tetris game. This method is called with a snapshot of the
+     * current game state. It updates the visual representation of the game board to show the newly spawned power-ups by
+     * calling showPowerUP, and updates the currentPowerUps list to reflect the new state of power-ups in the game. This
+     * ensures that the game interface accurately reflects the changes resulting from a power-up being added to the game.
      */
     @Override
     public void onPowerUpSpawned(TetrisEngine.GameState snapshot){
@@ -564,7 +606,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when the Tetris game is stopped. This method is called with a snapshot of the current game state. It stops the engine tickers for both players (if they exist) and the key handler, ensuring that all game-related processes are halted. This is typically called when the game is intentionally stopped or exited, allowing for a clean shutdown of the game's mechanics and input handling.
+     * Handles the event when the Tetris game is stopped. This method is called with a snapshot of the current game
+     * state. It stops the engine tickers for both players (if they exist) and the key handler, ensuring that all
+     * game-related processes are halted. This is typically called when the game is intentionally stopped or exited,
+     * allowing for a clean shutdown of the game's mechanics and input handling.
      * @param snapshot
      */
     @Override
@@ -578,7 +623,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a block is moved in the Tetris game. This method is called with a snapshot of the current game state and the player number. It updates the visual representation of the game board for the specified player by calling the render method, ensuring that the game interface accurately reflects the new position of the moved block.
+     * Handles the event when a block is moved in the Tetris game. This method is called with a snapshot of the current
+     * game state and the player number. It updates the visual representation of the game board for the specified player
+     * by calling the render method, ensuring that the game interface accurately reflects the new position of the moved
+     * block.
      */
     @Override
     public void onBlockMovement (TetrisEngine.GameState snapshot, int player) {
@@ -586,7 +634,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the event when a block swap occurs in the Tetris game. This method is called with a snapshot of the current game state. In dual-engine LAN mode, it ensures that the local player's board is rendered based on their own authoritative snapshot, while also rendering the opponent's board based on their respective snapshots. The method calls the render function for both players to update the visual representation of the game boards accordingly.
+     * Handles the event when a block swap occurs in the Tetris game. This method is called with a snapshot of the
+     * current game state. In dual-engine LAN mode, it ensures that the local player's board is rendered based on their
+     * own authoritative snapshot, while also rendering the opponent's board based on their respective snapshots. The
+     * method calls the render function for both players to update the visual representation of the game boards
+     * accordingly.
      */
     @Override
     public void onBlockSwap(TetrisEngine.GameState snapshot){
@@ -600,7 +652,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Plays the sound effect for a block lock event in the Tetris game. This method is called when a block is locked in place, and it uses the sound controller (sC) to play the corresponding sound effect. The sound effect enhances the gameplay experience by providing audio feedback for the block locking action.
+     * Plays the sound effect for a block lock event in the Tetris game. This method is called when a block is locked in
+     * place, and it uses the sound controller (sC) to play the corresponding sound effect. The sound effect enhances
+     * the gameplay experience by providing audio feedback for the block locking action.
      */
     @Override
     public void lockSound() {
@@ -608,7 +662,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Plays the sound effect for a column bomb event in the Tetris game. This method is called when a column bomb is triggered, and it uses the sound controller (sC) to play the corresponding sound effect. The sound effect enhances the gameplay experience by providing audio feedback for the column bomb action.
+     * Plays the sound effect for a column bomb event in the Tetris game. This method is called when a column bomb is
+     * triggered, and it uses the sound controller (sC) to play the corresponding sound effect. The sound effect
+     * enhances the gameplay experience by providing audio feedback for the column bomb action.
      */
     @Override
     public void columnBomb(){
@@ -674,7 +730,12 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Attaches a network bridge for the client in a LAN multiplayer Tetris game. This method sets up listeners for incoming messages from the network, allowing the client to receive state updates and line clear notifications from the host. It also handles key events for player input, sending them to the host over the network. The method ensures that only one state update is processed at a time, using an atomic reference to store the latest snapshot and scheduling a render on the JavaFX application thread. Additionally, it manages key repeat behavior for continuous input while keys are held down.
+     * Attaches a network bridge for the client in a LAN multiplayer Tetris game. This method sets up listeners for
+     * incoming messages from the network, allowing the client to receive state updates and line clear notifications
+     * from the host. It also handles key events for player input, sending them to the host over the network. The method
+     * ensures that only one state update is processed at a time, using an atomic reference to store the latest snapshot
+     * and scheduling a render on the JavaFX application thread. Additionally, it manages key repeat behavior for
+     * continuous input while keys are held down.
      */
     public void attachClientNetworkBridge(NetworkLayer network) {
         if (engine != null || network == null) return;
@@ -742,7 +803,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Sends a client key input to the host in a LAN multiplayer Tetris game. This method maps the pressed key to the corresponding input action and block index, then sends an Input message to the host over the network. It ensures that only valid key inputs are sent, and it uses the mapClientKey method to determine the appropriate action and block index based on the current two-block mode and player key mappings.
+     * Sends a client key input to the host in a LAN multiplayer Tetris game. This method maps the pressed key to the
+     * corresponding input action and block index, then sends an Input message to the host over the network. It ensures
+     * that only valid key inputs are sent, and it uses the mapClientKey method to determine the appropriate action and
+     * block index based on the current two-block mode and player key mappings.
      */
     private void sendClientKey(KeyCode key, NetworkLayer network) {
         Object[] actionData = mapClientKey(key);
@@ -754,7 +818,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Maps a client key input to the corresponding Tetris input action and block index. This method checks the pressed key against the configured player key mappings for both player 1 and player 2. It determines whether the key corresponds to a left, right, drop, or rotate action and returns an array containing the mapped InputAction and the block index (0 for player 1, 1 for player 2). The method also considers the current two-block mode to determine which block index to use for player 2's keys.
+     * Maps a client key input to the corresponding Tetris input action and block index. This method checks the pressed
+     * key against the configured player key mappings for both player 1 and player 2. It determines whether the key
+     * corresponds to a left, right, drop, or rotate action and returns an array containing the mapped InputAction and
+     * the block index (0 for player 1, 1 for player 2). The method also considers the current two-block mode to
+     * determine which block index to use for player 2's keys.
      */
     private Object[] mapClientKey(KeyCode key) {
         java.util.ArrayList<KeyCode> p1 = tS.getPlayer1Keys();
@@ -788,7 +856,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Increments the line count for the specified player in the Tetris game. This method updates the corresponding player's line count label by adding the specified number of lines cleared to the current count. It retrieves the current line count from the label, adds the new line count, and updates the label with the new total. This ensures that the game interface accurately reflects the player's progress in clearing lines during gameplay.
+     * Increments the line count for the specified player in the Tetris game. This method updates the corresponding
+     * player's line count label by adding the specified number of lines cleared to the current count. It retrieves the
+     * current line count from the label, adds the new line count, and updates the label with the new total. This
+     * ensures that the game interface accurately reflects the player's progress in clearing lines during gameplay.
      */
     private void incrementLines(int playerNum, int lineCount) {
         Label target = playerNum == 1 ? player1LinesLabel : player2LinesLabel;
@@ -797,7 +868,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Synchronizes the number of rows in the specified GridPane with the desired row count. This method ensures that the GridPane has the correct number of RowConstraints to match the current state of the game board. It adds or removes RowConstraints as needed to achieve the desired row count, maintaining a consistent visual representation of the game board for player 1 or player 2.
+     * Synchronizes the number of rows in the specified GridPane with the desired row count. This method ensures that
+     * the GridPane has the correct number of RowConstraints to match the current state of the game board. It adds or
+     * removes RowConstraints as needed to achieve the desired row count, maintaining a consistent visual representation
+     * of the game board for player 1 or player 2.
      */
     private void syncBoardRows(GridPane field, int target, boolean front) {
         var rows = field.getRowConstraints();
@@ -815,7 +889,12 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Applies the remote game state received from the host in a LAN multiplayer Tetris game. This method updates the local game interface to reflect the current state of both players' boards, scores, levels, and power-ups based on the provided GameState snapshot. It synchronizes the number of rows in each player's GridPane, renders the updated boards, and updates the score and level labels. If the game is over and has not yet been handled, it transitions to the ResultScreen scene to display the final results. This ensures that the client accurately reflects the host's authoritative game state during gameplay.
+     * Applies the remote game state received from the host in a LAN multiplayer Tetris game. This method updates the
+     * local game interface to reflect the current state of both players' boards, scores, levels, and power-ups based
+     * on the provided GameState snapshot. It synchronizes the number of rows in each player's GridPane, renders the
+     * updated boards, and updates the score and level labels. If the game is over and has not yet been handled, it
+     * transitions to the ResultScreen scene to display the final results. This ensures that the client accurately
+     * reflects the host's authoritative game state during gameplay.
      */
     private void applyRemoteState(TetrisEngine.GameState s) {
         this.currentTwoBlockMode = s.isTwoBlockMode(); // Sync with Host
@@ -997,7 +1076,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Sends the current game state of the local player's board to the opponent in a dual-engine LAN Tetris game. This method creates a BoardState message containing the provided GameState snapshot and the controlled player number, then sends it over the network. It ensures that the opponent receives an up-to-date representation of the local player's board for rendering on their side.
+     * Sends the current game state of the local player's board to the opponent in a dual-engine LAN Tetris game. This
+     * method creates a BoardState message containing the provided GameState snapshot and the controlled player number,
+     * then sends it over the network. It ensures that the opponent receives an up-to-date representation of the local
+     * player's board for rendering on their side.
      */
     private void sendMyBoard(NetworkLayer network, TetrisEngine.GameState s) {
         network.send(new TetrisMessage.BoardState(s, controlledPlayer));
@@ -1107,7 +1189,12 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Handles the disconnection event in a LAN multiplayer Tetris game. This method is called when the connection to the opponent is lost, either due to network issues or the opponent disconnecting. It stops all relevant engine tickers, the key handler, and any client repeat timers to ensure that no further game actions are processed. The method then clears the session and navigates back to the main menu, displaying an alert to inform the user of the disconnection reason. This ensures a clean exit from the game and provides feedback to the player about the disconnection.
+     * Handles the disconnection event in a LAN multiplayer Tetris game. This method is called when the connection to
+     * the opponent is lost, either due to network issues or the opponent disconnecting. It stops all relevant engine
+     * tickers, the key handler, and any client repeat timers to ensure that no further game actions are processed.
+     * The method then clears the session and navigates back to the main menu, displaying an alert to inform the user
+     * of the disconnection reason. This ensures a clean exit from the game and provides feedback to the player about
+     * the disconnection.
      */
     private void handleDisconnect(String reason) {
         if (disconnected) return;
@@ -1140,7 +1227,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         alert.showAndWait();
     }
     /**
-     * Sets the initial levels for both players in the Tetris game. This method is called to configure the starting levels for player 1 and player 2 before the game begins. It updates the internal variables that track the initial levels, which can be used later in the game logic or displayed on the user interface.
+     * Sets the initial levels for both players in the Tetris game. This method is called to configure the starting
+     * levels for player 1 and player 2 before the game begins. It updates the internal variables that track the initial
+     * levels, which can be used later in the game logic or displayed on the user interface.
      * @param initP1Level
      * @param initP2Level
      */
@@ -1150,7 +1239,9 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Initializes the Tetris game controller. This method is called when the controller is created and is responsible for setting up the initial state of the game, including starting animations and configuring keycaps for player controls. It ensures that the game interface is ready for user interaction and gameplay.
+     * Initializes the Tetris game controller. This method is called when the controller is created and is responsible
+     * for setting up the initial state of the game, including starting animations and configuring keycaps for player
+     * controls. It ensures that the game interface is ready for user interaction and gameplay.
      * @param url
      * @param resourceBundle
      */
@@ -1162,7 +1253,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Sets the keycaps for player controls in the Tetris game. This method retrieves the configured key mappings for both player 1 and player 2 from the TetrisSettings instance and updates the corresponding key labels on the user interface. It ensures that the displayed keycaps accurately reflect the current control settings, allowing players to see which keys are assigned to their actions (rotate, left, right, down) during gameplay.
+     * Sets the keycaps for player controls in the Tetris game. This method retrieves the configured key mappings for
+     * both player 1 and player 2 from the TetrisSettings instance and updates the corresponding key labels on the user
+     * interface. It ensures that the displayed keycaps accurately reflect the current control settings, allowing
+     * players to see which keys are assigned to their actions (rotate, left, right, down) during gameplay.
      */
     private void setKeycaps() {
         TetrisSettings tS = TetrisSettings.getInstance();
@@ -1181,7 +1275,10 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * starts the arrow animation for the Tetris game interface. This method sets up a Timeline animation that continuously updates the opacity of the arrow indicators for both players based on a sine wave function. The animation creates a visual effect of arrows fading in and out, simulating movement and providing feedback to players about their controls. The animation runs indefinitely, creating a dynamic and engaging user interface.
+     * starts the arrow animation for the Tetris game interface. This method sets up a Timeline animation that
+     * continuously updates the opacity of the arrow indicators for both players based on a sine wave function. The
+     * animation creates a visual effect of arrows fading in and out, simulating movement and providing feedback to
+     * players about their controls. The animation runs indefinitely, creating a dynamic and engaging user interface.
      */
     private void startAnimation() {
         animationPhase.addListener((obs, oldVal, newVal) -> {
@@ -1201,7 +1298,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
 
 
     /**
-     * Updates the opacity of arrow indicators in a VBox based on a sine wave function. This method calculates the opacity for each arrow in the VBox using a sine wave formula that combines spatial frequency and time phase to create a traveling wave effect. The opacity values are normalized to a range suitable for visual display, creating a dynamic fading effect for the arrows. The method ensures that the arrows visually indicate movement and provide feedback to players about their controls.
+     * Updates the opacity of arrow indicators in a VBox based on a sine wave function. This method calculates the
+     * opacity for each arrow in the VBox using a sine wave formula that combines spatial frequency and time phase to
+     * create a traveling wave effect. The opacity values are normalized to a range suitable for visual display,
+     * creating a dynamic fading effect for the arrows. The method ensures that the arrows visually indicate movement
+     * and provide feedback to players about their controls.
      */
     private void updateArrowOpacities(VBox box, double phase) {
         if (box == null) return;
@@ -1225,7 +1326,11 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     }
 
     /**
-     * Returns a short, user-friendly representation of a given KeyCode for display in the Tetris game interface. This method maps specific KeyCode values to corresponding symbols or abbreviations, such as arrow emojis for directional keys, "N" prefixes for numpad keys, and common symbols for other keys. If the KeyCode does not have a predefined short representation, it returns the default name of the KeyCode. This allows players to easily identify their control keys on the user interface.
+     * Returns a short, user-friendly representation of a given KeyCode for display in the Tetris game interface. This
+     * method maps specific KeyCode values to corresponding symbols or abbreviations, such as arrow emojis for
+     * directional keys, "N" prefixes for numpad keys, and common symbols for other keys. If the KeyCode does not have
+     * a predefined short representation, it returns the default name of the KeyCode. This allows players to easily
+     * identify their control keys on the user interface.
      */
     public String getShortKeyName(KeyCode code) {
         String toReturn = "";

@@ -94,7 +94,8 @@ public class SettingsMenu extends Controller implements Initializable {
 
     /**
      * Updates the displayed key bindings for both players based on the current settings in the TetrisSettings singleton
-     * instance. It retrieves the key codes for each player's controls and sets the corresponding labels to display the key names.
+     * instance. It retrieves the key codes for each player's controls and sets the corresponding labels to display the
+     * key names.
      */
     private void updateKeys() {
         ArrayList<KeyCode> p1keys = tS.getPlayer1Keys();

@@ -87,7 +87,8 @@ public class GameEngineImpl implements GameEngine {
      * the active player. The method also checks for game over conditions and notifies listeners accordingly.
      * @param cardId The ID of the card to flip. It should be a valid index within the board list.
      * @return A FlipResult object representing the outcome of the flip action, including whether it resulted in a match,
-     *          mismatch, or game over, along with relevant information such as flipped card IDs, active player, and points scored. If the flip is invalid, it returns null.
+     *          mismatch, or game over, along with relevant information such as flipped card IDs, active player, and
+     *          points scored. If the flip is invalid, it returns null.
      */
     @Override
     public FlipResult flip(int cardId) {

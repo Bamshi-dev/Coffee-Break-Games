@@ -10,7 +10,9 @@ public class Board implements Serializable {
     private final boolean inverted;
 
     /**
-     * Creates a new Board instance with the specified orientation. The board is initialized with a grid of the default width (10) and height (20), and all cells are set to null, indicating that they are empty. The inverted parameter determines whether the board is inverted (blocks fall upward) or standard (blocks fall downward).
+     * Creates a new Board instance with the specified orientation. The board is initialized with a grid of the default
+     * width (10) and height (20), and all cells are set to null, indicating that they are empty. The inverted parameter
+     * determines whether the board is inverted (blocks fall upward) or standard (blocks fall downward).
      * @param inverted
      */
     public Board(boolean inverted) {
@@ -19,7 +21,10 @@ public class Board implements Serializable {
     }
 
     /**
-     * Checks if the specified block is in a valid position on the board. A valid position means that the block does not collide with the boundaries of the board, does not overlap with any locked blocks in the grid, and does not collide with another active block if provided. This method is used to determine whether a block can be placed or moved to a specific location on the board.
+     * Checks if the specified block is in a valid position on the board. A valid position means that the block does not
+     * collide with the boundaries of the board, does not overlap with any locked blocks in the grid, and does not
+     * collide with another active block if provided. This method is used to determine whether a block can be placed or
+     * moved to a specific location on the board.
      * @param block The Block instance to check for a valid position on the board.
      * @return true if the block is in a valid position; false otherwise.
      */
@@ -28,9 +33,15 @@ public class Board implements Serializable {
     }
 
     /**
-     * Checks if the specified moving block is in a valid position on the board, considering another active block for potential collisions. A valid position means that the moving block does not collide with the boundaries of the board, does not overlap with any locked blocks in the grid, and does not collide with the other active block if provided. This method is used to determine whether a block can be placed or moved to a specific location on the board while considering interactions with another active block.
+     * Checks if the specified moving block is in a valid position on the board, considering another active block for
+     * potential collisions. A valid position means that the moving block does not collide with the boundaries of the
+     * board, does not overlap with any locked blocks in the grid, and does not collide with the other active block if
+     * provided. This method is used to determine whether a block can be placed or moved to a specific location on the
+     * board while considering interactions with another active block.
      * @param movingBlock The Block instance that is being moved or placed on the board.
-     * @param otherActiveBlock An optional Block instance representing another active block on the board. If provided, the method checks for potential collisions between the moving block and this other active block.
+     * @param otherActiveBlock An optional Block instance representing another active block on the board. If provided,
+     *                         the method checks for potential collisions between the moving block and this other
+     *                         active block.
      * @return true if the moving block is in a valid position; false otherwise.
      */
     public boolean isValidPosition(Block movingBlock, Block otherActiveBlock) {
@@ -82,7 +93,10 @@ public class Board implements Serializable {
     }
 
     /**
-     * Locks the specified block into the board's grid, marking the cells occupied by the block as filled with the block's color. This method updates the board's state to reflect that the block is now part of the locked grid and can no longer be moved or manipulated. It is typically called when a block has reached its final position on the board and needs to be integrated into the existing locked blocks.
+     * Locks the specified block into the board's grid, marking the cells occupied by the block as filled with the
+     * block's color. This method updates the board's state to reflect that the block is now part of the locked grid
+     * and can no longer be moved or manipulated. It is typically called when a block has reached its final position
+     * on the board and needs to be integrated into the existing locked blocks.
      * @param block The Block instance to be locked into the board's grid.
      */
     public void lockBlock(Block block) {
@@ -100,7 +114,10 @@ public class Board implements Serializable {
     }
 
     /**
-     * Overwrites the current grid of the board with a new grid. The new grid is provided as a 2D array of strings, where each string represents the color of a block or null for empty cells. This method updates the board's state to reflect the new configuration of blocks, allowing for dynamic changes to the board's layout during gameplay or for loading saved game states.
+     * Overwrites the current grid of the board with a new grid. The new grid is provided as a 2D array of strings,
+     * where each string represents the color of a block or null for empty cells. This method updates the board's state
+     * to reflect the new configuration of blocks, allowing for dynamic changes to the board's layout during gameplay
+     * or for loading saved game states.
      * @param newGrid A 2D array of strings representing the new grid configuration, where each string is a hexadecimal color code or null for empty cells.
      */
     public void overwriteGrid(String[][] newGrid) {
@@ -115,7 +132,10 @@ public class Board implements Serializable {
     }
 
     /**
-     * Clears any full lines in the board's grid and shifts the remaining blocks down (or up if inverted) to fill the cleared space. This method checks each row of the grid for completeness, removes any full rows, and updates the grid accordingly. It returns the number of lines that were cleared during this operation, which can be used for scoring or game progression purposes.
+     * Clears any full lines in the board's grid and shifts the remaining blocks down (or up if inverted) to fill the
+     * cleared space. This method checks each row of the grid for completeness, removes any full rows, and updates
+     * the grid accordingly. It returns the number of lines that were cleared during this operation, which can be used
+     * for scoring or game progression purposes.
      * @return The number of lines cleared from the board's grid.
      */
     public int clearLines() {
@@ -135,7 +155,9 @@ public class Board implements Serializable {
     }
 
     /**
-     * Checks if a specific row in the board's grid is completely filled with blocks (i.e., no empty cells). A full line is defined as a row where every cell contains a block (non-null value). This method is used to determine which rows need to be cleared during gameplay.
+     * Checks if a specific row in the board's grid is completely filled with blocks (i.e., no empty cells). A full
+     * line is defined as a row where every cell contains a block (non-null value). This method is used to determine
+     * which rows need to be cleared during gameplay.
      * @param row The index of the row to check for completeness.
      * @return true if the specified row is full; false otherwise.
      */
@@ -147,7 +169,10 @@ public class Board implements Serializable {
     }
 
     /**
-     * Shifts the rows of the board's grid down (or up if inverted) starting from a specified target row. This method is called after a line has been cleared to move all rows above (or below if inverted) the cleared line down (or up) by one position, effectively filling the space left by the cleared line. The topmost (or bottommost if inverted) row is then filled with empty cells (null values).
+     * Shifts the rows of the board's grid down (or up if inverted) starting from a specified target row. This method
+     * is called after a line has been cleared to move all rows above (or below if inverted) the cleared line down
+     * (or up) by one position, effectively filling the space left by the cleared line. The topmost (or bottommost if
+     * inverted) row is then filled with empty cells (null values).
      * @param targetRow The index of the row from which to start shifting the rows down (or up if inverted).
      */
     private void shiftGrid(int targetRow) {
@@ -165,7 +190,9 @@ public class Board implements Serializable {
     }
 
     /**
-     * Clears the entire board's grid, setting all cells to null, which indicates that they are empty. This method is typically used to reset the board to its initial state, removing all locked blocks and preparing it for a new game or round of gameplay.
+     * Clears the entire board's grid, setting all cells to null, which indicates that they are empty. This method is
+     * typically used to reset the board to its initial state, removing all locked blocks and preparing it for a new
+     * game or round of gameplay.
      */
     public void clear() {
         for (int row = 0; row < height; row++) {
@@ -173,10 +200,6 @@ public class Board implements Serializable {
         }
     }
 
-    /**
-     * Returns the current state of the board's grid as a 2D array of strings, where each string represents the color of a block or null for empty cells. This method provides access to the board's configuration, allowing other parts of the application to retrieve and display the current layout of blocks on the board.
-     * @param rows The number of rows to return from the top of the grid. If rows is less than or equal to 0, the entire grid is returned.
-     */
     public void expand(int rows) {
         int newHeight = height + rows;
         String[][] newGrid = new String[newHeight][width];
@@ -206,9 +229,13 @@ public class Board implements Serializable {
     }
 
     /**
-     * Shrinks the board's grid by removing a specified number of rows from either the top or bottom, depending on the board's orientation. If the board is inverted, rows are removed from the bottom; otherwise, they are removed from the top. This method updates the board's state to reflect the new height and configuration of the grid after the specified rows have been removed.
+     * Shrinks the board's grid by removing a specified number of rows from either the top or bottom, depending on the
+     * board's orientation. If the board is inverted, rows are removed from the bottom; otherwise, they are removed from
+     * the top. This method updates the board's state to reflect the new height and configuration of the grid after the
+     * specified rows have been removed.
      * @param rows The number of rows to remove from the board's grid. Must be less than the current height of the board.
-     * @throws IllegalArgumentException if the number of rows to remove is greater than or equal to the current height of the board.
+     * @throws IllegalArgumentException if the number of rows to remove is greater than or equal to the current height
+     * of the board.
      */
     public void shrink(int rows) {
         if (rows >= height) throw new IllegalArgumentException("Cannot shrink below 1 row");

@@ -13,7 +13,10 @@ public class HexHBox extends HBox {
     }
 
     /**
-     * Initializes the hexagonal shape of the HBox by creating a Polygon and setting it as the shape of the HBox. The hexagon is defined by its vertices, which are calculated based on the HBox's width and height during layout. This method is called during construction to ensure that the HBox has a distinct hexagonal appearance in the user interface.
+     * Initializes the hexagonal shape of the HBox by creating a Polygon and setting it as the shape of the HBox. The
+     * hexagon is defined by its vertices, which are calculated based on the HBox's width and height during layout. This
+     * method is called during construction to ensure that the HBox has a distinct hexagonal appearance in the user
+     * interface.
      */
     private void initShape() {
         hexShape = new Polygon();
@@ -22,7 +25,10 @@ public class HexHBox extends HBox {
     }
 
     /**
-     * Overrides the layoutChildren method to update the hexagonal shape of the HBox based on its current width and height. This method is called during the layout phase of the HBox's lifecycle, allowing for dynamic resizing and ensuring that the hexagon maintains its proportions as the HBox's size changes. The vertices of the hexagon are recalculated to fit within the HBox's bounds.
+     * Overrides the layoutChildren method to update the hexagonal shape of the HBox based on its current width and
+     * height. This method is called during the layout phase of the HBox's lifecycle, allowing for dynamic resizing and
+     * ensuring that the hexagon maintains its proportions as the HBox's size changes. The vertices of the hexagon are
+     * recalculated to fit within the HBox's bounds.
      */
     @Override
     protected void layoutChildren() {
@@ -36,7 +42,10 @@ public class HexHBox extends HBox {
     }
 
     /**
-     * Draws a hexagonal shape based on the specified width and height. This method calculates the vertices of the hexagon and updates the points of the Polygon used as the shape of the HBox. The hexagon is defined by six points, which are positioned to create a visually distinct HBox that can be used in the user interface for various layout purposes.
+     * Draws a hexagonal shape based on the specified width and height. This method calculates the vertices of the
+     * hexagon and updates the points of the Polygon used as the shape of the HBox. The hexagon is defined by six
+     * points, which are positioned to create a visually distinct HBox that can be used in the user interface for
+     * various layout purposes.
      * @param width The width of the hexagon to be drawn.
      * @param height The height of the hexagon to be drawn.
      */

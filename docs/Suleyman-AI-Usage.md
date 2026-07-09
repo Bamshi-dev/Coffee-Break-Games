@@ -425,3 +425,32 @@ in phases and tested each over two windows before moving on:
 shared `network/` package, `Session`, and the Memory/HexChess games were
 **not** touched (verified by diff + a full clean rebuild).
 
+---
+
+## 8. Lobby fixes — port leak & host re-announce (later work)
+
+Two lobby bugs Erik reported, fixed with AI assistance:
+
+- **"Address already in use: bind"** — backing out of a host lobby left a
+  daemon thread parked in `accept()` holding port 8765 forever, so hosting
+  the *next* game (any game — they share the port) failed. Fixed by making
+  `LanHost.hostAsync` return a `Pending` cancel handle; the lobby's Back
+  button now closes it, which unblocks `accept()` and frees the port.
+- **Host not re-announcing after a joiner leaves** — the host lobby only
+  showed a "disconnected" label on a dead connection. Now it resets the
+  lobby (ready flags, and in Memory the pristine config/setup) and starts
+  hosting again — discovery broadcast + accept — so a new opponent can
+  find and join it.
+
+While auditing my own change I caught a regression before it shipped:
+`LanSession` fires `onDisconnected` on *local* close too, so a host
+backing out with a client connected would have re-hosted from the dead
+screen. Guarded with a `leftLobby` flag (also closes the accept-vs-Back
+race by dropping a connection accepted just as the user leaves).
+
+**Files:** `network/LanHost.java` (+ a port-release regression test in
+`LanSessionTest`), and the three `WaitForOpponent` lobby controllers
+(Memory, Tetris, HexChess). Game screens and the message protocols were
+untouched. AI-supported: the cancel-handle design and the local-close
+listener analysis; I ran the two-window tests.
+

@@ -90,4 +90,37 @@ class LanSessionTest {
 
         if (hostLayer.get() != null) hostLayer.get().close();
     }
+
+    @Test
+    void cancelledHostReleasesThePort() throws Exception {
+        // Regression test: hosting a lobby and backing out before anyone joins
+        // must free the port, otherwise hosting the next game (any game — they
+        // all share DEFAULT_PORT) fails with "Address already in use: bind".
+        int port = TEST_PORT + 2;
+
+        LanHost.Pending first = LanHost.hostAsync(port,
+                layer -> {}, err -> {});
+        Thread.sleep(250);   // let it bind and block in accept()
+        first.close();       // simulate pressing Back in the lobby
+        Thread.sleep(250);   // let the accept thread unwind
+
+        // Hosting again on the same port must now succeed.
+        CountDownLatch secondReady = new CountDownLatch(1);
+        AtomicReference<Throwable> secondError = new AtomicReference<>();
+        AtomicReference<NetworkLayer> hostLayer = new AtomicReference<>();
+        LanHost.Pending second = LanHost.hostAsync(port,
+                layer -> { hostLayer.set(layer); secondReady.countDown(); },
+                err   -> { secondError.set(err); secondReady.countDown(); });
+        Thread.sleep(250);
+
+        NetworkLayer client = LanClient.join("127.0.0.1", port);
+        assertTrue(secondReady.await(2, TimeUnit.SECONDS), "second host attempt did not accept");
+        if (secondError.get() != null) {
+            throw new AssertionError("second host attempt failed: " + secondError.get(), secondError.get());
+        }
+
+        client.close();
+        if (hostLayer.get() != null) hostLayer.get().close();
+        second.close();
+    }
 }

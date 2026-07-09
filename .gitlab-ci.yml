@@ -24,8 +24,6 @@ build-linux:
   artifacts:
     paths:
       - target/gamebox-linux
-    reports:
-      junit: target/surefire-reports/TEST-*.xml
     expire_in: 30 days
 
 build-windows:
@@ -48,8 +46,6 @@ docs:
   image: texlive/texlive:latest
   needs:
     - job: build-linux
-      artifacts: true
-    - job: build-windows
       artifacts: true
   script:
     - command -v curl >/dev/null || (apt-get update && apt-get install -y curl)

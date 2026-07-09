@@ -1,18 +1,17 @@
 package seda_project.control_alt_defeat.gamebox.Tetris.Controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.BlockRegistry;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.TetrisAdvancedSettings;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.TetrisEngine;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LocalGameConfiguration extends Controller implements Initializable {
 
@@ -27,6 +26,12 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     @FXML
     private ComboBox<Integer> player1Level,player2Level;
 
+    /**
+     * Initializes the LocalGameConfiguration controller by setting up the user interface elements, including populating
+     * the level selection ComboBoxes for both players with levels from 1 to 20 and selecting the first level by default.
+     * It also hides the status label initially.
+     * @param location The location used to resolve relative paths for the root object, or null
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -43,12 +48,22 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         player2Level.getSelectionModel().select(0);
     }
 
+    /**
+     * Handles the action of going back to the previous scene. It plays a button sound effect and transitions back to the
+     * previous scene, passing along the player names and levels if the previous controller is an instance of HostLan or
+     * LocalGameConfiguration.
+     */
     @FXML
     protected void onBackAction() {
         sC.play("button");
         c.backScene(header,vS);
     }
 
+    /**
+     * Handles the action of opening the advanced settings for the local game. It plays a button sound effect, retrieves
+     * the current player names and levels from the input fields, and transitions to the AdvancedSettings scene, passing
+     * along the player data to the new controller.
+     */
     @FXML
     protected void onAdvancedSettingsAction(){
         sC.play("button");
@@ -60,6 +75,13 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         controller.handLocalData(p1Name,p2Name,p1Level,p2Level);
     }
 
+    /**
+     * Handles the action of starting a local game. It retrieves the player names and levels from the input fields,
+     * validates the name lengths, and if valid, creates a new TetrisEngine instance with the provided data and
+     * advanced settings. It then transitions to the appropriate game screen based on the layout setting (vertical or
+     * horizontal) and initializes the game controller with the necessary data. If the name lengths are invalid, it
+     * plays an error sound effect.
+     */
     @FXML
     protected void onStartAction() {
         sC.play("button");
@@ -72,7 +94,8 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         if (advancedSettings.isVertical()){
             address = "/Views/Tetris/GameScreen.fxml";
         }
-        else { address = "/Views/Tetris/GameScreenHorizontal.fxml";
+        else {
+            address = "/Views/Tetris/GameScreenHorizontal.fxml";
         }
 
         if (c.checkNameLength(player1Name,1,statusLabel) && c.checkNameLength(player2Name,2,statusLabel)){
@@ -94,6 +117,10 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         }
     }
 
+    /**
+     * Handles the action of resetting the player names and levels to their default values. It clears the text fields
+     * for both players and resets the level selection ComboBoxes to the first level (1).
+     */
     public void handLocalData(String p1Name, String p2Name, int p1Level, int p2Level) {
         player1TF.setText(p1Name);
         player2TF.setText(p2Name);

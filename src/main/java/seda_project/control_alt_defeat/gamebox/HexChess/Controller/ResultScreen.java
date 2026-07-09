@@ -4,9 +4,16 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import seda_project.control_alt_defeat.gamebox.Configuration;
 import seda_project.control_alt_defeat.gamebox.HexChess.Engine.GameEngine;
 import seda_project.control_alt_defeat.gamebox.HexChess.Engine.PlayerColor;
 import seda_project.control_alt_defeat.gamebox.HexChess.Network.ChessMessage;
@@ -15,10 +22,14 @@ import seda_project.control_alt_defeat.gamebox.network.NetworkListener;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
-public class ResultScreen extends Controller {
+public class ResultScreen extends Controller{
     @FXML
-    private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel;
+    private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel, statusLabel;
 
+
+    /**
+     * Initializes network listeners for the result screen
+     */
     public void initNetwork() {
         Session s = Session.current();
         if (s.network != null) {
@@ -46,13 +57,17 @@ public class ResultScreen extends Controller {
                 @Override
                 public void onDisconnected(String reason) {
                     Platform.runLater(() -> {
-                        resultLabel.setText("Opponent disconnected.");
+                        statusLabel.setVisible(true);
+                        statusLabel.setText("Opponent disconnected.");
                     });
                 }
             });
         }
     }
 
+    /**
+     * Evaluates whether both players are ready to restart.
+     */
     private void checkStart() {
         Session s = Session.current();
         if (s.isHost && s.localReady && s.peerReady) {
@@ -62,13 +77,25 @@ public class ResultScreen extends Controller {
         }
     }
 
+    /**
+     * Schedules a visual countdown leading to a fresh game restart.
+     * @param delayMs
+     */
     private void scheduleStartGame(long delayMs) {
-        resultLabel.setText("Restarting in " + (delayMs / 1000) + "s...");
+        statusLabel.setVisible(true);
+        statusLabel.setText("Restarting in " + (delayMs / 1000) + "s...");
         PauseTransition pt = new PauseTransition(Duration.millis(delayMs));
         pt.setOnFinished(e -> startGameNow());
         pt.play();
     }
 
+    /**
+     * Updates the text labels for player names and their base scores.
+     * @param p1Name
+     * @param p2Name
+     * @param p1Points
+     * @param p2Points
+     */
     public void handData(String p1Name, String p2Name, String p1Points, String p2Points){
         p1NameLabel.setText(p1Name);
         p2NameLabel.setText(p2Name);
@@ -76,16 +103,27 @@ public class ResultScreen extends Controller {
         p2Score.setText(""+p2Points);
     }
 
+    /**
+     * Processes a definitive checkmate victory scenario.
+     * @param winner
+     */
     public void winner(int winner){
         resultLabel.setText("Checkmate");
         onePoint(winner);
     }
 
+    /**
+     * Processes a mutual tie (Remis) scenario, awarding half points evenly.
+     */
     public void remis(){
         resultLabel.setText("Remis");
         halfPoint();
     }
 
+    /**
+     * Process a stalemate scenario
+     * @param winner
+     */
     public void stalemate(int winner){
         resultLabel.setText("Stalemate");
         if ((winner == 1)) {
@@ -101,6 +139,9 @@ public class ResultScreen extends Controller {
         }
     }
 
+    /**
+     * Method to bring a user back to the Main Menu
+     */
     public void onExitAction() {
         sC.play("button");
         sC.stopLooping();
@@ -110,6 +151,10 @@ public class ResultScreen extends Controller {
         c.changeScene("/Views/StartingScreen.fxml",header,vS);
     }
 
+
+    /**
+     * Method to start a new round. If in a Network Game just set tise player ready
+     */
     public void onPlayAgainAction() {
         sC.play("button");
         Session s = Session.current();
@@ -117,8 +162,8 @@ public class ResultScreen extends Controller {
         if (s.network != null) {
             s.localReady = true;
             s.network.send(new ChessMessage.Ready(true));
-
-            resultLabel.setText("Waiting for opponent...");
+            statusLabel.setVisible(true);
+            statusLabel.setText("Waiting for opponent...");
 
             checkStart();
         } else {
@@ -126,6 +171,9 @@ public class ResultScreen extends Controller {
         }
     }
 
+    /**
+     * Start a new Game Enginge and move all Player to the GameScreen that is linked to this Engine
+     */
     private void startGameNow() {
         Session s = Session.current();
 
@@ -136,8 +184,36 @@ public class ResultScreen extends Controller {
         GameEngine engine = new GameEngine();
         s.chessEngine = engine;
 
-        GameScreen controller = (GameScreen) c.changeScene("/Views/HexChess/GameScreen.fxml", header, vS);
+        StackPane parent = (StackPane) root.getParent();
+        parent.getChildren().remove(root);
+        GameScreen controller;
+        try {
+            FXMLLoader loader = new FXMLLoader(Configuration.class.getResource("/Views/HexChess/GameScreen.fxml"));
+            Parent root = loader.load();
+            vS.addFxmlLoaders("/Views/HexChess/GameScreen.fxml");
+            controller = loader.getController();
+            Stage stage = (Stage) parent.getScene().getWindow();
+            Scene currentScene = stage.getScene();
+
+            Platform.runLater(() -> {
+                double height = stage.getHeight();
+                double width = stage.getWidth();
+
+                currentScene.setFill(Color.TRANSPARENT);
+                currentScene.setRoot(root);
+
+                stage.sizeToScene();
+
+                stage.setWidth(Math.max(width, stage.getWidth()));
+                stage.setHeight(Math.max(height, stage.getHeight()));
+            });
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         controller.setGameEngine(engine);
+
 
         String p1 = p1NameLabel.getText();
         String p2 = p2NameLabel.getText();
@@ -150,20 +226,19 @@ public class ResultScreen extends Controller {
             controller.setBotMode(false, null);
         }
 
-        controller.init(header.getScene());
-        if (flipped){
-            controller.flip();
-        }
-        if (rainbowed){
-            controller.rainbow();
-        }
         if (p1.equals("Duck")) {
             controller.p1Duck();
         }
         if (p2.equals("Duck")){
             controller.p2Duck();
         }
-
+        controller.init(parent.getScene());
+        if (flipped){
+            controller.flip();
+        }
+        if (rainbowed){
+            controller.rainbow();
+        }
         if (s.network != null) {
             if (s.isHost) {
                 controller.attachHostBridge(s.network, engine);
@@ -180,16 +255,27 @@ public class ResultScreen extends Controller {
         }
     }
 
+    /**
+     * Process a Game that has ended in a Draw
+     */
     public void draw() {
         resultLabel.setText("Draw Proposal");
         halfPoint();
     }
 
+    /**
+     * Process a Game that has ended with a resign
+     * @param winner
+     */
     public void resign(int winner) {
         resultLabel.setText("Resigned");
         onePoint(winner);
     }
 
+    /**
+     * Method to award one Point
+     * @param winner
+     */
     private void onePoint(int winner) {
         if ((winner == 1)) {
             p1Score.setText(String.valueOf(Double.parseDouble(p1Score.getText()) + 1.0));
@@ -202,10 +288,16 @@ public class ResultScreen extends Controller {
         }
     }
 
+    /**
+     * Method to award half a Point
+     */
     private void halfPoint() {
         p1Score.setText(String.valueOf(Double.parseDouble(p1Score.getText()) + .5));
         p2Score.setText(String.valueOf(Double.parseDouble(p2Score.getText()) + .5));
         p1Awarded.setText("+0.5");
         p2Awarded.setText("+0.5");
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
     }
 }

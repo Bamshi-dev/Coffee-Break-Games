@@ -3,10 +3,8 @@
     src: url('../fonts/Michroma-Regular.ttf');
 }
 
-.text {
-    -fx-font-family: 'Michroma';
-}
 
+.button,
 .label,
 .radio-button,
 .check-box,
@@ -19,6 +17,12 @@
 .combo-box-popup .list-cell,
 .text-field {
     -fx-text-fill: -theme-text-primary;
+    -fx-font-family: 'Michroma';
+}
+
+.keyText {
+    -fx-font-family: "JetBrains Mono";
+    -fx-text-fill: #435896 -important;
 }
 
 .color-picker .label {

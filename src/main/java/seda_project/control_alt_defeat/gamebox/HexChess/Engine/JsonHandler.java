@@ -22,6 +22,10 @@ public class JsonHandler {
 
     private final File externalSaveFile = new File("BoardDesign.json");
 
+    /**
+     * Reads all Board States and then visualizes them on the Scene
+     * @return
+     */
     public List<BoardDesignState> readBoardStates(){
         List<BoardDesignState> listofBoards = new ArrayList<>();
         try {
@@ -51,6 +55,13 @@ public class JsonHandler {
         return listofBoards;
     }
 
+    /**
+     * Create a new Bord State on basis of one FenLike notation and the information of the pieceamounts
+     * @param notation
+     * @param pieceAmounts
+     * @param starting
+     * @return
+     */
     public BoardDesignState createNewState(String notation, Map<String, Integer> pieceAmounts, int starting){
         ObjectNode newBoard = jsonMapper.createObjectNode();
         newBoard.put("FENState", notation);
@@ -70,6 +81,10 @@ public class JsonHandler {
         return new BoardDesignState(newBoard);
     }
 
+    /**
+     * Method to write a Board State to a JSON file.
+     * @param listofBoards
+     */
     public void writeBoardStates(List<BoardDesignState> listofBoards) {
         ArrayNode arrayNode = jsonMapper.createArrayNode();
         listofBoards.forEach(board -> arrayNode.add(board.getBoard()));

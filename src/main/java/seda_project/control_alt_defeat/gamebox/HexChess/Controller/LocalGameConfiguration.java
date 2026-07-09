@@ -1,5 +1,6 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -25,12 +26,18 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     @FXML
     private ToggleSwitch isP1Bot, isP2Bot;
 
+    /**
+     * Method to get back to the previous screen
+     */
     @FXML
     public void onBackAction() {
         sC.play("button");
         c.backScene(header, vS);
     }
 
+    /**
+     * Method to start the Game.
+     */
     @FXML
     public void onStartAction() {
         sC.play("button");
@@ -50,28 +57,25 @@ public class LocalGameConfiguration extends Controller implements Initializable 
             } else {
                 controller.setBotMode(false, null);
             }
-
-            if (c.checkFlip(player1Name,player2Name)){
-                controller.flip();
-            }
-            if (c.checkRainbow(player1Name,player2Name)){
-                controller.rainbow();
-            }
             if (player1Name.equals("Duck")) {
                 controller.p1Duck();
             }
-            if (player2Name.equals("Duck")){
+            if (player2Name.equals("Duck")) {
                 controller.p2Duck();
+            }
+            if (c.checkFlip(player1Name, player2Name)) {
+                controller.flip();
+            }
+            if (c.checkRainbow(player1Name, player2Name)) {
+                controller.rainbow();
             }
             if (boardState == null) {
                 controller.init(header.getScene());
-            }
-            else{
+            } else {
                 controller.init(boardState, header.getScene());
             }
             controller.setNames(player1Name, player2Name);
             controller.setPoints(0, 0);
-
             PlayerColor startingColor = gameEngine.getActivePlayer();
             if (startingColor == PlayerColor.WHITE && player1Name.equalsIgnoreCase("Bot")) {
                 controller.activePlayer(PlayerColor.WHITE);
@@ -85,6 +89,9 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         }
     }
 
+    /**
+     * Method to bring the user to the Board Designer
+     */
     @FXML
     public void onCustomBoardAction() {
         BoardDesigner controller = (BoardDesigner) c.changeScene("/Views/HexChess/BoardDesigner.fxml",header,vS);
@@ -92,7 +99,12 @@ public class LocalGameConfiguration extends Controller implements Initializable 
     }
 
 
-
+    /**
+     * Method to set the notation and names of players if coming from the Board Designer
+     * @param notation Starting Game State in a FEN linke Notation
+     * @param p1Name
+     * @param p2Name
+     */
     public void boardSelection(String notation, String p1Name, String p2Name) {
         boardState = notation;
         if (p1Name != null){
@@ -103,6 +115,12 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         }
     }
 
+    /**
+     * Method to handle bot selection. If one Bot is selected and the other one is selected this deselects the currently
+     * active one so that only one bot is active
+     * @param newValue
+     * @param player
+     */
     private void changeBot(boolean newValue, int player){
         if (player == 1) {
             if (newValue) {

@@ -29,6 +29,10 @@ public class WaitForOpponent extends Controller {
 
     @FXML
     private Button startButton;
+
+    /**
+     * Method to get Back to the previous screen
+     */
     @FXML
     protected void onBackAction() {
         sC.play("button");
@@ -48,6 +52,9 @@ public class WaitForOpponent extends Controller {
         }
     }
 
+    /**
+     * Sets a player Ready if not already and updates the state for the other network player
+     */
     @FXML
     protected void onStartGameAction() {
         sC.play("button");
@@ -63,6 +70,11 @@ public class WaitForOpponent extends Controller {
         maybeStartCountdown();
     }
 
+    /**
+     * Pass the Data of the joining Player to this scene and the network and retrieve the data of the host
+     * @param playerName
+     * @param ipAddress
+     */
     public void passJoinData(String playerName, String ipAddress) {
         myname = playerName;
         Session s = Session.current();
@@ -95,6 +107,11 @@ public class WaitForOpponent extends Controller {
         layer.send(new ChessMessage.Hello(playerName));
     }
 
+    /**
+     * Pass the data of the host to this scene and to the network
+     * @param hostName
+     * @param boardState
+     */
     public void passHostData(String hostName, String boardState){
         myname = hostName;
         this.boardState = boardState;
@@ -140,6 +157,10 @@ public class WaitForOpponent extends Controller {
         );
     }
 
+    /**
+     * Attack a listener for the host to listen for network messages
+     * @param layer
+     */
     private void attachHostListener(NetworkLayer layer) {
         layer.addListener(new NetworkListener() {
             @Override
@@ -183,6 +204,11 @@ public class WaitForOpponent extends Controller {
         startHosting();
     }
 
+    /**
+     * Method to handle the messages coming to the HostListener
+     * @param layer
+     * @param msg
+     */
     private void handleHostMessage(NetworkLayer layer, Message msg) {
         if (msg instanceof ChessMessage.Hello h) {
             Session s = Session.current();
@@ -195,6 +221,11 @@ public class WaitForOpponent extends Controller {
             maybeStartCountdown();
         }
     }
+
+    /**
+     * Method to handle Messages coming to the Join Listener
+     * @param msg
+     */
     private void handleJoinMessage(Message msg) {
         if (msg instanceof ChessMessage.LobbyInfo info) {
             Session.current().peerName = info.hostName();
@@ -209,6 +240,9 @@ public class WaitForOpponent extends Controller {
     }
 
 
+    /**
+     * Check wether both players are ready and the game start can be scheduled
+     */
     private void maybeStartCountdown() {
         Session s = Session.current();
         if (!s.isHost) return;
@@ -219,15 +253,33 @@ public class WaitForOpponent extends Controller {
         scheduleStartGame(delayMs);
     }
 
+    /**
+     * Schedules the start of the game after a specified delay. It updates the status label to show the countdown and
+     * disables the start button. After the delay, it calls the method to start the game immediately.
+     */
     private void scheduleStartGame(long delayMs) {
         countdownStarted = true;
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
         startButton.setDisable(true);
-        PauseTransition pt = new PauseTransition(Duration.millis(delayMs));
-        pt.setOnFinished(e -> startGameNow());
+        final int[] time = {(int) (delayMs/1000)};
+        Timeline  pt = new Timeline(
+                new KeyFrame(Duration.seconds(1), _ -> {
+                    time[0]--;
+                    if (time[0] > 0 ) {
+                        statusLabel.setText("Starting in " + time[0] + "s...");
+                    }
+                    else {
+                        statusLabel.setText("Startign now!");
+                        startGameNow();
+                }
+                }));
+        pt.setCycleCount(time[0]);
         pt.play();
     }
 
+    /**
+     * Start the actual game
+     */
     private void startGameNow() {
         sC.stopLooping();
         sC.playLooping("chess_background",.1);
@@ -261,6 +313,7 @@ public class WaitForOpponent extends Controller {
         if (p2.equals("Duck")){
             controller.p2Duck();
         }
+        controller.setLanMode();
         if (s.isHost) {
             if (boardState == null) {
                 controller.init(header.getScene());
@@ -283,18 +336,24 @@ public class WaitForOpponent extends Controller {
     }
 
 
+    /**
+     * Method to handle the player Join
+     * @param joinN
+     */
     private void playerJoin(String joinN) {
         if (loadingDots != null) loadingDots.stop();
         opponentNameLabel.setText(joinN);
         statusLabel.setText("Waiting for " + joinN + " to be ready!");
     }
 
+    /**
+     * Method to update the status Label for both players
+     */
     private void updatePeerStatus() {
         Session s = Session.current();
         if (s.localReady && s.peerReady) {
-            statusLabel.getStyleClass().clear();
+            statusLabel.getStyleClass().remove("information");
             statusLabel.getStyleClass().add("ready");
-            statusLabel.getStyleClass().add("box");
             statusLabel.setText("All ready!");
         } else if (s.peerReady) {
             statusLabel.setText("Opponent is ready. Press Ready when you are.");
@@ -305,6 +364,9 @@ public class WaitForOpponent extends Controller {
         }
     }
 
+    /**
+     * Stops the announcer of the host, so that the host is no longer shown to the outside if there has somebody joined
+     */
     private void stopAnnouncer() {
         if (announcer != null) {
             try { announcer.close(); } catch (Exception ignored) {}

@@ -1,5 +1,13 @@
 package seda_project.control_alt_defeat.gamebox.Tetris.Controller;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,19 +22,13 @@ import javafx.util.Duration;
 import seda_project.control_alt_defeat.gamebox.network.Advertisement;
 import seda_project.control_alt_defeat.gamebox.network.Discovery;
 import seda_project.control_alt_defeat.gamebox.network.GameMode;
-import seda_project.control_alt_defeat.gamebox.network.Listener;
 import seda_project.control_alt_defeat.gamebox.network.LanClient;
+import seda_project.control_alt_defeat.gamebox.network.Listener;
 import seda_project.control_alt_defeat.gamebox.network.NetworkLayer;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import seda_project.control_alt_defeat.gamebox.ui.HexButton;
+import seda_project.control_alt_defeat.gamebox.ui.HexLabel;
 
 public class JoinLan extends Controller implements Initializable {
     private final ArrayList<Label> availableHosts = new ArrayList<>();
@@ -48,12 +50,25 @@ public class JoinLan extends Controller implements Initializable {
     private ComboBox<Integer> yourLevel;
 
     @FXML
+    private HexButton searchButton;
+
+    /**
+     * Handles the action of going back from the JoinLan scene. It stops the discovery of available hosts and transitions
+     * back to the previous scene.
+     */
+    @FXML
     protected void onBackAction(){
         sC.play("button");
         stopDiscovery();
         c.backScene(header,vS);
     }
 
+    /**
+     * Handles the action of connecting to a selected host in a LAN game. It retrieves the player's name and level from
+     * the input fields, validates the name length, and if valid, attempts to join the selected host using the LanClient.
+     * If successful, it sets up the session with the player's data and transitions to the WaitForOpponent scene. If there
+     * is an error during connection, it displays an error message.
+     */
     @FXML
     private void onConnectAction(){
         sC.play("button");
@@ -96,9 +111,16 @@ public class JoinLan extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Initializes the JoinLan controller by setting up the user interface elements, including populating the level selection
+     * ComboBox with levels from 1 to 20 and selecting the first level by default. It also starts the discovery of available
+     * hosts in the LAN.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
+        searchButton.setDisable(true);
+
         joinStatus.setVisible(false);
 
         yourLevel.getItems().clear();
@@ -112,6 +134,10 @@ public class JoinLan extends Controller implements Initializable {
     }
 
 
+    /**
+     * Stops the discovery of available hosts when the JoinLan controller is no longer needed. It stops the refresh timeline
+     * and closes the discovery listener to free up resources and prevent further updates to the host list.
+     */
     private void startDiscovery() {
         try {
             discoveryListener = Discovery.listen();
@@ -130,6 +156,10 @@ public class JoinLan extends Controller implements Initializable {
         refreshHostList();
     }
 
+    /**
+     * Stops the discovery of available hosts when the JoinLan controller is no longer needed. It stops the refresh timeline
+     * and closes the discovery listener to free up resources and prevent further updates to the host list.
+     */
     private void stopDiscovery() {
         if (refreshTimeline != null) {
             refreshTimeline.stop();
@@ -141,6 +171,12 @@ public class JoinLan extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Refreshes the list of available hosts by querying the discovery listener for the current advertisements. It updates
+     * the UI to display the available hosts, deselects any previously selected host, and enables or disables the
+     * search button based on whether a host is selected. If there are no available hosts, it displays a message indicating
+     * that no games were found.
+     */
     private void refreshHostList() {
         if (discoveryListener == null) return;
         List<Advertisement> ads = discoveryListener.currentHosts();
@@ -161,32 +197,41 @@ public class JoinLan extends Controller implements Initializable {
 
         for (Advertisement ad : ads) {
             if (ad.gameMode() != GameMode.TETRIS) continue;
-            Label l = makeHostLabel(ad);
+            HexLabel l = makeHostLabel(ad);
             availableHosts.add(l);
             scrollElements.getChildren().add(l);
             if (ad.ipAddress().equals(previouslySelectedIp)) {
                 selectedHost = l;
-                l.getStyleClass().add("box");
                 l.getStyleClass().add("ready");
             }
         }
         shownHostIps = newIps;
     }
 
-    private Label makeHostLabel(Advertisement ad) {
-        Label l = new Label(ad.name() + "   (" + ad.ipAddress() + ")");
+    /**
+     * Creates a HexLabel for the given Advertisement representing a host in the LAN. The label displays the host's name
+     * and IP address, and when clicked, it deselects any previously selected host, marks the clicked label as selected,
+     * and enables the search button for connecting to the selected host.
+     * @param ad The Advertisement object containing information about the host.
+     */
+    private HexLabel makeHostLabel(Advertisement ad) {
+        HexLabel l = new HexLabel(ad.name() + "   (" + ad.ipAddress() + ")");
         l.setUserData(ad);
         l.setAlignment(Pos.CENTER);
         l.setOnMouseClicked(mouseEvent -> {
             deselectAll();
             selectedHost = l;
-            l.getStyleClass().add("box");
             l.getStyleClass().add("ready");
+            searchButton.setDisable(false);
         });
         return l;
     }
 
+    /**
+     * Deselects all available host labels by removing the "ready" style class from each label. This method is called when
+     * a new host is selected, ensuring that only the currently selected host is visually marked as ready for connection.
+     */
     private void deselectAll() {
-        for (Label l : availableHosts) l.getStyleClass().clear();
+        for (Label l : availableHosts) l.getStyleClass().remove("ready");
     }
 }

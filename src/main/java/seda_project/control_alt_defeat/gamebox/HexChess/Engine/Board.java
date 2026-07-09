@@ -51,16 +51,32 @@ public class Board {
         }
     }
 
+    /**
+     * Retrieves a hexagonal cell by its string Id
+     * @param
+     * @return
+     */
     public HexCell getCellById(String id){
         HexCoord cell = HexCoord.transformIdToHex(id);
         return getCellByCoord(cell.col, cell.row);
     }
 
+    /**
+     * Retrieves a hexagonal cell by its Coords
+     * @param col
+     * @param row
+     * @return
+     */
     public HexCell getCellByCoord(int col, int row){
         int index = col - ROW_OFFSETS[row - 1];
         return cells.get(row - 1).get(index);
     }
 
+    /**
+     * Assigns a piece to a designated cell
+     * @param id
+     * @param piece
+     */
     public void placePiece(String id, Piece piece){
         HexCell cell = getCellById(id);
         cell.setPiece(piece);
@@ -72,6 +88,10 @@ public class Board {
         }
     }
 
+    /**
+     * Removes a piece from a given coordinate and the corrsponding player list
+     * @param coord
+     */
     public void removePiece(HexCoord coord){
         HexCell cell = getCellByCoord(coord.col, coord.row);
         Piece piece = cell.getPiece();
@@ -84,6 +104,12 @@ public class Board {
         cell.setPiece(null);
     }
 
+    /**
+     * move a pieve to a new location
+     * @param from
+     * @param to
+     * @return
+     */
     public Piece movePiece(HexCoord from , HexCoord to){
         HexCell fromCell = getCellByCoord(from.col, from.row);
         HexCell toCell = getCellByCoord(to.col, to.row);
@@ -106,6 +132,11 @@ public class Board {
         return toPiece;
     }
 
+    /**
+     * Returns all the direct orthogonal neighbors of a coord
+     * @param coord
+     * @return
+     */
     public List<HexCell> getDirectOrthogonalNeighbors(HexCoord coord){
         List<HexCell> neighbors = new ArrayList<>();
         int col = coord.col;
@@ -142,6 +173,11 @@ public class Board {
         return neighbors;
     }
 
+    /**
+     * returns all orthogonal Cells of a given coord
+     * @param coord
+     * @return
+     */
     public List<HexCell> getallOrthogonals(HexCoord coord){
         List<HexCell> neighbors = new ArrayList<>();
 
@@ -200,6 +236,11 @@ public class Board {
         return neighbors;
     }
 
+    /**
+     * Returns all direct diagonal neighbors of a given coord
+     * @param coord
+     * @return
+     */
     public List<HexCell> getDirectDiagonalNeighbors(HexCoord coord){
         List<HexCell> neighbors = new ArrayList<>();
         int col = coord.col;
@@ -244,6 +285,11 @@ public class Board {
         return neighbors;
     }
 
+    /**
+     * retuns all diagonal cells of a coord
+     * @param coord
+     * @return
+     */
     public List<HexCell> getAllDiagonals(HexCoord coord) {
         List<HexCell> neighbors = new ArrayList<>();
 
@@ -306,6 +352,11 @@ public class Board {
         return neighbors;
     }
 
+    /**
+     * returns all the jump neighbors of a given coord
+     * @param coord
+     * @return
+     */
     public List<HexCell> getJumpNeighbours(HexCoord coord) {
         List<HexCell> neighbors = new ArrayList<>();
         int col = coord.col;
@@ -349,6 +400,13 @@ public class Board {
         return neighbors;
     }
 
+    /**
+     * Mehtod to calcualte the offset for the "diagonal" shape of the baord
+     * @param currentC
+     * @param currentR
+     * @param dir
+     * @return
+     */
     // Helper method to accurately track row alterations as cells shift context
     private int getOrthogonalRowOffset(int currentC, int currentR, int dir) {
         switch (dir) {
@@ -370,6 +428,11 @@ public class Board {
         return black;
     }
 
+    /**
+     * Create a FEN like notation of the current game state
+     * @param startingPlayer
+     * @return
+     */
     public String createNotation(PlayerColor startingPlayer) {
         StringBuilder sb = new StringBuilder();
         sb.append(cells.stream()
@@ -380,6 +443,11 @@ public class Board {
         return sb.toString();
     }
 
+    /**
+     * Method to encode one row
+     * @param row
+     * @return
+     */
     private String encodeRow(List<HexCell> row) {
         int emptyCells = 0;
         StringBuilder sb = new StringBuilder();

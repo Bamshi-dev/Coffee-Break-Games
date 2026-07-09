@@ -8,18 +8,31 @@ public class HexCell {
         this.coords = coord;
     }
 
+    /**
+     * @return this HexCoord
+     */
     public HexCoord getCoords() {
         return coords;
     }
 
+    /**
+     * Set the piece on this Cell
+     * @param newPiece
+     */
     public void setPiece (Piece newPiece){
         this.piece = newPiece;
     }
 
+    /**
+     * @return the piece on this field
+     */
     public Piece getPiece(){
         return this.piece;
     }
 
+    /**
+     * @return true if this field has a piece
+     */
     public boolean hasPiece(){
         return this.piece != null;
     }

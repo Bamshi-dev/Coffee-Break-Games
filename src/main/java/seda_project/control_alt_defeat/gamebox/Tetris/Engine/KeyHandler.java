@@ -1,5 +1,9 @@
 package seda_project.control_alt_defeat.gamebox.Tetris.Engine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -7,9 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import seda_project.control_alt_defeat.gamebox.Tetris.Controller.GameScreen;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class KeyHandler {
     private final TetrisEngine engine;
@@ -31,14 +32,42 @@ public class KeyHandler {
     private final Map<KeyCode, Integer> activeKeys = new HashMap<>();
     private Timeline repeatTimer;
 
+    /**
+     * Creates a new KeyHandler instance that manages keyboard input for the Tetris game. It takes in the TetrisEngine,
+     * TetrisSettings, and GameScreen instances to handle player input and game state. The lanPlayer parameter
+     * determines which player the keyboard input will control in a LAN multiplayer setting.
+     * @param engine The TetrisEngine instance that manages the game logic and state.
+     * @param tS The TetrisSettings instance that holds the key bindings and settings for the game.
+     * @param gameScreen The GameScreen instance that represents the user interface for the game.
+     */
     public KeyHandler(TetrisEngine engine, TetrisSettings tS, GameScreen gameScreen) {
         this(engine, tS, gameScreen, 0);
     }
 
+    /**
+     * Creates a new KeyHandler instance that manages keyboard input for the Tetris game, specifically for
+     * LAN multiplayer settings. It takes in the TetrisEngine, TetrisSettings, and GameScreen instances to handle
+     * player input and game state. The p1Only parameter determines whether the keyboard input will control only player
+     * 1 (true) or both players (false) in a LAN multiplayer setting.
+     * @param engine The TetrisEngine instance that manages the game logic and state.
+     * @param tS The TetrisSettings instance that holds the key bindings and settings for the game.
+     * @param gameScreen The GameScreen instance that represents the user interface for the game.
+     * @param p1Only A boolean indicating whether the keyboard input will control only player 1 (true) or both players (false) in a LAN multiplayer setting.
+     */
     public KeyHandler(TetrisEngine engine, TetrisSettings tS, GameScreen gameScreen, boolean p1Only) {
         this(engine, tS, gameScreen, p1Only ? 1 : 0);
     }
 
+    /**
+     * Creates a new KeyHandler instance that manages keyboard input for the Tetris game, specifically for LAN
+     * multiplayer settings. It takes in the TetrisEngine, TetrisSettings, and GameScreen instances to handle player
+     * input and game state. The lanPlayer parameter determines which player the keyboard input will control in a LAN
+     * multiplayer setting (1 for player 1, 2 for player 2).
+     * @param engine The TetrisEngine instance that manages the game logic and state.
+     * @param tS The TetrisSettings instance that holds the key bindings and settings for the game.
+     * @param gameScreen The GameScreen instance that represents the user interface for the game.
+     * @param lanPlayer An integer indicating which player the keyboard input will control in a LAN multiplayer setting (1 for player 1, 2 for player 2).
+     */
     public KeyHandler(TetrisEngine engine, TetrisSettings tS, GameScreen gameScreen, int lanPlayer) {
         this.engine = engine;
         this.tS = tS;
@@ -46,10 +75,23 @@ public class KeyHandler {
         this.lanPlayer = lanPlayer;
     }
 
+    /**
+     * Stops the key handling process by stopping the internal repeat timer. This method is typically called when the
+     * game is paused or ended to prevent further processing of keyboard input. It ensures that no additional key
+     * events are handled after the game state has changed.
+     */
     public void stop() {
         if (repeatTimer != null) repeatTimer.stop();
     }
 
+    /**
+     * Handles the keyboard input for the Tetris game based on the provided KeyCode. It checks the key against the
+     * configured key bindings for both players and processes the corresponding game actions (left, right, drop, rotate)
+     * through the TetrisEngine. The method also takes into account whether the game is in LAN mode and which player
+     * the keyboard input is controlling.
+     * @param key The KeyCode representing the key that was pressed on the keyboard. This key is checked against the
+     *            configured key bindings for both players to determine the appropriate game action to process.
+     */
     public void handle(KeyCode key) {
         ArrayList<KeyCode> p1 = tS.getPlayer1Keys();
         ArrayList<KeyCode> p2 = tS.getPlayer2Keys();
@@ -94,6 +136,15 @@ public class KeyHandler {
         else if (key == p2.get(3)) engine.processInput(2, "ROTATE", p2LocalFocus);
     }
 
+    /**
+     * Attaches the KeyHandler to a JavaFX Scene, enabling it to listen for keyboard input events. It sets up event
+     * filters for key presses and releases, allowing the KeyHandler to track active keys and manage their states. The
+     * method also initializes an internal timer that processes key repeats at a fixed interval, simulating the behavior
+     * of holding down keys for continuous input. This setup ensures that the game responses appropriately to player
+     * input during gameplay.
+     * @param scene The JavaFX Scene to which the KeyHandler will be attached, allowing it to listen for keyboard input
+     *              events and manage player actions in the Tetris game.
+     */
     public void attach(Scene scene) {
         // Track Physical Press
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {

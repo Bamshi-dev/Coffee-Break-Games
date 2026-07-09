@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.BlockRegistry;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.TetrisAdvancedSettings;
 import seda_project.control_alt_defeat.gamebox.Tetris.Engine.TetrisEngine;
@@ -32,6 +31,12 @@ public class ResultScreen extends Controller {
     @FXML
     private Button playAgainButton;
 
+    /**
+     * Handles the action of playing again after a game has ended. It checks if the game is in local mode or LAN
+     * mode, and based on that, it either creates a new TetrisEngine instance for a local game or sends a restart
+     * message to the opponent in a LAN game. It then navigates to the appropriate game screen based on the layout
+     * setting (vertical or horizontal) and initializes the game controller with the necessary data.
+     */
     @FXML
     protected void onPlayAgainAction(){
         sC.play("button");
@@ -68,6 +73,9 @@ public class ResultScreen extends Controller {
         navigateToLanGame(fresh);
     }
 
+    /**
+     * Handles the action of exiting tetris. It plays a button sound effect and transitions back to the main menu.
+     */
     @FXML
     protected void onExitGameAction(){
         sC.play("button");
@@ -81,6 +89,12 @@ public class ResultScreen extends Controller {
         c.changeScene("/Views/StartingScreen.fxml",header,vS);
     }
 
+    /**
+     * Handles the data received from the game state after a game has ended. It sets the player names, scores, and lines
+     * for both players based on the provided parameters. It also determines the winner and loser, updates the UI labels
+     * accordingly, and sets up network listeners for LAN games to handle restart messages and disconnections.
+     * @param state The game state containing the final scores and player names.
+     */
     public void handGameState(TetrisEngine.GameState state, TetrisEngine engine, Label p1Lines, Label p2Lines) {
         this.engine = engine;
         this.state = state;
@@ -139,6 +153,12 @@ public class ResultScreen extends Controller {
     }
 
 
+    /**
+     * Navigates to the LAN game screen after a game has ended. It checks if the game is in dual engine mode or not, and
+     * based on that, it either creates a new TetrisEngine instance for the LAN game or uses the existing engine. It then
+     * initializes the appropriate game controller with the necessary data and attaches the network bridge for
+     * communication between the host and client.
+     */
     private void navigateToLanGame(TetrisEngine engineForHost) {
         Session s = Session.current();
         String address = s.lanVertical
@@ -205,6 +225,12 @@ public class ResultScreen extends Controller {
         alert.showAndWait();
     }
 
+    /**
+     * Sets the initial levels for both players in the result screen. This method is used to store the initial levels
+     * of the players before starting a new game after a match has ended.
+     * @param initP1Level The initial level of player 1.
+     * @param initP2Level The initial level of player 2.
+     */
     public void setInitialLevels(int initP1Level,int initP2Level){
         this.initP1Level = initP1Level;
         this.initP2Level = initP2Level;

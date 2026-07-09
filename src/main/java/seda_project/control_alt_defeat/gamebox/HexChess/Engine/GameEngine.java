@@ -36,6 +36,12 @@ public class GameEngine {
         listeners.add(listener);
     }
 
+    /**
+     * Main Method to actually handle a movement. Checks all the necessary rules like enpassent, stalemate, remis ...
+     * @param fromId
+     * @param toId
+     * @return
+     */
     public boolean handleMove(String fromId, String toId) {
         if (isGameOver) {
             return false;
@@ -137,6 +143,11 @@ public class GameEngine {
         return true;
     }
 
+    /**
+     * Checks if for a color the King is in check
+     * @param player
+     * @return
+     */
     public boolean isKingInCheck(PlayerColor player) {
         List<Piece> attackers = (player == PlayerColor.WHITE) ? board.blackPieces() : board.whitePieces();
         List<Piece> defenders = (player == PlayerColor.WHITE) ? board.whitePieces() : board.blackPieces();
@@ -154,11 +165,20 @@ public class GameEngine {
                         && cell.getCoords().row == kingPos.row);
     }
 
+    /**
+     * Returns all the legal moves for a player
+     * @param player
+     * @return
+     */
     private boolean playerLegalMoves(PlayerColor player) {
         List<Piece> pieces = (player == PlayerColor.WHITE) ? board.whitePieces() : board.blackPieces();
         return pieces.stream().anyMatch(p -> !getLegalMoves(p).isEmpty());
     }
 
+    /**
+     * Promote a piece to a new type
+     * @param chosenType
+     */
     public void promote(PieceType chosenType) {
         if (pendingPromotionCoord == null) return;
 
@@ -205,6 +225,11 @@ public class GameEngine {
         switchTurn(false);
     }
 
+    /**
+     * Check all the Remis rules
+     * @param e
+     * @return
+     */
     private boolean checkRemis(boolean e) {
         if (halfmove >= 100){
             return true;
@@ -234,6 +259,11 @@ public class GameEngine {
         return false;
     }
 
+    /**
+     * Increment the counter of the game
+     * @param pieceToMove
+     * @param capturedPiece
+     */
     private void incrementCounter(Piece pieceToMove, Piece capturedPiece) {
         if (pieceToMove.getType() == PAWN || capturedPiece != null){
             halfmove = 1;
@@ -267,7 +297,10 @@ public class GameEngine {
     }
 
 
-
+    /**
+     * Method to check all remis states
+     * @return
+     */
     public boolean checkMaterial(){
         List<Piece> white = board.whitePieces();
         List<Piece> black = board.blackPieces();
@@ -331,6 +364,12 @@ public class GameEngine {
         return false;
     }
 
+    /**
+     * returns the movement difference of one piece
+     * @param fromId
+     * @param toId
+     * @return
+     */
     private int getDiff(String fromId, String toId) {
         int from = Integer.parseInt(fromId.replaceAll("[abcdefghijk]",""));
         int to = Integer.parseInt(toId.replaceAll("[abcdefghijk]",""));
@@ -338,6 +377,13 @@ public class GameEngine {
         return diff;
     }
 
+    /**
+     * Returns if a move is a valid one
+     * @param from
+     * @param to
+     * @param piece
+     * @return
+     */
     private boolean isValidMove(HexCoord from, HexCoord to, Piece piece) {
         List<HexCell> legal = getRawMoves(piece);
         return legal.stream().anyMatch(cell ->
@@ -345,6 +391,10 @@ public class GameEngine {
         );
     }
 
+    /**
+     * Switch the color of the active player
+     * @param e
+     */
     private void switchTurn(boolean e) {
         enpassent = e;
         enpassentPending = false;
@@ -364,6 +414,11 @@ public class GameEngine {
         return this.isGameOver;
     }
 
+    /**
+     * retuns all the legal moves
+     * @param piece
+     * @return
+     */
     public List<HexCell> getLegalMoves(Piece piece){
         HexCoord currentPos = piece.getPosition();
         List<HexCell> candidates  = getRawMoves(piece);
@@ -371,6 +426,11 @@ public class GameEngine {
         return candidates;
     }
 
+    /**
+     * get all possible moves of a piece
+     * @param piece
+     * @return
+     */
     public List<HexCell> getRawMoves(Piece piece) {
 
         HexCoord coord = piece.getPosition();
@@ -398,6 +458,13 @@ public class GameEngine {
         return candidates;
     }
 
+    /**
+     * check if a move would leave the king in check
+     * @param piece
+     * @param from
+     * @param to
+     * @return
+     */
     private boolean wouldLeaveKingInCheck(Piece piece, HexCoord from, HexCoord to) {
         HexCell fromCell = board.getCellByCoord(from.col,from.row);
         HexCell toCell = board.getCellByCoord(to.col,to.row);
@@ -437,6 +504,13 @@ public class GameEngine {
         return inCheck;
     }
 
+    /**
+     * get the moves of a pawn
+     * @param coord
+     * @param color
+     * @param moved
+     * @return
+     */
     private List<HexCell> getPawnMoves(HexCoord coord, PlayerColor color, boolean moved) {
         List<HexCell> moves = new ArrayList<>();
         int col = coord.col;
@@ -480,6 +554,13 @@ public class GameEngine {
         return moves;
     }
 
+
+    /**
+     * returns the enpassent coord
+     * @param fromId
+     * @param toId
+     * @return
+     */
     private HexCoord getEnpassentCoord(String fromId, String toId) {
         int from = Integer.parseInt(fromId.replaceAll("[abcdefghijk]",""));
         int to = Integer.parseInt(toId.replaceAll("[abcdefghijk]",""));
@@ -494,6 +575,9 @@ public class GameEngine {
         return coord;
     }
 
+    /**
+     * initial Setup if no custom state is passed
+     */
     public void setupInitialState(){
 
         //Standart placement
@@ -536,6 +620,10 @@ public class GameEngine {
         setupPiece("g10", new Piece(PieceType.KING, PlayerColor.BLACK));
     }
 
+    /**
+     * Setup the inital state if a custom state is used
+     * @param boardState
+     */
     public void setupInitalState(String boardState){
         String turnIndicator = boardState.split(" ")[1];
         currentTurn = (turnIndicator.equals("1") || turnIndicator.equalsIgnoreCase("w")) ? PlayerColor.WHITE : PlayerColor.BLACK;
@@ -586,11 +674,19 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Method to place a piece
+     * @param cellId
+     * @param piece
+     */
     private void setupPiece(String cellId, Piece piece) {
         board.placePiece(cellId, piece);
         listeners.forEach(listener -> listener.onPlaced(cellId, board.getCellById(cellId).getPiece()));
     }
 
+    /**
+     * Checks whether a King is endangered
+     */
     private void checkEndangered(){
         PlayerColor nextTurn = (currentTurn == PlayerColor.WHITE) ? PlayerColor.BLACK : PlayerColor.WHITE;
 

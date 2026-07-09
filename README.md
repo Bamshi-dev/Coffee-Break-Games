@@ -217,9 +217,11 @@ ungraceful disconnects (cable pulled, process killed).
 
 ### Images
 * Application Icon: https://www.svgrepo.com/svg/211920/coffee-grain-seed?edit=true
-* Unmute Button: https://www.svgrepo.com/svg/363075/speaker-simple-none-bold?edit=true
-* Mute Button: https://www.svgrepo.com/svg/363074/speaker-simple-slash-bold?edit=true
+* Unmute Button Icon: https://www.svgrepo.com/svg/363075/speaker-simple-none-bold?edit=true
+* Mute Button Icon: https://www.svgrepo.com/svg/363074/speaker-simple-slash-bold?edit=true
 * Close Icon: https://www.svgrepo.com/svg/522388/close?edit=true
+* Quesiton Mark Icon: https://www.svgrepo.com/svg/438794/question?edit=true
+* Egg Icon: https://www.svgrepo.com/svg/487310/easter-egg-4?edit=true
 
 ### Sounds
 * Chess Pieces: https://pixabay.com/sound-effects/film-special-effects-chess-pieces-60890/

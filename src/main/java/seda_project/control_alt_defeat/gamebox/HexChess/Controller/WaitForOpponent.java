@@ -20,6 +20,9 @@ public class WaitForOpponent extends Controller {
     private Timeline loadingDots;
     private Announcer announcer;
     private String boardState;
+    private LanHost.Pending pendingHost;
+    private boolean countdownStarted;
+    private boolean leftLobby;
 
     @FXML
     private Label yourNameLabel, statusLabel, hostIpAddressLabel, opponentNameLabel;
@@ -33,6 +36,11 @@ public class WaitForOpponent extends Controller {
     @FXML
     protected void onBackAction() {
         sC.play("button");
+        // Session.clear() below fires our own onDisconnected ("local close");
+        // this flag stops it from restarting hosting on a screen we just left.
+        leftLobby = true;
+        stopAnnouncer();       // otherwise we keep broadcasting as a ghost host
+        cancelPendingHost();   // otherwise the port stays bound and the next host fails
         Object controller = c.backScene(header,vS);
         if (loadingDots != null) loadingDots.stop();
         Session.clear();
@@ -122,12 +130,22 @@ public class WaitForOpponent extends Controller {
         loadingDots.setCycleCount(Animation.INDEFINITE);
         loadingDots.play();
 
-        // Start UDP broadcast so joiners can discover us
-        announcer = Discovery.announceChess(hostName, Lan.DEFAULT_PORT, boardState);
+        startHosting();
+    }
+
+    /** Start (or restart) UDP discovery + the TCP accept for one opponent. */
+    private void startHosting() {
+        // UDP broadcast so joiners can discover us
+        announcer = Discovery.announceChess(myname, Lan.DEFAULT_PORT, boardState);
 
         // Open the server socket on the background
-        LanHost.hostAsync(Lan.DEFAULT_PORT,
+        pendingHost = LanHost.hostAsync(Lan.DEFAULT_PORT,
                 layer -> Platform.runLater(() -> {
+                    if (leftLobby) { // accept raced the Back button: don't adopt the connection
+                        try { layer.close(); } catch (Exception ignored) {}
+                        return;
+                    }
+                    pendingHost = null; // accepted: nothing left to cancel
                     stopAnnouncer();
                     Session.current().network = layer;
                     attachHostListener(layer);
@@ -151,9 +169,39 @@ public class WaitForOpponent extends Controller {
             }
             @Override
             public void onDisconnected(String reason) {
-                Platform.runLater(() -> statusLabel.setText("Opponent disconnected: " + reason));
+                Platform.runLater(() -> onOpponentLeftLobby(reason));
             }
         });
+    }
+
+    /**
+     * The joined opponent left before the game started: reset the lobby and
+     * start hosting again (announce + accept), so the host is discoverable
+     * and joinable again instead of being stuck on a dead connection.
+     */
+    private void onOpponentLeftLobby(String reason) {
+        // leftLobby: WE closed the connection by leaving — never restart hosting
+        // from a dead screen. countdownStarted: too late to rewind the lobby.
+        if (leftLobby || countdownStarted) {
+            statusLabel.setText("Opponent disconnected: " + reason);
+            return;
+        }
+        Session s = Session.current();
+        if (s.network != null) {
+            try { s.network.close(); } catch (Exception ignored) {}
+            s.network = null;
+        }
+        s.localReady = false;
+        s.peerReady = false;
+
+        startButton.setText("Ready");
+        startButton.setDisable(false);
+        statusLabel.getStyleClass().removeAll("ready");
+        statusLabel.setText("Opponent left. Waiting for an opponent to join!");
+        opponentNameLabel.setText("");
+        if (loadingDots != null) loadingDots.play();
+
+        startHosting();
     }
 
     /**
@@ -210,6 +258,7 @@ public class WaitForOpponent extends Controller {
      * disables the start button. After the delay, it calls the method to start the game immediately.
      */
     private void scheduleStartGame(long delayMs) {
+        countdownStarted = true;
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
         startButton.setDisable(true);
         final int[] time = {(int) (delayMs/1000)};
@@ -322,6 +371,13 @@ public class WaitForOpponent extends Controller {
         if (announcer != null) {
             try { announcer.close(); } catch (Exception ignored) {}
             announcer = null;
+        }
+    }
+
+    private void cancelPendingHost() {
+        if (pendingHost != null) {
+            pendingHost.close(); // unblocks accept() and frees the port
+            pendingHost = null;
         }
     }
 }

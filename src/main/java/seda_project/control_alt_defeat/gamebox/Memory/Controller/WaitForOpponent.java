@@ -27,6 +27,14 @@ public class WaitForOpponent extends Controller {
     private int deckSize;
     private Timeline timeline;
     private String ipAddress;
+    private LanHost.Pending pendingHost;
+    private boolean countdownStarted;
+    private boolean leftLobby;
+    // Pristine config/setup as built by HostLan, BEFORE any joiner's name was
+    // patched in. Restored when a joiner leaves the lobby so the next joiner
+    // doesn't inherit the previous one's name (e.g. as firstPlayer).
+    private GameConfig originalConfig;
+    private GameSetup originalSetup;
 
 
     @FXML
@@ -44,6 +52,10 @@ public class WaitForOpponent extends Controller {
     @FXML
     protected void onBackAction() {
         sC.play("button");
+        // Session.clear() below fires our own onDisconnected ("local close");
+        // this flag stops it from restarting hosting on a screen we just left.
+        leftLobby = true;
+        cancelPendingHost(); // otherwise the port stays bound and the next host fails
         Session.clear();
         Object controller = c.backScene(header,vS);
         if (controller instanceof HostLan con) {
@@ -119,6 +131,7 @@ public class WaitForOpponent extends Controller {
      *                countdown time displayed in the status label and the duration of the PauseTransition before starting the game.
      */
     private void scheduleStartGame(long delayMs) {
+        countdownStarted = true;
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
         startGameButton.setDisable(true);
         PauseTransition pt = new PauseTransition(Duration.millis(delayMs));
@@ -180,16 +193,63 @@ public class WaitForOpponent extends Controller {
 
         statusLabel.setText("Waiting for an opponent to Join!");
 
+        // Keep the pristine lobby data so a later joiner starts from a clean
+        // slate if the first one leaves (handleHostMessage patches these).
+        originalConfig = Session.current().config;
+        originalSetup  = Session.current().setup;
+
+        startHosting();
+        hostIpAddressLabel.setText(Lan.localIp());
+    }
+
+    /** Start (or restart) the TCP accept for one opponent. */
+    private void startHosting() {
         // Open the server socket. When the client connects, hop back to JavaFX
         // and attach the network listener so we can react to messages.
-        LanHost.hostAsync(Lan.DEFAULT_PORT,
+        pendingHost = LanHost.hostAsync(Lan.DEFAULT_PORT,
                 layer -> Platform.runLater(() -> {
+                    if (leftLobby) { // accept raced the Back button: don't adopt the connection
+                        try { layer.close(); } catch (Exception ignored) {}
+                        return;
+                    }
+                    pendingHost = null; // accepted: nothing left to cancel
                     Session.current().network = layer;
                     attachHostListener(layer);
                 }),
                 err -> Platform.runLater(() -> statusLabel.setText("Hosting failed: " + err.getMessage()))
         );
-        hostIpAddressLabel.setText(Lan.localIp());
+    }
+
+    /**
+     * The joined opponent left before the game started: reset the lobby state
+     * (including the config/setup that were patched with their name) and start
+     * accepting again so a new opponent can join.
+     */
+    private void onOpponentLeftLobby(String reason) {
+        // leftLobby: WE closed the connection by leaving — never restart hosting
+        // from a dead screen. countdownStarted: too late to rewind the lobby.
+        if (leftLobby || countdownStarted) {
+            statusLabel.setText("Opponent disconnected: " + reason);
+            return;
+        }
+        Session s = Session.current();
+        if (s.network != null) {
+            try { s.network.close(); } catch (Exception ignored) {}
+            s.network = null;
+        }
+        s.localReady = false;
+        s.peerReady = false;
+        s.config = originalConfig;
+        s.setup  = originalSetup;
+
+        startGameButton.setText("Ready");
+        startGameButton.setDisable(false);
+        statusLabel.getStyleClass().removeAll("ready");
+        statusLabel.setText("Opponent left. Waiting for an opponent to Join!");
+        opponentNameLabel.setText("");
+        if (timeline != null) timeline.play();
+
+        startHosting();
     }
 
     /**
@@ -251,7 +311,7 @@ public class WaitForOpponent extends Controller {
             }
             @Override
             public void onDisconnected(String reason) {
-                Platform.runLater(() -> statusLabel.setText("Opponent disconnected: " + reason));
+                Platform.runLater(() -> onOpponentLeftLobby(reason));
             }
         });
     }
@@ -360,6 +420,13 @@ public class WaitForOpponent extends Controller {
             statusLabel.setText("Waiting for opponent to be ready...");
         } else {
             statusLabel.setText("Press Ready to start!");
+        }
+    }
+
+    private void cancelPendingHost() {
+        if (pendingHost != null) {
+            pendingHost.close(); // unblocks accept() and frees the port
+            pendingHost = null;
         }
     }
 }

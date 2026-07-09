@@ -1,33 +1,40 @@
-# Coffee Break Games — Memory Game
+# Coffee Break Games
 
-A two-player memory card game built as our SEDA Masters project. Players take
-turns flipping cards on a shared board and try to find matching K-tuples
-(K cards sharing the same symbol). The player with the most points when the
-board is empty wins.
+A collection of three two-player games built as our SEDA Masters project:
 
-The game supports two modes:
+- **Memory** — flip cards on a shared board and find matching K-tuples
+  (K cards sharing the same symbol). Most points when the board is empty
+  wins.
+- **Tetris** — competitive two-board Tetris with optional power-ups
+  (portals, board/block swaps, speed and rotation effects), bombs, a
+  shared-boundary mode where clearing lines shrinks the opponent's board,
+  two-block mode, and a custom block editor.
+- **Hexagonal Chess** — Glinski's variant on a hexagonal board, with a bot
+  opponent, custom starting positions via a board designer, promotions,
+  and draw/resign handling.
 
-- **Local play** — two players share one machine and one keyboard/mouse.
-- **LAN play** — two players on the same Wi-Fi or LAN, one hosts and the
-  other joins by typing the host's IP address.
+Every game can be played **locally** (two players sharing one machine) or
+over **LAN** (two machines on the same network, one hosts and one joins).
+The rules are the same in both modes.
 
-The rules for this game are the same in Local and Lan mode.
 
 ## Team
 
-| Person   | Area                                              |
-|----------| ------------------------------------------------- |
-| Amir     | Game engine — match logic, scoring, deck setup    |
-| Erik     | UI / FXML controllers, animations, local play     |
-| Suleyman | LAN networking — sockets, lobby sync, disconnect  |
+| Person               | Area                                                  |
+|----------------------|-------------------------------------------------------|
+| Amirhossein (Amir)   | Game engines — Memory match logic, Tetris/Chess logic |
+| Erik                 | UI / FXML controllers, animations, sound, easter eggs |
+| Suleyman             | LAN networking — sockets, discovery, lobbies, sync    |
+
+AI usage disclosures per member are in `docs/` (`Suleyman-AI-Usage.md`,
+`Erik_AIUsage.md`, `Amirhossein_Mottie_AI_Parts.pdf`).
 
 ## Requirements
 
-- **Java 24 or newer** (the project uses Java 24 language features and a
-  module-info.java).
-- **Maven 3.9+** (or use IntelliJ's bundled Maven — see below).
+- **Java 24 or newer** (Java 24 language features + `module-info.java`).
+- **Maven 3.9+** (or IntelliJ's bundled Maven).
 - For LAN play: both machines on the same local network, with TCP port
-  **8765** reachable.
+  **8765** reachable and UDP port **8766** allowed for host discovery.
 
 ## Build
 
@@ -37,147 +44,147 @@ From the repo root:
 mvn clean package
 ```
 
-This compiles the project, runs the unit tests, and writes the build outputs
-into `target/`. You should see two JAR files there:
+This compiles, runs the tests, and writes to `target/`:
 
-- `GameBox.jar` — the plain artifact (depends on JavaFX being on the module
-  path at runtime).
-- `GameBox-jar-with-dependencies.jar` — fat JAR with dependencies bundled,
-  intended for direct execution with `java -jar`.
+- `GameBox.jar` — plain artifact (needs JavaFX on the module path).
+- `GameBox-jar-with-dependencies.jar` — fat JAR for `java -jar`, with the
+  JavaFX natives for the **current OS only**.
 
-## Run
-
-The simplest way during development is the JavaFX Maven plugin:
+### Cross-platform release build
 
 ```sh
-mvn javafx:run
+mvn clean package -Prelease
 ```
 
-Or run the fat JAR directly:
+Same fat JAR, but with the JavaFX natives for **Windows, Linux, Intel mac
+and Apple-silicon mac** bundled, so one file runs everywhere (a Java 24+
+runtime is still required on the target machine):
 
 ```sh
 java -jar target/GameBox-jar-with-dependencies.jar
 ```
 
-If you launch from IntelliJ instead, use the green ▶ next to `Launcher.java`
-under `src/main/java/seda_project/control_alt_defeat/gamebox/`.
+## Run
+
+During development:
+
+```sh
+mvn javafx:run
+```
+
+Or run the fat JAR directly (see above). From IntelliJ, use the green ▶
+next to `Launcher.java` under
+`src/main/java/seda_project/control_alt_defeat/gamebox/`.
 
 ## How to play
 
-### Local game
+### Local games
 
-1. Start the application.
-2. From the main menu choose **Local Game**.
-3. Enter K (1–45). The system computes up to three valid deck sizes (the
-   three largest multiples of K that do not exceed 45) and lets you pick one.
-4. Optionally enter both player names. If left blank they default to
-   "Player 1" and "Player 2".
-5. Click **Start**. The board appears and the first player (chosen randomly)
-   begins.
+Pick a game from the main menu, choose **Local Game**, configure it
+(player names, plus per game: K/deck size for Memory, level and advanced
+settings for Tetris, board setup for Chess) and start. Both players share
+the keyboard/mouse.
 
-### LAN game
+Hexagonal Chess also offers a **Bot** opponent in local mode.
 
-To play across two machines you need one host and one joining player.
+### LAN games
 
-#### Hosting
+One player hosts, the other joins.
 
-1. From the main menu choose **LAN Game → Host LAN Game**.
-2. Enter your name, choose K and a deck size, click **Host**.
-3. The lobby screen will show your **local IP address**. Tell that IP to the
-   other player.
-4. macOS / Windows may show a firewall prompt the first time the JVM listens
-   on a port. **Allow incoming connections** — otherwise the joining player
-   won't be able to connect.
+**Hosting** — choose **Host** in the game's LAN menu, enter your name and
+the game configuration, and you land in a lobby that shows your local IP.
+The host's settings (deck, board, Tetris advanced settings) apply to both
+sides. macOS/Windows may show a firewall prompt the first time — allow
+incoming connections, otherwise nobody can join.
 
-#### Joining
+**Joining** —
+- **Tetris / Hexagonal Chess:** open **Join**, running hosts on the
+  network appear automatically in a list (UDP discovery). Select one,
+  enter your name, connect.
+- **Memory:** enter the host's IP address (shown in their lobby) and your
+  name, then connect.
 
-1. From the main menu choose **LAN Game → Join LAN Game**.
-2. Enter the host's IP address, your player name, and click **Connect**.
-3. Both players land on the lobby screen and see each other's names plus the
-   chosen K and deck size. When both players click **Ready**, a 3-second
-   countdown starts and then the game begins on both machines simultaneously.
+When both players press **Ready**, a 3-second countdown starts the game on
+both machines simultaneously.
 
-#### During the game
+If a joiner leaves the lobby, the host resets and is discoverable/joinable
+again. Backing out of a lobby frees the port, so you can immediately host
+another game.
 
-- Only the active player can flip cards. The inactive client's clicks are
-  ignored until the turn changes.
-- Every flip is broadcast to the other machine within ~500 ms; both boards
-  stay identical the whole time.
-- A mismatch keeps the wrong cards visible for 1.5 seconds (the
-  `MISMATCH_DELAY_MS` constant in the engine) before flipping back, so both
-  players have time to memorise them.
+**During a LAN game** — each game keeps both machines in sync over TCP.
+Tetris runs a full engine on *each* machine (you simulate your own board,
+so your input reacts instantly; cross-board effects like portals and swaps
+travel as network messages). Memory and Chess validate moves and mirror
+them to the peer.
 
-#### Disconnections
+**Disconnections** — if the connection drops mid-game (app closed, Wi-Fi
+gone), the other player gets an alert within at most 5 seconds and returns
+to the main menu. There is no automatic reconnect.
 
-If the connection drops mid-game (someone closes the app, the Wi-Fi cuts
-out, etc.), the other player sees an alert within at most 5 seconds and is
-returned to the main menu. There is no automatic reconnect.
+### After a game
 
-### After the game
-
-When the board is empty the result screen shows both names, both final
-scores, and the outcome (win / lose / draw). From there you can:
-
-- **New Game** — keeps the same K, deck size, and player names. Starts a
-  fresh game without going back through the configuration screen. In LAN
-  mode the host's button initiates this; the other side just follows along.
-- **Return to Menu** — quits the current session and goes back to the main
-  menu.
+The result screen shows names, scores and the outcome. **Play Again**
+starts a rematch with the same settings (in LAN the host initiates and the
+other side follows). **Exit** returns to the main menu.
 
 ## Project layout
 
 ```
 src/main/java/seda_project/control_alt_defeat/gamebox/
-├── GameBox.java             JavaFX Application entry
-├── Launcher.java            main()
+├── GameBox.java              JavaFX Application entry
+├── Launcher.java             main()
+├── Configuration.java        scene loading/navigation helper
+├── ViewStack.java            FXML scene navigation stack
+├── SoundController.java      music + sound effects (and the Konami code)
 ├── Memory/
-│   ├── Configuration.java   helper for deck-size computation, scene loading
-│   ├── ViewStack.java       FXML scene navigation stack
-│   ├── Controller/          FXML controllers (one per screen)
-│   └── engine/              Amir's package: GameEngine + records, Decks,
-│                            GameEngineImpl, GameEventListener
-├── network/                 our LAN networking layer
-│   ├── NetworkLayer.java    public interface for either side of a session
-│   ├── NetworkListener.java callback interface
-│   ├── GameMessage.java     sealed protocol (Hello, LobbyConfig, Ready,
-│                            StartCountdown, Flip, Heartbeat, Disconnect,
-│                            NewGame)
-│   ├── LanSession.java      socket reader + heartbeat + disconnect
-│   ├── LanHost.java
-│   ├── LanClient.java
-│   ├── Lan.java             port + IP utilities
-│   └── Session.java         cross-screen state holder
-└── ui/                      misc UI helpers (MCard, etc.)
+│   ├── Controller/           FXML controllers (menu, lobby, game, result)
+│   └── engine/               match logic, scoring, deck setup
+├── Tetris/
+│   ├── Controller/           menus, lobbies, game screen, block editor
+│   ├── Engine/               TetrisEngine, blocks, bombs, power-ups,
+│   │                         KeyHandler, advanced settings
+│   └── network/              TetrisMessage protocol, dual-engine flag
+├── HexChess/
+│   ├── Controller/           menus, lobbies, game screen, board designer
+│   ├── Engine/               GameEngine, pieces, HexBot
+│   └── Network/              ChessMessage protocol
+├── network/                  shared LAN layer
+│   ├── NetworkLayer/Listener  public interface + callbacks
+│   ├── LanSession.java        socket reader + heartbeat + disconnect
+│   ├── LanHost/LanClient      accept/connect (host side is cancellable)
+│   ├── Discovery/Announcer…   UDP host discovery (port 8766)
+│   ├── GameMessage.java       Memory protocol (sealed interface)
+│   ├── Lan.java               port + IP utilities
+│   └── Session.java           cross-screen state holder
+└── ui/                       shared UI helpers
 
-src/main/resources/Views/Memory/    FXML layouts
-src/test/java/                       unit + integration tests
-docs/                                requirements.pdf
+src/main/resources/Views/     FXML layouts (Memory, Tetris, HexChess)
+src/main/resources/           Images, Sounds, css
+src/test/java/                unit + integration tests
+docs/                         PROJECT_DOCUMENTATION.md, requirements PDFs,
+                              AI usage disclosures
 ```
 
 ## Tests
 
-We use JUnit 5. Run them with:
+JUnit 5, run with:
 
 ```sh
 mvn test
 ```
 
-The test classes currently in the repo:
-
-- `gamebox.network.LanSessionTest` — verifies the socket layer and the
-  5-second peer-disconnect detection over loopback.
+- `gamebox.network.LanSessionTest` — socket layer over loopback: message
+  roundtrip, the 5-second peer-disconnect detection, and a regression test
+  that cancelling a host lobby releases the port.
 - `gamebox.ExampleTest` — placeholder smoke test from the template.
 
 ## Known limitations / non-goals
 
-These are intentionally out of scope (see `docs/requirements.pdf`, section
-2.2):
-
-- No single-player or AI opponent.
-- No internet play, only LAN.
-- No automatic host discovery — the joining player has to type the IP.
-- No persistent player accounts or cross-session leaderboard.
+- No internet play, only LAN (exactly two players).
+- No persistent accounts or cross-session leaderboard.
 - No mobile or web client.
+- Memory join is by IP address; automatic discovery is only in Tetris and
+  Chess.
 
 ## Troubleshooting
 
@@ -186,26 +193,29 @@ These are intentionally out of scope (see `docs/requirements.pdf`, section
 after a Maven dependency change.
 
 **"Connection refused" when joining.** Either the host hasn't reached the
-lobby screen yet (the server socket only opens once they click Host), or
-the firewall is blocking inbound TCP on port 8765, or the two machines are
-not actually on the same network.
+lobby screen yet (the server socket only opens there), the firewall blocks
+inbound TCP 8765, or the machines aren't on the same network.
 
-**Lobby labels show "Label" forever on the joining side.** Means the host
-didn't receive the join's `Hello` or didn't send back `LobbyConfig`. Check
-the firewall first; if both machines saw each other's TCP handshake, then
-look at the console on the host for exceptions.
+**No hosts show up in the join list (Tetris/Chess).** UDP broadcast on
+port 8766 is blocked by the firewall, or the network (e.g. eduroam-style
+Wi-Fi) filters broadcast traffic.
 
-**Disconnect alert fires too quickly.** That's actually correct — when a
-peer closes the socket cleanly, the OS sends a TCP FIN immediately and the
-remaining side detects it right away. The 5-second timeout is the fallback
-for ungraceful disconnects (cable pulled, process force-killed).
+**"Address already in use: bind" when hosting.** Shouldn't happen anymore
+(backing out of a lobby now frees the port) — if it does, an old GameBox
+process is probably still running in the background.
 
-## Chess
+**Disconnect alert fires quickly.** Correct — a cleanly closed socket is
+detected immediately via TCP FIN; the 5-second timeout is the fallback for
+ungraceful disconnects (cable pulled, process killed).
+
+## Credits
+
+### Chess
 * Pieces from: https://greenchess.net/info.php?item=downloads
 * Mug from: https://www.cgtrader.com/items/3536740/download-page
 * 3d pieces from: https://free3d.com/3d-model/chess-19650.html
 
-## Images
+### Images
 * Application Icon: https://www.svgrepo.com/svg/211920/coffee-grain-seed?edit=true
 * Unmute Button Icon: https://www.svgrepo.com/svg/363075/speaker-simple-none-bold?edit=true
 * Mute Button Icon: https://www.svgrepo.com/svg/363074/speaker-simple-slash-bold?edit=true
@@ -213,7 +223,7 @@ for ungraceful disconnects (cable pulled, process force-killed).
 * Quesiton Mark Icon: https://www.svgrepo.com/svg/438794/question?edit=true
 * Egg Icon: https://www.svgrepo.com/svg/487310/easter-egg-4?edit=true
 
-## Sounds
+### Sounds
 * Chess Pieces: https://pixabay.com/sound-effects/film-special-effects-chess-pieces-60890/
 * Chess Background: https://pixabay.com/music/video-games-music-for-puzzle-game-146738/
 * Chess Duck(White): https://www.svgrepo.com/svg/479843/duck-toy-illustration-3?edit=true
@@ -230,19 +240,21 @@ for ungraceful disconnects (cable pulled, process force-killed).
 * Memory Match: https://pixabay.com/sound-effects/film-special-effects-sample-confirm-success03-kofi-by-miraclei-360151/
 * Memory Missmatch: https://pixabay.com/sound-effects/film-special-effects-fail-234710/
 
-
 * Button press: https://pixabay.com/sound-effects/film-special-effects-button-press-382713/
 * Lobby Background: https://pixabay.com/music/ambient-coffee-morning-coffee-shop-music-499186/
 * Error Sound: https://pixabay.com/sound-effects/film-special-effects-windows-error-sound-effect-35894/
 
 * Konami EasterEgg: https://www.vgmpf.com/Wiki/index.php?title=Nemesis_(ARC)
 
-## Easter Eggs:
+## Easter Eggs
 * Konami Code -> Change Music
-* "Upsidedown", "Grumm", "Dinnerbone" -> GameScreen is rotated by 180 
+* "Upsidedown", "Grumm", "Dinnerbone" -> GameScreen is rotated by 180
 * "jeb_" -> GameScreen background has Rainbowcolors
 * "Duck" -> Pawns in Chess are replaced by Ducks
 * Second color-scheme when performing a double click on the header
 
 ## AI-Usage
-* FXML indentation
+
+See the per-member disclosures in `docs/`:
+`Suleyman-AI-Usage.md`, `Erik_AIUsage.md`,
+`Amirhossein_Mottie_AI_Parts.pdf`.

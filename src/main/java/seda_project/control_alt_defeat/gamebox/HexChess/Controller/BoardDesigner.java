@@ -35,6 +35,11 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Controller for the HexChess board designer view.
+ * It manages the visual board layout, piece placement, import/export of custom board states,
+ * and validation of the configured board before the game is started.
+ */
 public class BoardDesigner extends Controller implements Initializable {
 
     private final BoardDesignerEngine engine = new BoardDesignerEngine();
@@ -71,6 +76,12 @@ public class BoardDesigner extends Controller implements Initializable {
     @FXML
     private Polygon a6, a5, a4, a3, a2, a1, b7, b6, b5, b4, b3, b2, b1, c8, c7, c6, c5, c4, c3, c2, c1, d9, d8, d7, d6, d5, d4, d3, d2, d1, e10, e9, e8, e7, e6, e5, e4, e3, e2, e1, f11, f10, f9, f8, f7, f6, f5, f4, f3, f2, f1, g10, g9, g8, g7, g6, g5, g4, g3, g2, g1, h9, h8, h7, h6, h5, h4, h3, h2, h1, i8, i7, i6, i5, i4, i3, i2, i1, j7, j6, j5, j4, j3, j2, j1, k6, k5, k4, k3, k2, k1;
 
+    /**
+     * Converts a JavaFX color into its CSS hexadecimal representation.
+     *
+     * @param color the color to convert
+     * @return a CSS-compatible color string in the form #RRGGBB
+     */
     private static String toCssColor(Color color) {
         return String.format("#%02X%02X%02X", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
     }
@@ -91,11 +102,10 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Builds a map of piece labels for both players, associating each piece type with its corresponding label in the
-     * user interface. This method initializes the pieceLabels map with key-value pairs, where the keys are strings
-     * representing the piece types (e.g., "p1Pawn", "p2Rook") and the values are the corresponding Label objects that
-     * display the amount of each piece available for both players. The map is used to update the displayed amounts of
-     * pieces during gameplay.
+     * Starts a drag operation for a selected piece image.
+     * The dragged piece identifier and image are placed into the dragboard so the board can accept the drop.
+     *
+     * @param mouseEvent the mouse event that initiated the drag
      */
     @FXML
     public void dragStart(MouseEvent mouseEvent) {
@@ -131,7 +141,11 @@ public class BoardDesigner extends Controller implements Initializable {
         mouseEvent.consume();
     }
 
-
+    /**
+     * Highlights a board polygon while a piece is dragged over it.
+     *
+     * @param event the drag event that is currently being processed
+     */
     @FXML
     private void dragOver(DragEvent event) {
         if (event.getDragboard().hasString()) {
@@ -172,6 +186,11 @@ public class BoardDesigner extends Controller implements Initializable {
         event.consume();
     }
 
+    /**
+     * Removes the highlight from a board polygon when the drag leaves it.
+     *
+     * @param event the drag event that ended over the polygon
+     */
     @FXML
     private void dragExited(DragEvent event) {
         Polygon target = (Polygon) event.getSource();
@@ -180,6 +199,11 @@ public class BoardDesigner extends Controller implements Initializable {
         target.setStrokeType(StrokeType.INSIDE);
     }
 
+    /**
+     * Restores the piece count labels after a drag operation completes if no placement was made.
+     *
+     * @param event the drag event that has just finished
+     */
     @FXML
     private void dragDone(DragEvent event) {
         if (event.getTransferMode() == null) {

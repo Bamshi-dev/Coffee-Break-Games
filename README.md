@@ -17,9 +17,6 @@ Every game can be played **locally** (two players sharing one machine) or
 over **LAN** (two machines on the same network, one hosts and one joins).
 The rules are the same in both modes.
 
-📖 **Full technical documentation** — architecture, the network layer and
-per-game LAN protocols, threading rules, build/release details — is in
-[`docs/PROJECT_DOCUMENTATION.md`](docs/PROJECT_DOCUMENTATION.md).
 
 ## Team
 

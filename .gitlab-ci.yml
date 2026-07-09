@@ -26,6 +26,19 @@ build-linux:
       - target/gamebox-linux
     expire_in: 30 days
 
+build-windows:
+  stage: build
+  tags:
+    - windows
+  script:
+    - mvn clean javafx:jlink
+    - Rename-Item target\gamebox gamebox-windows
+    - Move-Item gamebox-windows target\
+  artifacts:
+    paths:
+      - target/gamebox-windows
+    expire_in: 30 days
+
 docs:
   stage: docs
   tags:

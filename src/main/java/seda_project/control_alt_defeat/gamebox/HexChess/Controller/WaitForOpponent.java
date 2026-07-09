@@ -206,14 +206,25 @@ public class WaitForOpponent extends Controller {
     }
 
     /**
-     * Schedule the gamestart
-     * @param delayMs
+     * Schedules the start of the game after a specified delay. It updates the status label to show the countdown and
+     * disables the start button. After the delay, it calls the method to start the game immediately.
      */
     private void scheduleStartGame(long delayMs) {
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
         startButton.setDisable(true);
-        PauseTransition pt = new PauseTransition(Duration.millis(delayMs));
-        pt.setOnFinished(e -> startGameNow());
+        final int[] time = {(int) (delayMs/1000)};
+        Timeline  pt = new Timeline(
+                new KeyFrame(Duration.seconds(1), _ -> {
+                    time[0]--;
+                    if (time[0] > 0 ) {
+                        statusLabel.setText("Starting in " + time[0] + "s...");
+                    }
+                    else {
+                        statusLabel.setText("Startign now!");
+                        startGameNow();
+                }
+                }));
+        pt.setCycleCount(time[0]);
         pt.play();
     }
 
@@ -292,7 +303,7 @@ public class WaitForOpponent extends Controller {
     private void updatePeerStatus() {
         Session s = Session.current();
         if (s.localReady && s.peerReady) {
-            statusLabel.getStyleClass().clear();
+            statusLabel.getStyleClass().remove("information");
             statusLabel.getStyleClass().add("ready");
             statusLabel.setText("All ready!");
         } else if (s.peerReady) {

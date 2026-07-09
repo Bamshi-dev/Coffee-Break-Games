@@ -24,8 +24,6 @@ build-linux:
   artifacts:
     paths:
       - target/gamebox-linux
-    reports:
-      junit: target/surefire-reports/TEST-*.xml
     expire_in: 30 days
 
 docs:

@@ -1199,7 +1199,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
     private void handleDisconnect(String reason) {
         if (disconnected) return;
         disconnected = true;
-
+        sC.playLooping("lobby_background",.2);
         // Null-safe per ticker: in dual-engine mode only one of the two tickers
         // exists (each machine ticks only its own player), so stopping them must
         // not assume both are present.

@@ -38,10 +38,10 @@
                     <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" text="Your Name:" />
                     <TextField fx:id="hostNameTF" maxHeight="-Infinity" maxWidth="-Infinity" promptText="Insert Player 1 Name " />
                 </HBox>
+                <HexLabel styleClass="information" text="Ports 8766 and 8765 have to be open" />
                 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                     <HexButton onAction="#onCustomBoardAction" text="Use Custom Board" />
                 </StackPane>
-                <Label styleClass="normalText" text="Ports 8766 and 8765 have to be open" />
                 <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
                 <HBox maxHeight="-Infinity" maxWidth="-Infinity">
                     <StackPane alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">

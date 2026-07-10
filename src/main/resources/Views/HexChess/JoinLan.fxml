@@ -42,10 +42,10 @@
                     </Label>
                     <TextField fx:id="joinPlayerNameTF" promptText="Insert Player 1 Name " />
                 </HBox>
+                <HexLabel styleClass="information" text="Ports 8766 and 8765 have to be open" />
                 <ScrollPane fx:id="scrollPane" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="scroller">
                     <VBox fx:id="scrollElements" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="transparent-scroll-content" />
                 </ScrollPane>
-                <Label styleClass="normalText" text="Ports 8766 and 8765 have to be open" />
                 <HexLabel fx:id="joinStatus" maxWidth="270.0" styleClass="error" visible="false" wrapText="true" />
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <StackPane styleClass="button-wrapper">

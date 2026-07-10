@@ -151,6 +151,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         sC.play("button");
         sC.stopLooping();
         sC.playLooping("lobby_background",.2);
+        handler.remove(root.getScene());
         if (arrowAnimation != null) {
             arrowAnimation.stop();
         }
@@ -553,7 +554,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         // not assume both are present.
         if (p1EngineTicker != null) p1EngineTicker.stop();
         if (p2EngineTicker != null) p2EngineTicker.stop();
-        if (handler != null) handler.stop();
+        if (handler != null) handler.remove(root.getScene());
         ResultScreen controller = (ResultScreen) c.changeScene("/Views/Tetris/ResultScreen.fxml", header, vS);
         controller.setInitialLevels(initP1Level,initP2Level);
         controller.handGameState(snapshot, engine, player1LinesLabel,player2LinesLabel);
@@ -619,7 +620,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         // not assume both are present.
         if (p1EngineTicker != null) p1EngineTicker.stop();
         if (p2EngineTicker != null) p2EngineTicker.stop();
-        if (handler != null) handler.stop();
+        if (handler != null) handler.remove(root.getScene());
     }
 
     /**
@@ -1163,7 +1164,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
 
         if (p1EngineTicker != null) p1EngineTicker.stop();
         if (p2EngineTicker != null) p2EngineTicker.stop();
-        if (handler != null) handler.stop();
+        if (handler != null) handler.remove(root.getScene());
         if (engine != null) engine.stop();
 
         TetrisEngine.GameState mine = engine.getSnapshot();
@@ -1206,7 +1207,7 @@ public class GameScreen extends Controller implements TetrisEventListener, Initi
         if (p1EngineTicker != null) p1EngineTicker.stop();
         if (p2EngineTicker != null) p2EngineTicker.stop();
         if (engine != null) engine.stop();
-        if (handler != null) handler.stop();
+        if (handler != null) handler.remove(root.getScene());
         if (clientRepeatTimer != null) clientRepeatTimer.stop();
 
         // Only navigate if we're still attached to a window; if the scene was already

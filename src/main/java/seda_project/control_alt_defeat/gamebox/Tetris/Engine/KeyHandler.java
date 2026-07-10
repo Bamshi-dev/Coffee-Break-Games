@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +32,9 @@ public class KeyHandler {
     // bypass OS limitations
     private final Map<KeyCode, Integer> activeKeys = new HashMap<>();
     private Timeline repeatTimer;
+
+    private EventHandler<KeyEvent> keyPressedFilter;
+    private EventHandler<KeyEvent> keyReleasedFilter;
 
     /**
      * Creates a new KeyHandler instance that manages keyboard input for the Tetris game. It takes in the TetrisEngine,
@@ -137,6 +141,25 @@ public class KeyHandler {
     }
 
     /**
+     * Removes the KeyHandler filters from the given JavaFX Scene, stops the internal
+     * repeat timer, and clears any cached key states to prevent memory leaks.
+     * @param scene The JavaFX Scene to detach from.
+     */
+    public void remove(Scene scene) {
+        if (scene != null) {
+            if (keyPressedFilter != null) {
+                scene.removeEventFilter(KeyEvent.KEY_PRESSED, keyPressedFilter);
+            }
+            if (keyReleasedFilter != null) {
+                scene.removeEventFilter(KeyEvent.KEY_RELEASED, keyReleasedFilter);
+            }
+        }
+        stop(); // Stops the repeat timer Timeline
+        activeKeys.clear(); // Wipe the pressed keys map
+    }
+
+
+    /**
      * Attaches the KeyHandler to a JavaFX Scene, enabling it to listen for keyboard input events. It sets up event
      * filters for key presses and releases, allowing the KeyHandler to track active keys and manage their states. The
      * method also initializes an internal timer that processes key repeats at a fixed interval, simulating the behavior
@@ -147,21 +170,24 @@ public class KeyHandler {
      */
     public void attach(Scene scene) {
         // Track Physical Press
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            KeyCode code = ((KeyEvent) event).getCode();
+        keyPressedFilter = event -> {
+            KeyCode code = event.getCode();
             if (!activeKeys.containsKey(code)) {
-                activeKeys.put(code, 0); // 0 ticks held
-                handle(code); // Trigger immediately
+                activeKeys.put(code, 0);
+                handle(code);
             }
-            event.consume(); // Prevent OS repeat
-        });
+            event.consume();
+        };
 
-        // Track Physical Release
-        scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
-            activeKeys.remove(((KeyEvent) event).getCode());
-        });
+        keyReleasedFilter = event -> {
+            activeKeys.remove(event.getCode());
+        };
 
-        // Internal 60fps Key Engine
+        // Attach the explicit references
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyPressedFilter);
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, keyReleasedFilter);
+
+        // Internal Key Engine
         repeatTimer = new Timeline(new KeyFrame(Duration.millis(20), e -> {
             ArrayList<KeyCode> p1 = tS.getPlayer1Keys();
             ArrayList<KeyCode> p2 = tS.getPlayer2Keys();
@@ -176,10 +202,8 @@ public class KeyHandler {
                 boolean isDrop = (key == p1.get(2) || key == p2.get(2));
 
                 if (isDrop) {
-                    // Soft drop repeats very fast (40ms) immediately
                     if (ticks % 2 == 0) handle(key);
                 } else if (isLeftRight) {
-                    // Standard Tetris DAS: Wait 160ms before auto-repeating, then move every 60ms
                     if (ticks > 8 && (ticks - 8) % 3 == 0) handle(key);
                 }
             }

@@ -82,9 +82,11 @@ public class SoundController {
      * Stop the currently running music
      */
     public void stopLooping() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer = null;
+        if (!konami) {
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer = null;
+            }
         }
     }
 

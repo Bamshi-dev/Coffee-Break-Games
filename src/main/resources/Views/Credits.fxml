@@ -37,184 +37,200 @@
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="5.0" styleClass="box">
             <ScrollPane hbarPolicy="NEVER" maxHeight="350.0" maxWidth="600.0" styleClass="scroller" vbarPolicy="ALWAYS">
                <content>
-                  <VBox alignment="TOP_CENTER" maxWidth="600.0">
+                  <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="600.0">
                      <children>
-                        <Label styleClass="normalText" text="Music" />
-                        <HBox alignment="CENTER" minWidth="435.0">
+                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="600.0">
                            <children>
-                              <Label minWidth="170.0" text="Chess Pieces:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-chess-pieces-60890/" wrapText="true" />
+                              <Label maxWidth="600.0" styleClass="normalText" text="Music" />
                            </children>
                         </HBox>
-                         <HBox alignment="CENTER" minWidth="435.0">
+                        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="435.0">
+                           <children>
+                              <Label minWidth="170.0" text="Chess Pieces:" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-chess-pieces-60890/" wrapText="true" />
+                           </children>
+                        </HBox>
+                         <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="435.0">
                              <children>
                                  <Label minWidth="170.0" text="Chess Endangered:" />
-                                 <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.youtube.com/watch?v=dQw4w9WgXcQ" wrapText="true" />
+                                 <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.youtube.com/watch?v=dQw4w9WgXcQ" wrapText="true" />
                              </children>
                          </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="38.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Chess Background:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/video-games-music-for-puzzle-game-146738/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/video-games-music-for-puzzle-game-146738/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="62.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="62.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Tetris Background:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/classical-string-quartet-tetris-theme-korobeiniki-rearranged-arr-for-strings-185592/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/classical-string-quartet-tetris-theme-korobeiniki-rearranged-arr-for-strings-185592/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="86.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Tetris Lineclear:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-clear-notification-355970/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-clear-notification-355970/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="127.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Tetris Piecesnap:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-finger-snap-179180/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-finger-snap-179180/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="168.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="168.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Tetris Levelup:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-level-up-05-326133/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-level-up-05-326133/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="192.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Tetris Radialbomb:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/bomb-explosion-469038/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/bomb-explosion-469038/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="216.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Tetris Columnbomb:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-drill-spinning-in-open-air-33575/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-drill-spinning-in-open-air-33575/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="240.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="240.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Memory Background:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/solo-piano-retro-arcade-game-music-491487/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/solo-piano-retro-arcade-game-music-491487/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="280.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Memory Match:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-sample-confirm-success03-kofi-by-miraclei-360151/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-sample-confirm-success03-kofi-by-miraclei-360151/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="304.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="304.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Memory Missmatch:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-fail-234710/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-fail-234710/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="345.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Button Press:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-button-press-382713/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-button-press-382713/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="369.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="369.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Lobby Background:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/ambient-coffee-morning-coffee-shop-music-499186/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/music/ambient-coffee-morning-coffee-shop-music-499186/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="388.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="388.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Error Sound:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-windows-error-sound-effect-35894/" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-windows-error-sound-effect-35894/" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="380.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="380.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Konami EasterEgg:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.vgmpf.com/Wiki/index.php?title=Nemesis_(ARC)" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.vgmpf.com/Wiki/index.php?title=Nemesis_(ARC)" wrapText="true" />
                            </children>
                         </HBox>
-                        <Label styleClass="normalText" text="Images" />
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="388.0">
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="normalText" text="Images" />
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="388.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Application Icon" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/211920/coffee-grain-seed?edit=true" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/211920/coffee-grain-seed?edit=true" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="426.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="426.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Unmute Button Icon:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/363075/speaker-simple-none-bold?edit=true" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/363075/speaker-simple-none-bold?edit=true" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="506.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="506.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Mute Button Icon:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/363074/speaker-simple-slash-bold?edit=true" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/363074/speaker-simple-slash-bold?edit=true" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="530.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="530.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Close Icon:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/522388/close?edit=true" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/522388/close?edit=true" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="554.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="554.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Egg Icon:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/487310/easter-egg-4?edit=true" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/487310/easter-egg-4?edit=true" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="578.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="578.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Chess Pieces:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://greenchess.net/info.php?item=downloads" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://greenchess.net/info.php?item=downloads" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="602.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="602.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Chess Duck White:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/479843/duck-toy-illustration-3?edit=true" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/479843/duck-toy-illustration-3?edit=true" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="626.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="626.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Chess Duck Black:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/479851/duck-toy-1" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.svgrepo.com/svg/479851/duck-toy-1" wrapText="true" />
                            </children>
                         </HBox>
-                        <Label styleClass="normalText" text="Code" />
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="671.0">
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="normalText" text="Code" />
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="671.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Resize Helper:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://stackoverflow.com/a/24017605" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://stackoverflow.com/a/24017605" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="723.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="723.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Toast:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://stackoverflow.com/questions/26792812/android-toast-equivalent-in-javafx" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://stackoverflow.com/questions/26792812/android-toast-equivalent-in-javafx" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="746.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="746.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="Int Field:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://stackoverflow.com/a/12851162" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://stackoverflow.com/a/12851162" wrapText="true" />
                            </children>
                         </HBox>
-                        <Label styleClass="normalText" text="Others" />
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="595.0">
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="normalText" text="Others" />
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="3D Chess Pieces:" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://free3d.com/3d-model/chess-19650.html" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://free3d.com/3d-model/chess-19650.html" wrapText="true" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="675.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="675.0" maxHeight="-Infinity" maxWidth="-Infinity">
                            <children>
                               <Label minWidth="170.0" text="3D Mug" />
-                              <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.cgtrader.com/items/3536740/download-page" wrapText="true" />
+                              <Hyperlink maxWidth="395.0" minWidth="395.0" onAction="#onHyperlinkAction" text="https://www.cgtrader.com/items/3536740/download-page" wrapText="true" />
                            </children>
                         </HBox>
                      </children>

@@ -252,6 +252,7 @@ ungraceful disconnects (cable pulled, process killed).
 * "jeb_" -> GameScreen background has Rainbowcolors
 * "Duck" -> Pawns in Chess are replaced by Ducks
 * Second color-scheme when performing a double click on the header
+* Credits Chess Endangered is a RickRoll
 
 ## AI-Usage
 

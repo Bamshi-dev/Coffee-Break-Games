@@ -112,7 +112,6 @@
 }
 
 .color-picker .arrow-button {
-    -fx-background-color: -theme-arrow-btn-bg;
     -fx-background-radius: 0 6px 6px 0;
 }
 

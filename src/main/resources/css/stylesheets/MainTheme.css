@@ -66,9 +66,6 @@
     /* Game Playgrounds (Tetris / HexChess) */
     -theme-game-bg-solid: #000000FF;
     -theme-game-line: #4A4A4AFF;
-    -theme-gradient-core: #0080FFFF;
-    -theme-gradient-mid: #1A3A5AFF;
-    -theme-gradient-outer: #0A1A2EFF;
     -theme-tetris-field-glow: #1ECFCF4C;
 
     /* Game Pieces & Polygons */

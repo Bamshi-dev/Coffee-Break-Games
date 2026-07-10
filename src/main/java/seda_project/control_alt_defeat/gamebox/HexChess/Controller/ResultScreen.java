@@ -24,6 +24,7 @@ import seda_project.control_alt_defeat.gamebox.network.NetworkListener;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 import javafx.scene.control.Button;
+import seda_project.control_alt_defeat.gamebox.ui.HexButton;
 
 import java.io.IOException;
 
@@ -31,7 +32,11 @@ public class ResultScreen extends Controller{
     @FXML
     private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel, statusLabel;
 
+    @FXML
+    private HexButton playAgain;
+
     private String boardState;
+
 
     /**
      * Initializes network listeners for the result screen
@@ -71,6 +76,7 @@ public class ResultScreen extends Controller{
                     Platform.runLater(() -> {
                         statusLabel.setVisible(true);
                         statusLabel.setText("Opponent disconnected.");
+                        playAgain.setDisable(true);
                     });
                 }
             });

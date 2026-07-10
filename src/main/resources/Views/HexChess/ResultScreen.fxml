@@ -42,7 +42,7 @@
                   <HexButton onAction="#onExitAction" text="Exit" />
               </StackPane>
               <StackPane alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
-                  <HexButton onAction="#onPlayAgainAction" text="Play Again" />
+                  <HexButton fx:id="playAgain" onAction="#onPlayAgainAction" text="Play Again" />
               </StackPane>
           </HBox>
       <padding>

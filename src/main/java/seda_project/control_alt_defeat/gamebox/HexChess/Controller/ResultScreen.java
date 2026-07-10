@@ -23,6 +23,8 @@ import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 import javafx.scene.control.Button;
 
+import java.io.IOException;
+
 public class ResultScreen extends Controller{
     @FXML
     private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel, statusLabel;
@@ -149,7 +151,30 @@ public class ResultScreen extends Controller{
         sC.playLooping("lobby_background",.2);
         Session.clear();
         vS.emtyStack();
-        c.changeScene("/Views/StartingScreen.fxml",header,vS);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Configuration.class.getResource("/Views/StartingScreen.fxml"));
+            Parent rot = loader.load();
+            vS.addFxmlLoaders("/Views/StartingScreen.fxml");
+            var controller = loader.getController();
+            Stage stage = (Stage) root.getScene().getWindow();
+            Scene currentScene = stage.getScene();
+
+            Platform.runLater(() -> {
+                double height = stage.getHeight();
+                double width = stage.getWidth();
+
+                currentScene.setFill(Color.TRANSPARENT);
+                currentScene.setRoot(rot);
+
+                stage.sizeToScene();
+
+                stage.setWidth(Math.max(width, stage.getWidth()));
+                stage.setHeight(Math.max(height, stage.getHeight()));
+            });
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 

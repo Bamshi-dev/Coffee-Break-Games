@@ -1,5 +1,7 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Engine;
 
+import java.util.Objects;
+
 public class Piece {
     private PieceType type;
     private final PlayerColor player;
@@ -58,6 +60,6 @@ public class Piece {
      * @param position
      */
     public void setPosition(HexCoord position) {
-        this.position = position;
+        this.position = Objects.requireNonNull(position, "Piece position cannot be null");
     }
 }

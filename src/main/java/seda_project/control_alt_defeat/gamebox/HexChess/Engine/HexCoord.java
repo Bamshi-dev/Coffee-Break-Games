@@ -16,14 +16,17 @@ public class HexCoord {
      * Transform a String into a HexCoord
      * @param id
      * @return
+     * update: validate if the string is not empty
      */
     public static HexCoord transformIdToHex(String id){
-        char[] parts = id.toCharArray();
-        int col = parts[0]- 'a';
-        int row = Integer.parseInt(id.replaceAll("[abcdefghijk]",""));
-        return new HexCoord(col,row);
-    }
+        if (id == null || id.length() < 2) throw new IllegalArgumentException("Invalid ID format");
+        char colChar = id.charAt(0);
+        int col = colChar - 'a';
+        String rowStr = id.substring(1);
+        int row = Integer.parseInt(rowStr);
 
+        return new HexCoord(col, row);
+    }
     /**
      * Retuns the Id of a HexCoord
      * @return

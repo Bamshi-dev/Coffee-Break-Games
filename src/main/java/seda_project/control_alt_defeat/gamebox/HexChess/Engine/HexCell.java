@@ -24,7 +24,7 @@ public class HexCell {
     }
 
     /**
-     * @return the piece on this field
+     * @return the piece on this field, or null if empty.
      */
     public Piece getPiece(){
         return this.piece;

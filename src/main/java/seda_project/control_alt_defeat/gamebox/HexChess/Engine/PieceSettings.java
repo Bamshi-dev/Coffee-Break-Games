@@ -38,17 +38,22 @@ public class PieceSettings {
      * Method to load the inital pieces of a given player
      * @param color
      * @return
+     * update: error handling
      */
     private List<ImageView> loadPieces(String color) {
         ImageView[] views = new ImageView[PIECE_NAMES.length];
         for (int i = 0; i < PIECE_NAMES.length; i++) {
             String path = "/Images/HexChess/" + color + "/" + color.toLowerCase() + "-" + PIECE_NAMES[i] + ".png";
-            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
-            views[i] = new ImageView(image);
+            var resource = getClass().getResourceAsStream(path);
+            if (resource == null) {
+                System.err.println("Warning: Missing image at " + path);
+                views[i] = new ImageView();
+            } else {
+                views[i] = new ImageView(new Image(resource));
+            }
         }
         return Arrays.asList(views);
     }
-
     public Color getP1Color() {
         return p1Color;
     }

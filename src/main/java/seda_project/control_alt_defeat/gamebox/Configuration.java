@@ -1,5 +1,6 @@
 package seda_project.control_alt_defeat.gamebox;
 
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ public class Configuration {
 
     private static Configuration instance;
     public boolean crimson = false;
+    private HostServices hostServices;
 
     private Configuration() {
     }
@@ -211,5 +213,13 @@ public class Configuration {
             return true;
         }
         return player2Name.equals("Rainbow");
+    }
+
+    public HostServices getHostServices() {
+        return hostServices;
+    }
+
+    public void setHostServices(HostServices hostServices) {
+        this.hostServices = hostServices;
     }
 }

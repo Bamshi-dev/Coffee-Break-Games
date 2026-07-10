@@ -96,9 +96,8 @@ public class WaitForOpponent extends Controller {
      */
     private void updateLocalStatus(boolean myReady) {
         if (myReady && Session.current().peerReady) {
-            statusLabel.getStyleClass().clear();
+            statusLabel.getStyleClass().remove("information");
             statusLabel.getStyleClass().add("ready");
-            statusLabel.getStyleClass().add("box");
             statusLabel.setText("All ready!");
         } else if (myReady) {
             statusLabel.setText("Waiting for opponent to be ready...");

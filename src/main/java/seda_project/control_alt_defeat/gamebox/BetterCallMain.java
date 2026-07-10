@@ -23,6 +23,7 @@ import java.util.List;
 public class BetterCallMain extends Application {
     private static final Logger logger = LoggerFactory.getLogger(BetterCallMain.class);
     private static final ViewStack vS = ViewStack.getInstance();
+    private Configuration c = Configuration.getInstance();
 
     private final SoundController sC = SoundController.getInstance();
     private final List<KeyCode> konamiList = new ArrayList<>();
@@ -63,6 +64,7 @@ public class BetterCallMain extends Application {
         stage.centerOnScreen();
         ResizeHelper.addResizeListener(stage);
         logger.debug("Startup completed");
+        c.setHostServices(getHostServices());
     }
 
 

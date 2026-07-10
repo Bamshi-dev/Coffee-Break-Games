@@ -61,12 +61,24 @@
                 <Label styleClass="normalText" text="Hex Chess" />
                 <VBox>
                     <padding>
-                        <Insets bottom="15.0" left="40.0" />
+                        <Insets bottom="10.0" left="40.0" />
                     </padding>
                     <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                         <HexButton onAction="#onHexChessAction" text="Play Hex Chess" />
                     </StackPane>
                 </VBox>
+            <VBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="241.0">
+               <children>
+                  <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
+                     <children>
+                        <HexButton onAction="#onCreditsAction" text="Credits" />
+                     </children>
+                  </StackPane>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="40.0" />
+               </padding>
+            </VBox>
                 <VBox alignment="CENTER_LEFT">
                     <StackPane alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="button-wrapper">
                         <HexButton onAction="#onExitAction" text="Exit" />

@@ -54,6 +54,12 @@ public class StartingScreenController extends Controller implements Initializabl
         c.changeScene("/Views/HexChess/ChessMenu.fxml", header, vS);
     }
 
+    @FXML
+    protected void onCreditsAction(){
+        sC.play("button");
+        c.changeScene("/Views/Credits.fxml",header,vS);
+    }
+
     /**
      * Initializes the StartingScreenController by calling the superclass's initialize method. This method is part of
      * the Initializable interface and is called to perform any necessary setup for the controller after its root

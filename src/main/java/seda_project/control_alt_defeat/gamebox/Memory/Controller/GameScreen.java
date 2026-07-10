@@ -485,6 +485,7 @@ public class GameScreen extends Controller {
         alert.showAndWait();
 
         Session.clear();
+        sC.playLooping("lobby_background",.2);
         vS.emtyStack();
         c.changeScene("/Views/StartingScreen.fxml",header,vS);
     }

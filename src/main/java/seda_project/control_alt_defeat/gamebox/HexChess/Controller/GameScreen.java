@@ -853,6 +853,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         alert.setHeaderText("Opponent disconnected");
         alert.showAndWait();
         Session.clear();
+        sC.playLooping("lobby_background",.2);
         vS.emtyStack();
         c.changeScene("/Views/StartingScreen.fxml", header, vS);
     }

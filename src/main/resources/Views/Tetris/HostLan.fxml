@@ -79,6 +79,7 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </StackPane>
+                <Label styleClass="normalText" text="Ports 8766 and 8765 have to be open" />
                 <HexLabel fx:id="statusLabel" maxWidth="270.0" styleClass="error" textAlignment="CENTER" visible="false" wrapText="true" />
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity">
                     <VBox.margin>

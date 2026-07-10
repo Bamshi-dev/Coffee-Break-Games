@@ -1,5 +1,7 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -9,6 +11,7 @@ import seda_project.control_alt_defeat.gamebox.HexChess.Engine.GameEngine;
 import seda_project.control_alt_defeat.gamebox.HexChess.Engine.PieceType;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 import seda_project.control_alt_defeat.gamebox.ui.Toast;
+
 
 import java.util.List;
 import java.util.Map;
@@ -69,21 +72,26 @@ public class Promotion extends Controller {
 
     /**
      * Handles the actual promotion if a piece is selected and the  promotion button is clicked
+     * update: disable button immediately after clicking
      */
     @FXML
-    protected void onPromoteAction(){
+    protected void onPromoteAction(ActionEvent event){
+        Button btn = (Button) event.getSource();
+        btn.setDisable(true);
         sC.play("button");
+
         if (selected == null){
-            Toast.makeText(root,"You need to select a Pice!");
+            Toast.makeText(root,"You need to select a Piece!");
+            btn.setDisable(false);
             return;
         }
         PieceType chosenType = VIEW_TO_TYPE.get(selected.getId());
         if (chosenType == null) {
             Toast.makeText(root, "Invalid piece selection!");
+            btn.setDisable(false);
             return;
         }
         gameEngine.promote(chosenType);
-
         ((Stage) root.getScene().getWindow()).close();
     }
 }

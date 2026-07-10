@@ -3,9 +3,12 @@ package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -54,8 +57,9 @@ public class JoinLan extends Controller implements Initializable {
      * Method to handle the connection to a Host. If no Host is selected return an error
      */
     @FXML
-    protected void onConnectAction() {
+    protected void onConnectAction(ActionEvent event) {
         sC.play("button");
+
         if (selectedHost == null){
             joinStatus.setVisible(true);
             sC.play("error");
@@ -74,22 +78,47 @@ public class JoinLan extends Controller implements Initializable {
         Advertisement ad = (Advertisement) selectedHost.getUserData();
         stopDiscovery();
 
-        try {
-            NetworkLayer layer = LanClient.join(ad.ipAddress(), ad.tcpPort());
-            Session s = Session.current();
-            s.myName   = yourName;
-            s.isHost   = false;
-            s.network  = layer;
-            s.peerName = ad.name();
-            s.boardState = ad.boardState();
+        // Prevent double clicking: a second click would open a second connection
+        Button connectButton = (Button) event.getSource();
+        connectButton.setDisable(true);
+        joinStatus.setVisible(true);
+        joinStatus.setText("Connecting...");
 
-            WaitForOpponent controller = (WaitForOpponent) c.changeScene("/Views/HexChess/WaitForOpponent.fxml", header, vS);
-            controller.passJoinData(yourName, ad.ipAddress());
-        } catch (Exception e) {
-            joinStatus.setVisible(true);
-            sC.play("error");
-            joinStatus.setText("Could not connect: " + e.getMessage());
-        }
+        // connect on a background thread so the UI doesn't freeze on the timeout
+        Thread connect = new Thread(() -> {
+            try {
+                NetworkLayer layer = LanClient.join(ad.ipAddress(), ad.tcpPort());
+
+                Platform.runLater(() -> {
+                    // user pressed Back while we were connecting: drop the
+                    // connection instead of navigating from a dead screen
+                    if (header.getScene() == null) {
+                        try { layer.close(); } catch (Exception ignored) {}
+                        return;
+                    }
+                    Session s = Session.current();
+                    s.myName   = yourName;
+                    s.isHost   = false;
+                    s.network  = layer;
+                    s.peerName = ad.name();
+                    s.boardState = ad.boardState();
+
+                    WaitForOpponent controller = (WaitForOpponent) c.changeScene("/Views/HexChess/WaitForOpponent.fxml", header, vS);
+                    controller.passJoinData(yourName, ad.ipAddress());
+                });
+            } catch (Exception e) {
+                // Return to Main UI Thread to show error
+                Platform.runLater(() -> {
+                    sC.play("error");
+                    joinStatus.setText("Could not connect: " + e.getMessage());
+                    connectButton.setDisable(false);
+                    // restart discovery so the host list keeps refreshing
+                    startDiscovery();
+                });
+            }
+        }, "hexchess-join-connect");
+        connect.setDaemon(true);
+        connect.start();
     }
 
     /**
@@ -200,5 +229,4 @@ public class JoinLan extends Controller implements Initializable {
         joinStatus.setVisible(false);
         startDiscovery();
     }
-
 }

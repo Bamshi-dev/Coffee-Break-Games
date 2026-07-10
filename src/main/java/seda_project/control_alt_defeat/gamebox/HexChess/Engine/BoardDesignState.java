@@ -11,7 +11,8 @@ public class BoardDesignState {
     public BoardDesignState(JsonNode board){
         this.board = board;
 
-        this.FENState = board.get("FENState").toString();
+        // prevent crash if someone "accidentally" edits Mr. Json for whatever reason
+        this.FENState = board.path("FENState").asText("");
 
         this.p1Pawn = board.get("p1Pawn").asInt();
         this.p1Rook = board.get("p1Rook").asInt();

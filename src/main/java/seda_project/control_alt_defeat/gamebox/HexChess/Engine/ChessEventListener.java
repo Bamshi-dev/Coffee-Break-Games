@@ -1,7 +1,5 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Engine;
 
-import seda_project.control_alt_defeat.gamebox.Tetris.Engine.TetrisEngine;
-
 public interface ChessEventListener {
     default void onPlaced(String id, Piece piece) {}
 

@@ -1,8 +1,10 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -37,13 +39,19 @@ public class LocalGameConfiguration extends Controller implements Initializable 
 
     /**
      * Method to start the Game.
+     * Update: Prevent starting the game twice  by double clicking
      */
     @FXML
-    public void onStartAction() {
+    public void onStartAction(ActionEvent event) {
+        Button startBtn = (Button) event.getSource();
+        startBtn.setDisable(true);
+
         sC.play("button");
         String player1Name = c.checkNameInput(player1TF.getText(),1);
         String player2Name = c.checkNameInput(player2TF.getText(),2);
+
         if (c.checkNameLength(player1Name,1, statusLabel) && c.checkNameLength(player2Name,2,statusLabel)) {
+
             sC.stopLooping();
             sC.playLooping("chess_background",.2);
             GameScreen controller = (GameScreen) c.changeScene("/Views/HexChess/GameScreen.fxml", header, vS);
@@ -86,6 +94,7 @@ public class LocalGameConfiguration extends Controller implements Initializable 
         else{
             statusLabel.setVisible(true);
             sC.play("error");
+            startBtn.setDisable(false);
         }
     }
 

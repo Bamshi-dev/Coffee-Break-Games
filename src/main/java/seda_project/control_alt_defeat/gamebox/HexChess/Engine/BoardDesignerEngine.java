@@ -52,6 +52,8 @@ public class BoardDesignerEngine {
      * @return
      */
     public Map<String, String> computeIncrement(String pieceId) {
+        // unknown piece id: change nothing and update no labels
+        if (pieceId == null || !pieceAmounts.containsKey(pieceId)) return Map.of();
         String playerPrefix = pieceId.contains("1") ? "p1" : "p2";
         int amount = pieceAmounts.get(pieceId);
         pieceAmounts.put(pieceId, amount + 1);
@@ -87,6 +89,8 @@ public class BoardDesignerEngine {
      * @return
      */
     public Map<String, String> computeAdapt(String pieceId) {
+        // unknown piece id: change nothing and update no labels
+        if (pieceId == null || !pieceAmounts.containsKey(pieceId)) return Map.of();
         String playerPrefix = pieceId.contains("1") ? "p1" : "p2";
         boolean isPawn = pieceId.contains("Pawn");
 
@@ -99,7 +103,10 @@ public class BoardDesignerEngine {
                 pieceAmounts.put(pieceId, currentAmount - 1);
             } else {
                 int pawnAmount = pieceAmounts.get(playerPrefix + "PawnImg");
-                pieceAmounts.put(playerPrefix + "PawnImg", pawnAmount - 1);
+                // fix: only subtract when pawn amount is greater than zero
+                if (pawnAmount > 0) {
+                    pieceAmounts.put(playerPrefix + "PawnImg", pawnAmount - 1);
+                }
             }
         }
 
@@ -186,6 +193,7 @@ public class BoardDesignerEngine {
      * @param state
      */
     public void loadExport(BoardDesignState state) {
+        if (state == null) return;
         pieceAmounts = new HashMap<>(Map.ofEntries(
                 Map.entry("p1PawnImg",   state.getP1Pawn()),
                 Map.entry("p1RookImg",   state.getP1Rook()),

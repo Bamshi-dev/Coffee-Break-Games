@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Who is Json?
+ * Why is he important?
+ */
 public class JsonHandler {
     public JsonHandler(){}
     private final ObjectMapper jsonMapper = new ObjectMapper();
@@ -33,7 +37,12 @@ public class JsonHandler {
             JsonNode nodes = null;
 
             if (externalSaveFile.exists()) {
-                nodes = jsonMapper.readTree(externalSaveFile);
+                try {
+                    nodes = jsonMapper.readTree(externalSaveFile);
+                } catch (IOException e) {
+                    System.err.println("BoardDesign.json is corrupted. Resetting to defaults.");
+                    nodes = jsonMapper.createArrayNode();
+                }
             }
             else {
                 try (InputStream is = BoardDesigner.class.getResourceAsStream(path)) {
@@ -65,19 +74,21 @@ public class JsonHandler {
     public BoardDesignState createNewState(String notation, Map<String, Integer> pieceAmounts, int starting){
         ObjectNode newBoard = jsonMapper.createObjectNode();
         newBoard.put("FENState", notation);
-        newBoard.put("startingPlayer",starting);
-        newBoard.put("p1Pawn", pieceAmounts.get("p1PawnImg"));
-        newBoard.put("p1Rook", pieceAmounts.get("p1RookImg"));
-        newBoard.put("p1Knight", pieceAmounts.get("p1KnightImg"));
-        newBoard.put("p1Bishop", pieceAmounts.get("p1BishopImg"));
-        newBoard.put("p1Queen", pieceAmounts.get("p1QueenImg"));
-        newBoard.put("p1King", pieceAmounts.get("p1KingImg"));
-        newBoard.put("p2Pawn", pieceAmounts.get("p2PawnImg"));
-        newBoard.put("p2Rook", pieceAmounts.get("p2RookImg"));
-        newBoard.put("p2Knight", pieceAmounts.get("p2KnightImg"));
-        newBoard.put("p2Bishop", pieceAmounts.get("p2BishopImg"));
-        newBoard.put("p2Queen", pieceAmounts.get("p2QueenImg"));
-        newBoard.put("p2King", pieceAmounts.get("p2KingImg"));
+        newBoard.put("startingPlayer", starting);
+        // add 0 for missing keys
+        newBoard.put("p1Pawn", pieceAmounts.getOrDefault("p1PawnImg", 0));
+        newBoard.put("p1Rook", pieceAmounts.getOrDefault("p1RookImg", 0));
+        newBoard.put("p1Knight", pieceAmounts.getOrDefault("p1KnightImg", 0));
+        newBoard.put("p1Bishop", pieceAmounts.getOrDefault("p1BishopImg", 0));
+        newBoard.put("p1Queen", pieceAmounts.getOrDefault("p1QueenImg", 0));
+        newBoard.put("p1King", pieceAmounts.getOrDefault("p1KingImg", 0));
+        newBoard.put("p2Pawn", pieceAmounts.getOrDefault("p2PawnImg", 0));
+        newBoard.put("p2Rook", pieceAmounts.getOrDefault("p2RookImg", 0));
+        newBoard.put("p2Knight", pieceAmounts.getOrDefault("p2KnightImg", 0));
+        newBoard.put("p2Bishop", pieceAmounts.getOrDefault("p2BishopImg", 0));
+        newBoard.put("p2Queen", pieceAmounts.getOrDefault("p2QueenImg", 0));
+        newBoard.put("p2King", pieceAmounts.getOrDefault("p2KingImg", 0));
+
         return new BoardDesignState(newBoard);
     }
 
@@ -93,7 +104,7 @@ public class JsonHandler {
             // always write to the external file
             jsonMapper.writerWithDefaultPrettyPrinter().writeValue(externalSaveFile, arrayNode);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Failed to write to BoardDesign.json: " + e.getMessage());
         }
     }
 }

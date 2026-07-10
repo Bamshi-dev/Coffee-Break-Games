@@ -21,6 +21,7 @@ import seda_project.control_alt_defeat.gamebox.network.Message;
 import seda_project.control_alt_defeat.gamebox.network.NetworkListener;
 import seda_project.control_alt_defeat.gamebox.network.Session;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
+import javafx.scene.control.Button;
 
 public class ResultScreen extends Controller{
     @FXML
@@ -155,7 +156,9 @@ public class ResultScreen extends Controller{
     /**
      * Method to start a new round. If in a Network Game just set tise player ready
      */
-    public void onPlayAgainAction() {
+    public void onPlayAgainAction(ActionEvent event) {
+        // prevent double clicking
+        ((Button) event.getSource()).setDisable(true);
         sC.play("button");
         Session s = Session.current();
 

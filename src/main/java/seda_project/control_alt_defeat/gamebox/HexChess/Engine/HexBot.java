@@ -55,7 +55,9 @@ public class HexBot {
 
         if (moves.isEmpty()) {
             if (isKingInCheck(engine, currentTurn)) {
-                return isMaximizingPlayer ? -999999 + depth : 999999 - depth;
+                // Bot gets mated -> -999999 - depth
+                // Opponent gets mated -> 999999 + depth
+                return isMaximizingPlayer ? -999999 - depth : 999999 + depth;
             }
             return 0;
         }
@@ -93,8 +95,9 @@ public class HexBot {
 
     private static int evaluateBoard(GameEngine engine, PlayerColor botColor, int depth) {
         if (engine.isGameOver()) {
-            if (isKingInCheck(engine, getOpponent(botColor))) return 999999 - depth;
-            if (isKingInCheck(engine, botColor)) return -999999 + depth;
+            // fFlipped the +/- depth operators
+            if (isKingInCheck(engine, getOpponent(botColor))) return 999999 + depth;
+            if (isKingInCheck(engine, botColor)) return -999999 - depth;
             return 0;
         }
         return evaluatePieces(engine, botColor) - evaluatePieces(engine, getOpponent(botColor));

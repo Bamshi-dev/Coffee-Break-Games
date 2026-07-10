@@ -46,6 +46,10 @@ public class GameEngine {
         if (isGameOver) {
             return false;
         }
+        // Prevent race condition: player can still move the pieces in lan mode while the promotion is still on
+        if (isPromotionPending()) {
+            return false;
+        }
 
         HexCell fromCell = board.getCellById(fromId);
         // Check if there's actually a piece to move
@@ -207,6 +211,7 @@ public class GameEngine {
         if (checkRemis(false)) {
             isGameOver = true;
             listeners.forEach(l ->l.remis());
+            return;
         }
 
 
@@ -625,9 +630,17 @@ public class GameEngine {
      * @param boardState
      */
     public void setupInitalState(String boardState){
-        String turnIndicator = boardState.split(" ")[1];
-        currentTurn = (turnIndicator.equals("1") || turnIndicator.equalsIgnoreCase("w")) ? PlayerColor.WHITE : PlayerColor.BLACK;
-        String[] rows = boardState.split(" ")[0].split("/");
+        String[] parts = boardState.split(" ");
+
+        // default to White if the string is missing the turn indicator
+        if (parts.length > 1) {
+            String turnIndicator = parts[1];
+            currentTurn = (turnIndicator.equals("1") || turnIndicator.equalsIgnoreCase("w")) ? PlayerColor.WHITE : PlayerColor.BLACK;
+        } else {
+            currentTurn = PlayerColor.WHITE;
+        }
+
+        String[] rows = parts[0].split("/");
 
         Pattern p = Pattern.compile("[PRNBQKprnbqk]|\\d+");
         for (int i = 0; i < rows.length; i++) {

@@ -79,6 +79,17 @@ public class Board {
      */
     public void placePiece(String id, Piece piece){
         HexCell cell = getCellById(id);
+
+        // remove the existing piece from array before adding the new one.
+        if (cell.hasPiece()) {
+            Piece oldPiece = cell.getPiece();
+            if (oldPiece.getPlayer() == PlayerColor.WHITE) {
+                white.remove(oldPiece);
+            } else {
+                black.remove(oldPiece);
+            }
+        }
+
         cell.setPiece(piece);
         piece.setPosition(cell.getCoords());
         if (piece.getPlayer() == PlayerColor.WHITE) {
@@ -89,19 +100,22 @@ public class Board {
     }
 
     /**
-     * Removes a piece from a given coordinate and the corrsponding player list
+     * Removes a piece from a given coordinate and the corresponding player list
      * @param coord
      */
     public void removePiece(HexCoord coord){
         HexCell cell = getCellByCoord(coord.col, coord.row);
         Piece piece = cell.getPiece();
-        if (piece.getPlayer() == PlayerColor.WHITE) {
-            white.remove(piece);
+        // Prevent removing an empty cell
+        if (piece != null) {
+            if (piece.getPlayer() == PlayerColor.WHITE) {
+                white.remove(piece);
+            }
+            else{
+                black.remove(piece);
+            }
+            cell.setPiece(null);
         }
-        else{
-            black.remove(piece);
-        }
-        cell.setPiece(null);
     }
 
     /**
@@ -116,6 +130,9 @@ public class Board {
 
         Piece fromPiece = fromCell.getPiece();
         Piece toPiece = toCell.getPiece();
+
+        // abort if a corrupted network packet tries to move a non existent piece
+        if (fromPiece == null) return null;
 
         if (toPiece != null) {
             if (toPiece.getPlayer() == PlayerColor.WHITE) {

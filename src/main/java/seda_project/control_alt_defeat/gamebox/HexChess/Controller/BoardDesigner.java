@@ -299,9 +299,11 @@ public class BoardDesigner extends Controller implements Initializable {
     @FXML
     protected void onP1FirstAcion() {
         sC.play("button");
-        p1GoFirst.getStyleClass().add("ready");
-        p2GoFirst.getStyleClass().remove("ready");
-        engine.activePlayer(1);
+        if (!p1GoFirst.getStyleClass().contains("ready")) {
+            p1GoFirst.getStyleClass().add("ready");
+            p2GoFirst.getStyleClass().remove("ready");
+            engine.activePlayer(1);
+        }
     }
 
     /**
@@ -312,9 +314,11 @@ public class BoardDesigner extends Controller implements Initializable {
     @FXML
     protected void onP2FirstAction() {
         sC.play("button");
-        p2GoFirst.getStyleClass().add("ready");
-        p1GoFirst.getStyleClass().remove("ready");
-        engine.activePlayer(2);
+        if(!p2GoFirst.getStyleClass().contains("ready")) {
+            p2GoFirst.getStyleClass().add("ready");
+            p1GoFirst.getStyleClass().remove("ready");
+            engine.activePlayer(2);
+        }
     }
 
     /**

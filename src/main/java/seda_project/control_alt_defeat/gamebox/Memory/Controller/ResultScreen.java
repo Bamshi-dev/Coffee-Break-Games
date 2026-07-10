@@ -175,9 +175,9 @@ public class ResultScreen extends Controller {
                 break;
             case 2:
                 winnerLabel.setText(player2Name);
-                looserPointsLabel.setText(pointsPlayer2);
+                winnerPointsLabel.setText(pointsPlayer2);
                 looserLabel.setText(player1Name);
-                winnerPointsLabel.setText(pointsPlayer1);
+                looserPointsLabel.setText(pointsPlayer1);
                 break;
         }
 

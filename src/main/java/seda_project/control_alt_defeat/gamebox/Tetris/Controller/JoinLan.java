@@ -59,6 +59,7 @@ public class JoinLan extends Controller implements Initializable {
     @FXML
     protected void onBackAction(){
         sC.play("button");
+        Session.clear();
         stopDiscovery();
         c.backScene(header,vS);
     }

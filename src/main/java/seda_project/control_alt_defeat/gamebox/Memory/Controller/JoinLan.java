@@ -1,19 +1,25 @@
 package seda_project.control_alt_defeat.gamebox.Memory.Controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import seda_project.control_alt_defeat.gamebox.network.Lan;
-import seda_project.control_alt_defeat.gamebox.network.LanClient;
-import seda_project.control_alt_defeat.gamebox.network.NetworkLayer;
-import seda_project.control_alt_defeat.gamebox.network.Session;
+import javafx.util.Duration;
+import seda_project.control_alt_defeat.gamebox.network.*;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
 
 public class JoinLan extends Controller implements Initializable {
+    private Listener discoveryListener;
+    private Timeline refreshTimeline;
+
     @FXML
     private Label joinStatus;
 
@@ -29,6 +35,7 @@ public class JoinLan extends Controller implements Initializable {
     protected void onBackAction(){
         sC.play("button");
         Session.clear();
+        stopDiscovery();
         c.backScene(header,vS);
     }
 
@@ -41,6 +48,7 @@ public class JoinLan extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         joinStatus.setVisible(false);
+        startDiscovery();
     }
 
     /**
@@ -51,32 +59,92 @@ public class JoinLan extends Controller implements Initializable {
      * established, it displays an appropriate error message in the join status label and plays an error sound.
      */
     @FXML
-    protected void onConnectAction(){
+    protected void onConnectAction() {
         sC.play("button");
         String yourName = c.checkNameInput(joinPlayerNameTF.getText(),2);
         if (c.checkNameLength(yourName,2,joinStatus)) {
             if (checkIP()) {
+                String targetIp = ipAdresseTF.getText();
+
+                // Validate against background-gathered host advertisements
+                if (discoveryListener != null) {
+                    for (Advertisement adv : discoveryListener.currentHosts()) {
+                        if (adv.gameMode() == GameMode.TETRIS || adv.gameMode() == GameMode.HEXCHESS) {
+
+                            // Check direct match OR check if it's the same multi-homed machine via subnet
+                            if (adv.ipAddress().equals(targetIp) || isSameSubnet(adv.ipAddress(), targetIp)) {
+                                joinStatus.setVisible(true);
+                                joinStatus.setText("Cannot join: That host is running a Tetris or Chess game!");
+                                sC.play("error");
+                                return; // Block the connection immediately
+                            }
+                        }
+                    }
+                }
+
+                // If validation passes, close discovery and connect
+                stopDiscovery();
+
                 try {
-                    NetworkLayer layer = connectToHost(ipAdresseTF.getText());
+                    NetworkLayer layer = connectToHost(targetIp);
 
                     Session s = Session.current();
                     s.myName  = yourName;
                     s.isHost  = false;
                     s.network = layer;
 
-
                     WaitForOpponent controller = (WaitForOpponent) c.changeScene("/Views/Memory/WaitForOpponent.fxml",header,vS);
-                    controller.passJoinData(yourName, ipAdresseTF.getText());
+                    controller.passJoinData(yourName, targetIp);
                 } catch (Exception e) {
                     joinStatus.setVisible(true);
                     joinStatus.setText("Could not connect: " + e.getMessage());
                     sC.play("error");
+                    startDiscovery(); // Restart discovery if connection failed so the user can try again
                 }
             }
         }
         else {
             sC.play("error");
         }
+    }
+
+    private void startDiscovery() {
+        try {
+            discoveryListener = Discovery.listen();
+            discoveryListener.disableSelfFilter();
+        } catch (IOException e) {
+            joinStatus.setVisible(true);
+            joinStatus.setText("Could not start discovery: " + e.getMessage());
+            return;
+        }
+
+        // Keep the discovery active and polling internal state every 500ms
+        refreshTimeline = new Timeline(
+                new KeyFrame(Duration.millis(500), _ -> { /* Maintains background tracking state */ }));
+        refreshTimeline.setCycleCount(Animation.INDEFINITE);
+        refreshTimeline.play();
+    }
+
+    private void stopDiscovery() {
+        if (refreshTimeline != null) {
+            refreshTimeline.stop();
+            refreshTimeline = null;
+        }
+        if (discoveryListener != null) {
+            try { discoveryListener.close(); } catch (Exception ignored) {}
+            discoveryListener = null;
+        }
+    }
+
+    private boolean isSameSubnet(String ip1, String ip2) {
+        String[] parts1 = ip1.split("\\.");
+        String[] parts2 = ip2.split("\\.");
+        if (parts1.length == 4 && parts2.length == 4) {
+            return parts1[0].equals(parts2[0]) &&
+                    parts1[1].equals(parts2[1]) &&
+                    parts1[2].equals(parts2[2]);
+        }
+        return false;
     }
 
     /**

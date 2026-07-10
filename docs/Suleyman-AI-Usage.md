@@ -8,6 +8,28 @@ able to understand and explain the code on request."*
 
 ---
 
+## 0. Tool, model and prompts
+
+I used Claude Opus 4.8  in **intellij chat** — it could read the repo,
+suggest edits etc; I reviewed the changes and did the testing.
+Later sessions I ran the Claude Fable 5 via claude code to see if there is any bugs, errors etc that we have missed. 
+
+Typical prompts: "we had a lag on tetris ... deeply analyze and make a
+plan. tell me about the problem caused and proposed fix and why", "Exit button doesn't work
+when you lose the game to a bot ... confirm then fix without breaking
+anything" — plus a lot of pasted console logs for debugging.
+
+Rough split: the everyday code in my files (lobby wiring, UI glue, small
+handlers) is **AI-assisted, ~70%**; the harder parts (`LanSession`
+internals, the Tetris dual-engine work, the lobby restart fixes and some
+later bug fixes) are **AI-generated**, reviewed and tested by me.
+Sections 2–8 name the exact classes and methods.
+
+No code from Stack Overflow, books or tutorials; official docs (JavaFX,
+Maven) consulted along the way. Asset credits are in the README.
+
+---
+
 ## 1. Why an LLM was used
 
 I came into this project with no prior Java experience (my background is PHP,

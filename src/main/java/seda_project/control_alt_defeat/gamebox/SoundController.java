@@ -95,8 +95,8 @@ public class SoundController {
      */
     public void activateKonami() {
         if (!konami) {
-            konami = true;
             stopLooping();
+            konami = true;
             next();
         }
 

@@ -49,12 +49,21 @@ public class Configuration {
             mediumGame.setText(String.valueOf((max - stepsize) * tupleSize));
             largeGame.setDisable(true);
             largeGame.setText("---");
+            if (largeGame.isSelected()) {
+                largeGame.setSelected(false);
+            }
         } else if (max == 1) {
             smallGame.setText(String.valueOf(tupleSize));
             mediumGame.setDisable(true);
             mediumGame.setText("---");
             largeGame.setDisable(true);
             largeGame.setText("---");
+            if (largeGame.isSelected()){
+                largeGame.setSelected(false);
+            }
+            if (mediumGame.isSelected()){
+                mediumGame.setSelected(false);
+            }
         } else {
             largeGame.setText(String.valueOf(max * tupleSize));
             mediumGame.setDisable(false);

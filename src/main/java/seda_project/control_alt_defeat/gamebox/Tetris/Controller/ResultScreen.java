@@ -26,7 +26,8 @@ public class ResultScreen extends Controller {
 
 
     @FXML
-    private Label PointsWinnerLabel, PointsLoserLabel, LinesWinnerLabel, LinesLoserLabel, positionLabel1, positionLabel2,NameWinnerLabel, NameLoserLabel;
+    private Label statusLabel, PointsWinnerLabel, PointsLoserLabel, LinesWinnerLabel, LinesLoserLabel, positionLabel1,
+            positionLabel2,NameWinnerLabel, NameLoserLabel;
 
     @FXML
     private Button playAgainButton;
@@ -138,7 +139,7 @@ public class ResultScreen extends Controller {
             this.network.addListener(new NetworkListener() {
                 @Override
                 public void onMessage(Message msg) {
-                    if (msg instanceof TetrisMessage.Restart) {
+                    if (msg instanceof TetrisMessage.Restart r) {
                         // Client side: host wants a new game
                         // the new GameScreen renders received state
                         Platform.runLater(() -> navigateToLanGame(null));

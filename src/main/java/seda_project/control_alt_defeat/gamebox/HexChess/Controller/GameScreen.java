@@ -66,6 +66,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     private List<ImageView>p1Views;
     private List<ImageView>p2Views;
     private boolean lanMode = false;
+    private String boardState;
 
     @FXML
     private VBox header, p1, p2;
@@ -153,6 +154,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
         thisScene = scene;
         this.gameEngine.addListener(this);
         this.gameEngine.setupInitalState(boardState);
+        this.boardState = boardState;
         activePlayer = gameEngine.getActivePlayer();
         highlightActivePlayer(activePlayer);
 
@@ -593,6 +595,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
             ResultScreen controller = loader.getController();
             controller.handData(p1NameLabel.getText(), p2NameLabel.getText(), p1Score.getText(), p2Score.getText());
             controller.setGameScreen(this);
+            controller.handBoardState(boardState);
             controller.initNetwork();
 
             if (flipped)   controller.flip();

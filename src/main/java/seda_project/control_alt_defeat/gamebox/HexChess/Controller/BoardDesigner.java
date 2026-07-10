@@ -200,7 +200,9 @@ public class BoardDesigner extends Controller implements Initializable {
     }
 
     /**
-     * Restores the piece count labels after a drag operation completes if no placement was made.
+     * Method that is called when a drag operation is completed. It checks if the drag was successful or not. 
+     * If the drag was not successful and it was not an initial placement, it computes the new label values
+     *  for the piece that was being dragged and applies the updated label values to reflect the change in piece counts.
      *
      * @param event the drag event that has just finished
      */

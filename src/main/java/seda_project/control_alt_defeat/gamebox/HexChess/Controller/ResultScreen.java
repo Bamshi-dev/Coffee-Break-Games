@@ -1,6 +1,8 @@
 package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +31,7 @@ public class ResultScreen extends Controller{
     @FXML
     private Label p1NameLabel, p2NameLabel, p1Score, p2Score, p1Awarded, p2Awarded, resultLabel, statusLabel;
 
+    private String boardState;
 
     /**
      * Initializes network listeners for the result screen
@@ -50,6 +53,12 @@ public class ResultScreen extends Controller{
                     if (msg instanceof ChessMessage.Ready r) {
                         Platform.runLater(() -> {
                             s.peerReady = r.ready();
+                            if (r.ready()) {
+                                statusLabel.setVisible(true);
+                                statusLabel.setText(s.peerName+ " wants to play again!");
+                            } else {
+                                statusLabel.setVisible(false);
+                            }
                             checkStart();
                         });
                     } else if (msg instanceof ChessMessage.StartCountdown sc) {
@@ -87,8 +96,19 @@ public class ResultScreen extends Controller{
     private void scheduleStartGame(long delayMs) {
         statusLabel.setVisible(true);
         statusLabel.setText("Restarting in " + (delayMs / 1000) + "s...");
-        PauseTransition pt = new PauseTransition(Duration.millis(delayMs));
-        pt.setOnFinished(e -> startGameNow());
+        final int[] time = {(int) (delayMs / 1000)};
+        Timeline pt = new Timeline(
+                new KeyFrame(Duration.seconds(1), _ -> {
+                    time[0]--;
+                    if (time[0] > 0 ) {
+                        statusLabel.setText("Starting in " + time[0] + "s...");
+                    }
+                    else {
+                        statusLabel.setText("Startign now!");
+                        startGameNow();
+                    }
+                }));
+        pt.setCycleCount(time[0]);
         pt.play();
     }
 
@@ -106,6 +126,9 @@ public class ResultScreen extends Controller{
         p2Score.setText(""+p2Points);
     }
 
+    public void handBoardState(String boardState){
+        this.boardState = boardState;
+    }
     /**
      * Processes a definitive checkmate victory scenario.
      * @param winner
@@ -246,31 +269,46 @@ public class ResultScreen extends Controller{
         String p1 = p1NameLabel.getText();
         String p2 = p2NameLabel.getText();
 
-        if (p1.equalsIgnoreCase("Bot")) {
-            controller.setBotMode(true, PlayerColor.WHITE);
-        } else if (p2.equalsIgnoreCase("Bot")) {
-            controller.setBotMode(true, PlayerColor.BLACK);
-        } else {
-            controller.setBotMode(false, null);
-        }
+        if (s.network == null) {
 
+            if (p1.equalsIgnoreCase("Bot")) {
+                controller.setBotMode(true, PlayerColor.WHITE);
+            } else if (p2.equalsIgnoreCase("Bot")) {
+                controller.setBotMode(true, PlayerColor.BLACK);
+            } else {
+                controller.setBotMode(false, null);
+            }
+        }
+        if (c.checkFlip(p1,p2)){
+            controller.flip();
+        }
+        if (c.checkRainbow(p1,p2)){
+            controller.rainbow();
+        }
         if (p1.equals("Duck")) {
             controller.p1Duck();
         }
         if (p2.equals("Duck")){
             controller.p2Duck();
         }
-        controller.init(parent.getScene());
-        if (flipped){
-            controller.flip();
-        }
-        if (rainbowed){
-            controller.rainbow();
-        }
+
         if (s.network != null) {
+            controller.setLanMode();
             if (s.isHost) {
+                if (boardState == null) {
+                    controller.init(root.getScene());
+                }
+                else{
+                    controller.init(boardState, root.getScene());
+                }
                 controller.attachHostBridge(s.network, engine);
             } else {
+                if(s.boardState == null) {
+                    controller.init(root.getScene());
+                }
+                else {
+                    controller.init(s.boardState, root.getScene());
+                }
                 controller.attachClientBridge(s.network, engine);
             }
         }

@@ -106,13 +106,19 @@ public class BoardSelection extends Controller implements Initializable {
     protected void onDeleteAction(){
         sC.play("button");
         if (selectedboard == null) return;
+
         int position = boards.indexOf(selectedboard);
+        if (position == -1) return; // Prevent crash on rapid clicks
         availableStates.remove(position);
         scrollContent.getChildren().remove(position);
         boards.remove(position);
         JsonHandler handler = new  JsonHandler();
         handler.writeBoardStates(boards);
         selectedboard = null;
+
+        // buttons are disabled again after deletion
+        deleteButton.setDisable(true);
+        useButton.setDisable(true);
     }
 
     /**

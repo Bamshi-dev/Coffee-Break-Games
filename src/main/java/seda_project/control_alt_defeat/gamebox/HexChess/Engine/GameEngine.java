@@ -415,7 +415,7 @@ public class GameEngine {
     }
 
     /**
-     * retuns all the legal moves
+     * returns all the legal moves
      * @param piece
      * @return
      */
@@ -621,7 +621,7 @@ public class GameEngine {
     }
 
     /**
-     * Setup the inital state if a custom state is used
+     * Set up the inital state if a custom state is used
      * @param boardState
      */
     public void setupInitalState(String boardState){
@@ -719,5 +719,9 @@ public class GameEngine {
 
     public boolean isEnpassent() {
         return enpassent;
+    }
+
+    public boolean isPromotionPending() {
+        return pendingPromotionCoord != null;
     }
 }

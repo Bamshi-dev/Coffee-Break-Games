@@ -258,6 +258,7 @@ public class WaitForOpponent extends Controller {
      * disables the start button. After the delay, it calls the method to start the game immediately.
      */
     private void scheduleStartGame(long delayMs) {
+        if (countdownStarted) return;
         countdownStarted = true;
         statusLabel.setText("Starting in " + (delayMs / 1000) + "s...");
         startButton.setDisable(true);

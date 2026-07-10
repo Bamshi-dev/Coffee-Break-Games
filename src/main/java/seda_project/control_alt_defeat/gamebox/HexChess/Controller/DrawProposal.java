@@ -2,15 +2,21 @@ package seda_project.control_alt_defeat.gamebox.HexChess.Controller;
 
 import javafx.stage.Stage;
 import seda_project.control_alt_defeat.gamebox.ui.Controller;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+
+import java.awt.*;
 
 public class DrawProposal extends Controller {
     private GameScreen screen;
     private int proposing;
+    private Image event;
 
     /**
      * Handles the action when the draw proposal is accepted.
      */
     public void onAcceptAction() {
+        ((Button) event.getSource()).setDisable(true);
         sC.play("button");
         screen.drawProposal();
         ((Stage) root.getScene().getWindow()).close();
@@ -20,6 +26,7 @@ public class DrawProposal extends Controller {
      * Handles the action when the draw proposal is declined.
      */
     public void onDeclineAction() {
+        ((Button) event.getSource()).setDisable(true);
         sC.play("button");
         screen.declined(proposing);
         ((Stage) root.getScene().getWindow()).close();

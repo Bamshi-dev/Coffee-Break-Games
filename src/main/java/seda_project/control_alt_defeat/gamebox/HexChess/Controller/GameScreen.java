@@ -298,6 +298,13 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
                     return;
                 }
             }
+
+            // enforce turn order
+            // Prevent concurrent modifications that would crash the Minimax algorithm (hexbot)
+            if (playerColor != activePlayer) {
+                return;
+            }
+
             if (isBotMode && playerColor == botColor) {
                 return;
             }
@@ -607,7 +614,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
     }
 
     /**
-     * Methodt that is called whenever a promotion occurs. In case of a network game only the promoting player gets the UI for this
+     * Method that is called whenever a promotion occurs. In case of a network game only the promoting player gets the UI for this
      * @param currentTurn
      */
     @Override
@@ -651,6 +658,12 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
             promotionStage.setHeight(156);
             promotionStage.setX(stage.getX() + stage.getWidth() / 2 - promotionStage.getWidth() / 2);
             promotionStage.setY(stage.getY() + stage.getHeight() / 2 - promotionStage.getHeight() / 2);
+            // If the user closes the window, it will automatically choose queen instead of freezing
+            promotionStage.setOnCloseRequest(event -> {
+                if (gameEngine.isPromotionPending()) {
+                    gameEngine.promote(PieceType.QUEEN);
+                }
+            });
 
             promotionStage.show();
 
@@ -724,6 +737,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
 
                 if (bestMove != null) {
                     javafx.application.Platform.runLater(() -> {
+                        // Don't let the bot move if the game was exited
+                        if (disconnected) return;
                         gameEngine.handleMove(bestMove[0], bestMove[1]);
                         if (gameEngine.getCurrentTurn() == botColor && !gameEngine.isGameOver()) {
 
@@ -788,12 +803,15 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      */
     @FXML
     protected void onExitAction(){
+        // Prevent user rapidly clicks Exit
+        if (disconnected) return;
+        disconnected = true;
+
         sC.play("button");
         sC.stopLooping();
         sC.playLooping("lobby_background",.2);
         // we're leaving on purpose: don't show ourselves a disconnect alert,
         // but DO close the connection so the opponent is notified gracefully.
-        disconnected = true;
         Session.clear();
         vS.emtyStack();
         c.changeScene("/Views/StartingScreen.fxml",header,vS);
@@ -979,6 +997,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      */
     @FXML
     protected void onP1DrawAction() {
+        // prevent opening multiple modals
+        p1Draw.setDisable(true);
         sC.play("button");
         Session s = Session.current();
         if (s.network != null) {
@@ -994,6 +1014,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      */
     @FXML
     protected void onP1ResignAction() {
+        // prevent double calling end game logic
+        p1Resign.setDisable(true);
         sC.play("button");
         Session s = Session.current();
         if (s.network != null && !s.isHost) return;
@@ -1005,6 +1027,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      */
     @FXML
     protected void onP2DrawAction() {
+        // prevent opening multiple modals
+        p2Draw.setDisable(true);
         sC.play("button");
         Session s = Session.current();
         if (s.network != null) {
@@ -1020,6 +1044,8 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      */
     @FXML
     protected void onP2ResignAction() {
+        // prevent double calling end game
+        p2Resign.setDisable(true);
         sC.play("button");
         Session s = Session.current();
         if (s.network != null && s.isHost) return;
@@ -1032,6 +1058,13 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      * @param proposing
      */
     public void declined(int proposing) {
+        // Re enable draw button
+        if (proposing == 1) {
+            p1Draw.setDisable(false);
+        } else {
+            p2Draw.setDisable(false);
+        }
+
         Session s = Session.current();
         if (s.network != null) {
             s.network.send(new ChessMessage.DrawDeclined(proposing));
@@ -1063,7 +1096,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      *Method to swap the normal Pawn Image to a Duck Image
      */
     public void p2Duck(){
-       p2PawnImg.setImage(settings.getP2Pieces().get(6).getImage());
+        p2PawnImg.setImage(settings.getP2Pieces().get(6).getImage());
     }
 
     /**

@@ -52,8 +52,8 @@ public class BoardDesignerEngine {
      * @return
      */
     public Map<String, String> computeIncrement(String pieceId) {
-        // prevent NullPointerException on invalid pieces
-        if (pieceId == null || !pieceAmounts.containsKey(pieceId)) return buildLabelValues(pieceId != null && pieceId.contains("1") ? "p1" : "p2");
+        // unknown piece id: change nothing and update no labels
+        if (pieceId == null || !pieceAmounts.containsKey(pieceId)) return Map.of();
         String playerPrefix = pieceId.contains("1") ? "p1" : "p2";
         int amount = pieceAmounts.get(pieceId);
         pieceAmounts.put(pieceId, amount + 1);
@@ -89,8 +89,8 @@ public class BoardDesignerEngine {
      * @return
      */
     public Map<String, String> computeAdapt(String pieceId) {
-        // prevent NullPointerException on invalid pieces
-        if (pieceId == null || !pieceAmounts.containsKey(pieceId)) return buildLabelValues(pieceId != null && pieceId.contains("1") ? "p1" : "p2");
+        // unknown piece id: change nothing and update no labels
+        if (pieceId == null || !pieceAmounts.containsKey(pieceId)) return Map.of();
         String playerPrefix = pieceId.contains("1") ? "p1" : "p2";
         boolean isPawn = pieceId.contains("Pawn");
 

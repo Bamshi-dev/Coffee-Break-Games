@@ -916,7 +916,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
                     Platform.runLater(() -> drawProposal(offer.getProposing()));
                 }
                 else if (msg instanceof ChessMessage.DrawDeclined declinedMsg) {
-                    Platform.runLater(() -> showDeclinedToast(declinedMsg.getProposing()));
+                    Platform.runLater(() -> onDrawDeclinedRemote(declinedMsg.getProposing()));
                 }
             }
         });
@@ -955,7 +955,7 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
                     Platform.runLater(() -> drawProposal(offer.getProposing()));
                 }
                 else if (msg instanceof ChessMessage.DrawDeclined declinedMsg) {
-                    Platform.runLater(() -> showDeclinedToast(declinedMsg.getProposing()));
+                    Platform.runLater(() -> onDrawDeclinedRemote(declinedMsg.getProposing()));
                 }
             }
         });
@@ -1058,16 +1058,32 @@ public class GameScreen extends Controller implements Initializable, ChessEventL
      * @param proposing
      */
     public void declined(int proposing) {
-        // Re enable draw button
+        Session s = Session.current();
+        if (s.network != null) {
+            // LAN: the proposer's button lives on the OTHER machine; it is
+            // re-enabled there when the DrawDeclined message arrives. Re-enabling
+            // here would wrongly enable the peer's button on the decliner's screen.
+            s.network.send(new ChessMessage.DrawDeclined(proposing));
+        } else {
+            // local hot-seat: the same screen owns both buttons
+            if (proposing == 1) {
+                p1Draw.setDisable(false);
+            } else {
+                p2Draw.setDisable(false);
+            }
+        }
+        showDeclinedToast(proposing);
+    }
+
+    /**
+     * The peer declined our draw offer: re-enable our draw button and show the toast.
+     * @param proposing 1 if player 1 proposed the draw, 2 if player 2 did
+     */
+    private void onDrawDeclinedRemote(int proposing) {
         if (proposing == 1) {
             p1Draw.setDisable(false);
         } else {
             p2Draw.setDisable(false);
-        }
-
-        Session s = Session.current();
-        if (s.network != null) {
-            s.network.send(new ChessMessage.DrawDeclined(proposing));
         }
         showDeclinedToast(proposing);
     }

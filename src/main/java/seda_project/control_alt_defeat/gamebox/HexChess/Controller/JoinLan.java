@@ -4,9 +4,11 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -55,7 +57,7 @@ public class JoinLan extends Controller implements Initializable {
      * Method to handle the connection to a Host. If no Host is selected return an error
      */
     @FXML
-    protected void onConnectAction() {
+    protected void onConnectAction(ActionEvent event) {
         sC.play("button");
 
         if (selectedHost == null){
@@ -76,16 +78,24 @@ public class JoinLan extends Controller implements Initializable {
         Advertisement ad = (Advertisement) selectedHost.getUserData();
         stopDiscovery();
 
-        // Prevent double clicking
+        // Prevent double clicking: a second click would open a second connection
+        Button connectButton = (Button) event.getSource();
+        connectButton.setDisable(true);
         joinStatus.setVisible(true);
         joinStatus.setText("Connecting...");
 
-        // prevent UI freeze
-        new Thread(() -> {
+        // connect on a background thread so the UI doesn't freeze on the timeout
+        Thread connect = new Thread(() -> {
             try {
                 NetworkLayer layer = LanClient.join(ad.ipAddress(), ad.tcpPort());
 
                 Platform.runLater(() -> {
+                    // user pressed Back while we were connecting: drop the
+                    // connection instead of navigating from a dead screen
+                    if (header.getScene() == null) {
+                        try { layer.close(); } catch (Exception ignored) {}
+                        return;
+                    }
                     Session s = Session.current();
                     s.myName   = yourName;
                     s.isHost   = false;
@@ -101,11 +111,14 @@ public class JoinLan extends Controller implements Initializable {
                 Platform.runLater(() -> {
                     sC.play("error");
                     joinStatus.setText("Could not connect: " + e.getMessage());
-                    // Optionally restart discovery if connection failed
+                    connectButton.setDisable(false);
+                    // restart discovery so the host list keeps refreshing
                     startDiscovery();
                 });
             }
-        }).start();
+        }, "hexchess-join-connect");
+        connect.setDaemon(true);
+        connect.start();
     }
 
     /**

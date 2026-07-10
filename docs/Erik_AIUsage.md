@@ -14,3 +14,11 @@
   * Since we neglected the documentation of our code during development we had a lot of uncommented code. LLMs are a 
     good tool to create this documentation in a fast manner. The Comments still had to be reevaluated by myself for 
     correctness
+
+* Creation of Images
+  * Sadly time is a limiting factor in the creation of Icons. In an ideal world the images of Memory and the Icons 
+    of the Tetris Game would have been all created by myself. For Memory I started taking photos of the university 
+    but due to limited time I had to ask ChatGPT for Images.
+    ![img.png](img.png)
+  * The same goes for the Icons of Tetris. There I only had time to create the Bomb Icons, the Poral and the swaps. 
+    All the other Icons had to be created with the usage of ChatGPT since there was just to little time to get creative.

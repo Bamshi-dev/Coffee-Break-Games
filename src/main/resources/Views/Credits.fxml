@@ -46,6 +46,12 @@
                               <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://pixabay.com/sound-effects/film-special-effects-chess-pieces-60890/" wrapText="true" />
                            </children>
                         </HBox>
+                         <HBox alignment="CENTER" minWidth="435.0">
+                             <children>
+                                 <Label minWidth="170.0" text="Chess Endangered:" />
+                                 <Hyperlink minWidth="415.0" onAction="#onHyperlinkAction" text="https://www.youtube.com/watch?v=dQw4w9WgXcQ" wrapText="true" />
+                             </children>
+                         </HBox>
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="38.0">
                            <children>
                               <Label minWidth="170.0" text="Chess Background:" />

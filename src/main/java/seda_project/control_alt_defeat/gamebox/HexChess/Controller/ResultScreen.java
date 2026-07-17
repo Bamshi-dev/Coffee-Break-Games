@@ -301,22 +301,18 @@ public class ResultScreen extends Controller{
         if (s.network != null) {
             controller.setLanMode();
             if (s.isHost) {
-                if (boardState == null) {
-                    controller.init(root.getScene());
-                }
-                else{
-                    controller.init(boardState, root.getScene());
-                }
+
                 controller.attachHostBridge(s.network, engine);
             } else {
-                if(s.boardState == null) {
-                    controller.init(root.getScene());
-                }
-                else {
-                    controller.init(s.boardState, root.getScene());
-                }
                 controller.attachClientBridge(s.network, engine);
             }
+        }
+
+        if (boardState == null) {
+            controller.init(root.getScene());
+        }
+        else{
+            controller.init(boardState, root.getScene());
         }
 
         controller.setNames(p1, p2);

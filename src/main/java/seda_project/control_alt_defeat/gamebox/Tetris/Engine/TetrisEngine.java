@@ -547,7 +547,7 @@ public class TetrisEngine {
                                 p1Board.expand(linesCleared);
                                 p2Board.shrink(linesCleared);
                                 for(int i = 0; i < (isTwoBlockMode ? 2 : 1); i++) {
-                                    if (p2ActiveBlocks[i] != null) p2ActiveBlocks[i].setY(p2ActiveBlocks[i].getY() + linesCleared);
+                                    if (p2ActiveBlocks[i] != null) p2ActiveBlocks[i].setY(p2ActiveBlocks[i].getY() - linesCleared);
                                 }
                                 listeners.forEach(l -> l.onBoardSizeChange(playerNum,linesCleared,getSnapshot()));
                             }
@@ -566,7 +566,7 @@ public class TetrisEngine {
                                 p2Board.expand(linesCleared);
                                 p1Board.shrink(linesCleared);
                                 for(int i = 0; i < (isTwoBlockMode ? 2 : 1); i++) {
-                                    if (p1ActiveBlocks[i] != null) p1ActiveBlocks[i].setY(p1ActiveBlocks[i].getY() - linesCleared);
+                                    if (p1ActiveBlocks[i] != null) p1ActiveBlocks[i].setY(p1ActiveBlocks[i].getY() + linesCleared);
                                 }
                                 listeners.forEach(l -> l.onBoardSizeChange(playerNum,linesCleared,getSnapshot()));
                             }
@@ -1003,8 +1003,8 @@ public class TetrisEngine {
      * @param activeBlock The Block object representing the active block that is being rotated. Its position and shape will be updated to reflect the 180-degree rotation on the board.
      */
     private void rotateBlock180(Board board,Block activeBlock) {
-        activeBlock.setX((board.getWidth() - 1) - (activeBlock.getX() + activeBlock.getShape().length - 1));
-        activeBlock.setY( (board.getHeight() - 1) - (activeBlock.getY() + activeBlock.getShape()[0].length - 1));
+        activeBlock.setX((board.getWidth() - 1) - (activeBlock.getX() + activeBlock.getShape()[0].length - 1));
+        activeBlock.setY( (board.getHeight() - 1) - (activeBlock.getY() + activeBlock.getShape().length - 1));
 
         boolean[][] shape = activeBlock.getShape();
         int rows = shape.length;

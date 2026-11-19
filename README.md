@@ -22,7 +22,7 @@ The rules are the same in both modes.
 
 | Person               | Area                                                  |
 |----------------------|-------------------------------------------------------|
-| Amirhossein (Amir)   | Game engines — Memory match logic, Tetris/Chess logic |
+| Amirhossein (Amir)   | Game engines — Memory match logic, Tetris/Chess logic, Chess AI |
 | Erik                 | UI / FXML controllers, animations, sound, easter eggs |
 | Suleyman             | LAN networking — sockets, discovery, lobbies, sync    |
 
